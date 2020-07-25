@@ -9,17 +9,14 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return{
-        questionNumber: state.questionNumber,
-        constraints_budget: state.constraints_budget,
-        constraints_location: state.constraints_location,
-        constraints_type: state.constraints_type,
+        listOfFoodPlaces: state.listOfFoodPlaces
     }
 }
 
 const questions = [
-    ["How much is your budget?", "Less than P60", "P60-P100", "More than P100", "", "I don't care"],
-    ["Where do you want to eat?", "Within UPLB Campus", "Raymundo", "Grove", "", "I don't care"],
-    ["What food are you craving for?", "Meat", "Seafoods", "Veggies", "Noodles", "I don't care"],
+    ["How much is your budget?", "Less than P60", "P60-P100", "More than P100", null, null, "I don't care"],
+    ["Where do you want to eat?", "Within UPLB Campus", "Raymundo", "Grove", "Demarces", null, "I don't care"],
+    ["What food are you craving for?", "Meat", "Vegetable", "Seafood", "Snacks", "Ice Cream", "I don't care"],
 ]
 
 class Randomizer extends React.Component {
@@ -29,7 +26,7 @@ class Randomizer extends React.Component {
         constraints_location: "",
         constraints_type: "",
     }
-
+    
     handleClick = (choice) => {
         if(choice === 0) {
             this.setState({
@@ -48,47 +45,110 @@ class Randomizer extends React.Component {
             else if(choice === 3) {
                 this.setState({constraints_budget: ">100"});
             }
-            else if(choice === 5) {
+            else if(choice === 6) {
                 this.setState({constraints_budget: "any"});
             }
             this.setState({questionNumber: 1})
         }
         else if(this.state.questionNumber === 1){
             if(choice === 1) {
-                this.setState({constraints_location: "within_campus"});
+                this.setState({constraints_location: "within UPLB"});
             }
             else if(choice === 2) {
-                this.setState({constraints_location: "raymundo"});
+                this.setState({constraints_location: "Raymundo"});
             }
             else if(choice === 3) {
-                this.setState({constraints_location: "grove"});
+                this.setState({constraints_location: "Grove"});
             }
-            else if(choice === 5) {
+            else if(choice === 4) {
+                this.setState({constraints_location: "Demarces"});
+            }
+            else if(choice === 6) {
                 this.setState({constraints_location: "any"});
             }
             this.setState({questionNumber: 2})
         }
         else if(this.state.questionNumber === 2){
             if(choice === 1) {
-                this.setState({constraints_type: "meat"}, this.handleFormSubmit);
+                this.setState({constraints_type: "Meat"}, this.handleFormSubmit);
             }
             else if(choice === 2) {
-                this.setState({constraints_type: "seafood"}, this.handleFormSubmit);
+                this.setState({constraints_type: "Vegetable"}, this.handleFormSubmit);
             }
             else if(choice === 3) {
-                this.setState({constraints_type: "veggies"}, this.handleFormSubmit);
+                this.setState({constraints_type: "Seafood"}, this.handleFormSubmit);
             }
             else if(choice === 4) {
-                this.setState({constraints_type: "noodles"}, this.handleFormSubmit);
+                this.setState({constraints_type: "Snacks"}, this.handleFormSubmit);
             }
             else if(choice === 5) {
+                this.setState({constraints_type: "Ice Cream"}, this.handleFormSubmit);
+            }
+            else if(choice === 6) {
                 this.setState({constraints_type: "any"}, this.handleFormSubmit);
             }
         }
     }
 
+    foodPlaceRanker = () => {
+        var date = new Date();
+        var day = date.getDay();                                // day of the week (0-6 is Sunday-Saturday)
+        var hour = date.getHours() * 100 + date.getMinutes()    // hour in 24-hour format (0-23)
+        // make an array of user preferences (constraints)
+        const userPref = [this.state.constraints_budget, this.state.constraints_location, this.state.constraints_type];
+        // populate the foodPlaceScores with {name: score} objects for every food place
+        var foodPlaceScores = [];
+        this.props.listOfFoodPlaces.forEach((currentValue) => {
+            // food place needs to be open on current time and day of the week
+            if(((hour > currentValue.Opening_time && hour < currentValue.Closing_time) || currentValue.Opening_time === null) && currentValue.Days_open.includes(day)) {
+                foodPlaceScores.push({...currentValue, score: 0});
+            }
+        })
+        console.log(foodPlaceScores);
+
+        this.props.listOfFoodPlaces.forEach((currentValue) => {
+            // check if the price range of food place is similar to user preference
+            // right budget rewards 3 points, right location rewards 1 point, right type rewards 2 points
+            if(currentValue.Price_range === userPref[0]) {
+                // find the food place in foodPlaceScores and increase its score
+                foodPlaceScores = foodPlaceScores.map(place => (
+                    place.Food_place_name === currentValue.Food_place_name
+                    ?   {...place, score: place.score + 3}
+                    :   place
+                ))
+            }
+            // check if the location of food place is similar to user preference
+            if(currentValue.Location === userPref[1]) {
+                // find the food place in foodPlaceScores and increase its score
+                foodPlaceScores = foodPlaceScores.map(place => (
+                    place.Food_place_name === currentValue.Food_place_name
+                    ?   {...place, score: place.score + 1}
+                    :   place
+                ))
+            }
+            // check if the type of food place contains the user preference
+            if(currentValue.Food_types.includes(userPref[2])) {
+                // find the food place in foodPlaceScores and increase its score
+                foodPlaceScores = foodPlaceScores.map(place => (
+                    place.Food_place_name === currentValue.Food_place_name
+                    ?   {...place, score: place.score + 2}
+                    :   place
+                ))
+            }
+        })
+        // add a random value between 0-1 to break ties
+        foodPlaceScores = foodPlaceScores.map(place => (
+            {...place, score: place.score + Math.random()}
+        ))
+        // sort foodPlaceScores from highest score to lowest score, best pick will be at index [0]
+        foodPlaceScores.sort((a, b) => b.score - a.score);
+        console.log(foodPlaceScores);
+        return foodPlaceScores;
+    }
+
     handleFormSubmit = () => {
-        this.props.randomize(this.state.constraints_budget+this.state.constraints_location+this.state.constraints_type);
+        //dispatch the ranked food places to listOfFoodPlacesRanked in redux store
+        this.props.randomize(this.foodPlaceRanker());
         console.log(this.state);
     }
 
@@ -112,10 +172,13 @@ class Randomizer extends React.Component {
                         <button onClick={() => this.handleClick(1)}>{questions[this.state.questionNumber][1]}</button>
                         <button onClick={() => this.handleClick(2)}>{questions[this.state.questionNumber][2]}</button>
                         <button onClick={() => this.handleClick(3)}>{questions[this.state.questionNumber][3]}</button>
-                        {questions[this.state.questionNumber][4] !== "" &&
+                        {questions[this.state.questionNumber][4] !== null &&
                             <button onClick={() => this.handleClick(4)}>{questions[this.state.questionNumber][4]}</button>
                         }
-                        <button onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
+                        {questions[this.state.questionNumber][5] !== null &&
+                            <button onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
+                        }
+                        <button onClick={() => this.handleClick(6)}>{questions[this.state.questionNumber][6]}</button>
                     </div>
                 </div>
             </div>
