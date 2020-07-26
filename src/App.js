@@ -77,12 +77,14 @@ class Counter extends React.Component {
           <h2>{this.props.listOfFoodPlacesRanked[0].Food_place_name}</h2>
           <p>You might also like...</p>
           <h3>{this.props.listOfFoodPlacesRanked[1].Food_place_name}</h3>
+          <p>Note: This is for demo purposes only and not to be displayed here in final product. After choices are made, rankings are stored
+          in the store and user will be redirected to the food place page.</p>
         </div>
         }
         <Randomizer/>
       </div>
     )
-  }
+  }a
 }
 const ConnectedCounter = connect(mapStateToProps, mapDispatchToProps)(Counter);
 

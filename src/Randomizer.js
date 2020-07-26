@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { randomizeAction } from './App.js';
-// import './Randomizer.css';
+import banner from './ElbusogCSS/cakeBanner.png';
+import './ElbusogCSS/ElbusogCSS.css';
 
 const mapDispatchToProps = dispatch => ({
     randomize: (payload) => dispatch(randomizeAction(payload)),
@@ -155,34 +156,36 @@ class Randomizer extends React.Component {
     render(){
         return(
             <div>
-                <div>
-                    <p>Want to eat but can't decide where?</p>
-                </div>
-                <div>
-                    <p onClick={() => this.handleClick(0)}>Click here to get instant recommendations!</p>
-                </div>
-                <div>
-                    <div>
-                        <p>or choose your preferences to get what suits you the most!</p>
+                <div className="row">
+                    <div className="col-12">
+                        <img className="banner" src={banner} alt="Banner" onClick={() => this.handleClick(0)}/>
+                        <h5 className="pretitle">Want to eat but can't decide where?</h5>
+                        <h2 className="title" onClick={() => this.handleClick(0)}>Get an instant recommendation!</h2>
                     </div>
-                    <div>
-                        <p>{questions[this.state.questionNumber][0]}</p>
+                </div>
+                <div className="banner padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
+                    <div className="row">
+                        <h4 className="col-12 force-center white">...or choose your preferences</h4>
                     </div>
-                    <div>
-                        <button onClick={() => this.handleClick(1)}>{questions[this.state.questionNumber][1]}</button>
-                        <button onClick={() => this.handleClick(2)}>{questions[this.state.questionNumber][2]}</button>
-                        <button onClick={() => this.handleClick(3)}>{questions[this.state.questionNumber][3]}</button>
+                    <div className="row margin-tb-20">
+                        <h5 className="col-12 force-center white">{questions[this.state.questionNumber][0]}</h5>
+                    </div>
+                    <div className="rowcenter">
+                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(1)}>{questions[this.state.questionNumber][1]}</button>
+                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(2)}>{questions[this.state.questionNumber][2]}</button>
+                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(3)}>{questions[this.state.questionNumber][3]}</button>
+                    </div>
+                    <div className="rowcenter">
                         {questions[this.state.questionNumber][4] !== null &&
-                            <button onClick={() => this.handleClick(4)}>{questions[this.state.questionNumber][4]}</button>
+                            <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(4)}>{questions[this.state.questionNumber][4]}</button>
                         }
                         {questions[this.state.questionNumber][5] !== null &&
-                            <button onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
+                            <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
                         }
-                        <button onClick={() => this.handleClick(6)}>{questions[this.state.questionNumber][6]}</button>
+                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(6)}>{questions[this.state.questionNumber][6]}</button>
                     </div>
                 </div>
             </div>
-                
         );
     }
 }
