@@ -1,11 +1,12 @@
 import React from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { randomizeAction } from './App.js';
-import banner from './ElbusogCSS/cakeBanner.png';
-import './ElbusogCSS/ElbusogCSS.css';
+import { randomizeAction, getAllFoodPlaces } from '../redux';
+import banner from '../assets/cakeBanner.png';
 
 const mapDispatchToProps = dispatch => ({
     randomize: (payload) => dispatch(randomizeAction(payload)),
+    getallfoodplaces: (payload) => dispatch(getAllFoodPlaces(payload))
 });
 
 const mapStateToProps = state => {
@@ -21,6 +22,14 @@ const questions = [
 ]
 
 class Randomizer extends React.Component {
+    componentDidMount() {
+        axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
+        .then(response => {
+            console.log(response.data)
+            this.props.getallfoodplaces(response.data);
+        })
+    }
+
     state = {
         questionNumber: 0,
         constraints_budget: "",
