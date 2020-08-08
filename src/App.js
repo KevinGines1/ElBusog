@@ -1,21 +1,27 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 import './ElbusogCSS/ElbusogCSS.css';
-import Nav from './components/nav';
-import Home from './components/home';
-import Profile from './components/profile';
+import FetchData from './components/FetchData';
+import Nav from './components/Nav';
+import Home from './components/Home';
+import Profile from './components/Profile';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Nav />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/profile" component={Profile} />
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <FetchData />
+      <Router>
+        <div className="App">
+          <Nav />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/profile" component={Profile} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 

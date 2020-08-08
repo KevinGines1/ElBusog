@@ -1,0 +1,116 @@
+.editProfileContainer {
+    font-family: sans-serif;
+    overflow-y: scroll;
+}
+
+.editProfileTitle {
+    text-align: center;
+}
+
+.uploadImageBtn {
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid#cccccc;
+    background-color: #cccccc;
+    color: #404040;
+    font-family: sans-serif;
+    font-size: min(7vw, 12px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.uploadImageBtn:hover {
+    border-color: #a6a6a6;
+    background-color: transparent;
+}
+
+.editInput {
+    background-color: transparent;
+    color: #404040;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1.5px solid #999999;
+    outline: none;
+    font-size: min(8vw, 15px);
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.editName {
+    width: 9em;
+    background-color: transparent;
+    color: #404040;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: #999999;
+    outline: none;
+    font-size: min(12vw, 28px);
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+.editDetail p {
+    color: #999999;
+    font-size: min(7vw, 14px);
+}
+
+.editDetail {
+    display: flex-box;
+    margin-top: 5px;
+    background-color: transparent;
+    outline: none;
+}
+
+.changePassword {
+    display: inline-block;
+    padding: 0px 10px 13px 10px;
+    margin-top: 15px;
+    background-color: #cccccc;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    outline: none;
+}
+
+.changePassword p {
+    margin-top: 10px;
+    color: #737373;
+    font-size: min(7vw, 14px);
+}
+
+.userTypeOptions {
+    background-color: #cccccc;
+    color: #404040;
+    margin-top: 1px;
+    padding: 2px;
+    font-size: min(8vw, 15px);
+    border-color: #cccccc;
+    border-radius: 3px;
+    outline: none;
+}
+
+.editDetail p {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    font-size: min(7vw, 14px);
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+    color: #ff1a1a;
+    font-size: min(7vw, 14px);
+    margin-top: 5px;
+}
+
+.editProfileBtn:hover:disabled {
+    background-color: transparent;
+    color: #737373;
+    border-color: #737373;
+}

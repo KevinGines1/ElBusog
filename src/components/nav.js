@@ -1,31 +1,56 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './nav.css';
+import { useSelector } from 'react-redux';
+import './Nav.css';
 import '../ElbusogCSS/ElbusogCSS.css';
 import logo from '../ElbusogCSS/logo.png';
-import userPic from '../ElbusogCSS/user.png';
+import defaultPic from '../ElbusogCSS/user.png';
 
 function Nav() {
+    const profilePic = useSelector(state => state.profile.Picture)
     return (
-        <div className="fixedNavbar">
+        <div>
+            {(profilePic !== "" &&
+                <div className="fixedNavbar">
+                    <img className="navbarLogo" src={logo} alt="Elbusog" />
+                    <Link to="/">
+                        Home
+                    </Link>
+                    <Link to="/foodplaces">
+                        Browse
+                    </Link>
+                    <Link to="/">
+                        About
+                    </Link>
+                    <div className="userHover">
+                        <Link to="/profile">
+                            <img
+                                className="userThumb"
+                                src={profilePic ? profilePic : defaultPic}
+                                alt="User" />
+                        </Link>
+                    </div>
+                </div>
+            )}
+            {/* <div className="stickyNavbar">
             <img className="navbarLogo" src={logo} alt="Elbusog" />
             <ul>
-                <Link to="/">
-                    <ls>Home</ls>
-                </Link>
-                <Link>
-                    <ls>Food</ls>
-                </Link>
-                <Link>
-                    <ls>About</ls>
-                </Link>
-            </ul>
-            <div className="userHover">
-                <Link to="/profile">
-                    <img className="userThumb" src={userPic} alt="Name" />
-                </Link>
-            </div>
-            {/* <img className="userThumb" src={userPic} alt="Name" /> */}
+            <Link to="/">
+                        <ls>Home</ls>
+                        </Link>
+                        <Link to="/foodplaces">
+                        <ls>Browse</ls>
+                        </Link>
+                        <Link>
+                        <ls>About</ls>
+                        </Link>
+                        </ul>
+                        <div className="userHover">
+                    <Link to="/profile">
+                        <img className="userThumb" src={profilePic} alt="User" />
+                    </Link>
+                    </div>
+                </div> */}
         </div>
     )
 }
