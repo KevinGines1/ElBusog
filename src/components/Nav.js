@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 //     }
 // }
 
-//this can be optimized later
+//this can be optimized later, maybe change to a function
 class StickyNavbar extends React.Component {
     state = {
         profileDropdownVisible: false
@@ -26,12 +26,7 @@ class StickyNavbar extends React.Component {
     }
 
     toggleDropdown() {
-        if(this.state.profileDropdownVisible === false) {
-            this.setState({profileDropdownVisible: true})
-        }
-        else {
-            this.setState({profileDropdownVisible: false})
-        }
+        this.setState({profileDropdownVisible: !this.state.profileDropdownVisible})
     }
 
     handleScroll = () => {
