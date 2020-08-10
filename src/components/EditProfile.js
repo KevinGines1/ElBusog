@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     editProfile,
-    disableSave,
-    enableSave,
     checkUsername,
     checkEmail,
     saveChanges,
     cancelChanges
 } from '../redux';
+// import ImageUploader from 'react-images-upload';
 import defaultPic from '../ElbusogCSS/user.png';
-import './EditProfile.css';
 
 // Add loading sa delay ng pag-save ng changes
 // delete code for invalidName, invalidUsername, invalidEmail if maxLength is ok
@@ -27,27 +25,50 @@ function EditProfile() {
         Picture: profile.Picture,
         User_type: profile.User_type,
         blankField: false,
-        // invalidName: false,
-        // invalidUsername: false,
-        // invalidEmail: false,
         passwordsMatch: true,
-        confirmPassword: ""
+        confirmPassword: "",
+        invalidAccType: false,
+        deletingAccount: false 
     })
 
+    // npm install compression
+    // var express = require('express')
+    // var bodyParser = require('body-parser')
+
+    // var app = express()
+    // app.use(bodyParser.json({limit: "10mb"}))
+    // app.use(bodyParser.urlencoded({extended: true, limit: "10mb"}))
+
     // VALIDATION: checks if input in each field is valid
-    // MAY SLIGHT ERROR; KAPAG NAG-SET NG BLANK FIELD TO FALSE, PAMINSAN DI SIYA NAG-SESETSTATE
+
+    // CHECKS IF USERNAME IS AVAILABLE
     useEffect(() => {
-        
-        // checks if username is available
         if (profile.Username !== state.Username) {
             dispatch(checkUsername(state.Username))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.Username])
 
+    // CHECKS IF EMAIL IS AVAILABLE
+    useEffect(() => {
         if (profile.Email !== state.Email) {
             dispatch(checkEmail(state.Email))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.Email])
 
-        // checks for blank fields
+    //  CHECKS IF A BUSINESS OWNER HAS BUSINESSES
+    useEffect(() => {
+        if(state.User_type === "Customer" && profile.ownedFoodPlaces.length !== 0){
+            setState(state => ({...state, invalidAccType: true}))
+        } else if (state.invalidAccType === true){
+            setState(state => ({...state, invalidAccType: false}))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.User_type])
+
+    // CHECKS FOR BLANK FIELDS
+    useEffect(() => {
         if (
             state.Name !== "" &&
             state.Username !== "" &&
@@ -57,30 +78,7 @@ function EditProfile() {
             setState({ ...state, blankField: false })
         } else {
             setState({ ...state, blankField: true })
-            dispatch(disableSave())
         }
-
-        // // check if name is too long
-        // if (state.Name.length > 30) {
-        //     setState({ ...state, invalidName: true})
-        // } else if (state.invalidName === true) {
-        //     setState({ ...state, invalidName: false})
-        // }
-
-        // // check if username is too long
-        // if (state.Username.length > 15) {
-        //     setState({ ...state, invalidUsername: true})
-        // } else if (state.invalidUsername === true) {
-        //     setState({ ...state, invalidUsername: false})
-        // }
-
-        // // check if email is too long
-        // if (state.Email.length > 25) {
-        //     setState({ ...state, invalidEmail: true})
-        // } else if (state.invalidEmail === true) {
-        //     setState({ ...state, invalidEmail: false})
-        // }
-
         if (state.Password !== state.confirmPassword) {
             setState({ ...state, passwordsMatch: false })
         } else if (state.passwordsMatch === false) {
@@ -88,22 +86,19 @@ function EditProfile() {
         }
 
         // enables save button if there are no blank fields and input lengths are valid 
-        if (
-            state.Name !== "" &&
-            state.Username !== "" &&
-            state.Email !== "" &&
-            state.Picture !== "" &&
-            // !state.invalidName &&
-            // !state.invalidUsername &&
-            // !state.invalidEmail &&
-            state.passwordsMatch
-        ) {
-            if (profile.disabledSaveBtn === true) {
-                dispatch(enableSave())
-            }
-        } else {
-            dispatch(disableSave())
-        }
+        // if (
+        //     state.Name !== "" &&
+        //     state.Username !== "" &&
+        //     state.Email !== "" &&
+        //     state.Picture !== "" &&
+        //     state.passwordsMatch
+        // ) {
+        //     if (profile.disabledSaveBtn === true) {
+        //         dispatch(enableSave())
+        //     }
+        // } else {
+        //     dispatch(disableSave())
+        // }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -122,22 +117,40 @@ function EditProfile() {
     };
 
     const handlePictureChange = (event) => {
-        setState({ ...state, Picture: URL.createObjectURL(event.target.files[0]) })
+        let files = event.target.files
+        let reader = new FileReader()
+        reader.readAsDataURL(files[0])
+        reader.onload = (event) => {
+            const image={file: event.target.result}
+            console.log(image, image.file)
+            setState({ ...state, Picture: image.file })
+        }
     };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        dispatch(saveChanges(
-            state.UserID,
-            profile.Username,
-            state.Name,
-            state.Username,
-            state.Email,
-            state.Password,
-            state.Picture,
-            state.User_type
-        ))
-        dispatch(editProfile())
+        if (
+            state.Name !== "" &&
+            state.Username !== "" &&
+            state.Email !== "" &&
+            state.Picture !== "" &&
+            state.passwordsMatch &&
+            profile.usernameAvailable &&
+            profile.emailAvailable &&
+            !state.invalidAccType
+        ) {
+            dispatch(saveChanges(
+                state.UserID,
+                profile.Username,
+                state.Name,
+                state.Username,
+                state.Email,
+                state.Password,
+                state.Picture,
+                state.User_type
+            ))
+            dispatch(editProfile())
+        }
     }
 
     const handleCancel = (event) => {
@@ -146,19 +159,37 @@ function EditProfile() {
         dispatch(cancelChanges())
     }
 
+    const deleteAccount = () => {
+        setState(state => ({...state, deletingAccount: true}))
+        console.log("Deleting account")
+    }
+
     return (
         <div className="editProfileContainer col-4 tile margin-lr-10 margin-tb-10 profileTiles">
             <form onSubmit={handleFormSubmit}>
                 <h3>Edit Profile</h3>
-                <div className="profilePicContainer">
+                <div className="myProfilePic">
                     <img
                         src={state.Picture ? state.Picture : defaultPic}
                         alt="Profile"
-                        className="profilePic" />
+                    />
                 </div>
+                {/* <ImageUploader
+                    buttonText="Upload image"
+                    buttonStyles={{margin: "0"}}
+                    onChange={handlePictureChange}
+                    imgExtension={['.jpg', '.png']}
+                    accept="image/*"
+                    withPreview={true}
+                    singleImage={true}
+                    label=""
+                    fileContainerStyle={{backgroundColor: "transparent", boxShadow: "none", padding: "0", margin:"0"}}
+                    withIcon={false}
+                /> */}
                 <input
                     onChange={handlePictureChange}
                     type="file"
+                    className="uploadImage"
                     accept="image/*"
                     name="Picture"
                     id="file"
@@ -174,9 +205,6 @@ function EditProfile() {
                         maxLength="30"
                         defaultValue={profile.Name}
                     />
-                    {/* <div className={state.invalidName ? "show" : "hide"}>
-                        Name must be less than 31 characters.
-                    </div> */}
                 </div>
                 <div className="editDetail">
                     <p>Account Type</p>
@@ -189,6 +217,9 @@ function EditProfile() {
                         <option value="Customer">Customer</option>
                         <option value="Business_owner">Business Owner</option>
                     </select>
+                    <div className={state.invalidAccType ? "show" : "hide"}>
+                        Please delete your businesses first before switching to a Customer account.
+                    </div>
                 </div>
                 <div className="editDetail">
                     <p>Username</p>
@@ -203,9 +234,6 @@ function EditProfile() {
                     <div className={profile.usernameAvailable ? "hide" : "show"}>
                         Username is already taken
                     </div>
-                    {/* <div className={state.invalidUsername ? "show" : "hide"}>
-                        Username must be less than 16 characters.
-                    </div> */}
                 </div>
                 <div className="editDetail">
                     <p>Email</p>
@@ -220,9 +248,6 @@ function EditProfile() {
                     <div className={profile.emailAvailable ? "hide" : "show"}>
                         Email is already taken
                     </div>
-                    {/* <div className={state.invalidEmail ? "show" : "hide"}>
-                        Email must be less than 26 characters.
-                    </div> */}
                 </div>
                 <div className="changePassword">
                     {/* <p>Password</p>
@@ -258,17 +283,19 @@ function EditProfile() {
                 </div>
                 <div>
                     <button
-                        className="editProfileBtn margin-lr-10"
+                        className="deleteAccBtn"
+                        type="button"
+                        onClick={deleteAccount}
+                    >Delete Account</button>
+                </div>
+                <div>
+                    <button
+                        className="profileBtn margin-lr-10"
                         type="submit"
-                        disabled={
-                            profile.disabledSaveBtn ||
-                            !profile.usernameAvailable ||
-                            !profile.emailAvailable
-                        }
                     >Save Changes</button>
                     <button
                         type="button"
-                        className="editProfileBtn margin-lr-10"
+                        className="profileBtn margin-lr-10"
                         onClick={handleCancel}
                     >Cancel</button>
                 </div>

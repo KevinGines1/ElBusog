@@ -5,8 +5,8 @@ import store from './redux/store';
 import './ElbusogCSS/ElbusogCSS.css';
 import FetchData from './components/FetchData';
 import Nav from './components/Nav';
-import Home from './components/Home';
-import Profile from './components/Profile';
+import Home from './pages/Home';
+import Profile from './pages/Profile';
 
 function App() {
   return (

@@ -9,11 +9,15 @@ import {
     CHECK_EMAIL,
     SAVE_CHANGES,
     CANCEL_CHANGES,
+    // DELETE_ACCOUNT,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
-    ADD_FOOD_PLACE
+    ADD_FOOD_PLACE,
+    DELETE_FOOD_PLACE
 } from './profileTypes';
+
+// FETCH DATA ACTIONS
 
 export const fetchProfile = (username) => {
     return (dispatch) => {
@@ -45,10 +49,36 @@ export const fetchOwnFoodPlace = (userID) => {
     return (dispatch) => {
         axios.get(`https://ancient-garden-70007.herokuapp.com/api/getOwnFoodPlace/${userID}`)
             .then(response => {
-                const foodPlaceData = response.data[0]
-                dispatch({
-                    type: FETCH_OWN_FOODPLACE,
-                    payload: foodPlaceData
+                const foodPlaceData = response.data
+                foodPlaceData.map(foodPlace => {
+                    axios.get(`https://ancient-garden-70007.herokuapp.com/api/comments/${foodPlace.Food_place_id}`)
+                        .then(response => {
+                            const Comments = response.data
+                            let totalRating = 0
+                            let count = 0
+                            let avgRating = 0
+                            Comments.map(comment => { 
+                                totalRating += comment.Rating
+                                count += 1
+                                return null
+                            })
+                            avgRating = Math.round((totalRating/count)*10)/10
+                            axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/5`)
+                                .then(response => {
+                                    const foodPlacePic = response.data[0].Picture
+                                    const collatedFoodPlaceData = {
+                                        ...foodPlace,
+                                        Comments: Comments,
+                                        Picture: foodPlacePic,
+                                        Rating: avgRating
+                                    }
+                                    dispatch({
+                                        type: FETCH_OWN_FOODPLACE,
+                                        payload: collatedFoodPlaceData
+                                    })
+                                })
+                        })
+                    return null
                 })
             })
             .catch(error => {
@@ -57,7 +87,7 @@ export const fetchOwnFoodPlace = (userID) => {
     }
 }
 
-// EDIT PROFILE ACTIONS
+// MY PROFILE ACTIONS
 export const editProfile = () => {
     return {
         type: EDIT_PROFILE
@@ -156,7 +186,24 @@ export const cancelChanges = () => {
     }
 }
 
-// FOOD PLACE ACTIONS
+export const deleteAccount = (username) => {
+    console.log("Doesn't actually delete yet, will try after merging", username)
+    // add logout on delete (baka mas ok na sa fetch data reducer 'to)
+
+    // axios.delete(`https://ancient-garden-70007.herokuapp.com/api/remove/customer/${username}`)
+    //     .then(response => {
+    //         console.log(response.data)
+    //         dispatch({
+    //             type: DELETE_ACCOUNT,
+    //             payload: username
+    //         })
+    //     })
+    //     .catch(error => {
+    //         console.log(error.message)
+    //     })
+}
+
+// DASHBOARD ACTIONS
 
 export const editingFoodPlace = (foodPlace) => {
     return {
@@ -167,7 +214,7 @@ export const editingFoodPlace = (foodPlace) => {
 
 export const editFoodPlace = (
     newName,
-    newLoc,
+    newLocation,
     newPrice,
     newDesc,
     newOpen,
@@ -175,13 +222,15 @@ export const editFoodPlace = (
     newDays,
     newFoodTypes,
     owner,
-    foodPlaceId
+    foodPlaceID,
+    foodPlacePhoto
 ) => {
     return (dispatch) => {
-        axios.post("https://ancient-garden-70007.herokuapp.com/api/editFoodPlace",
+        axios.patch("https://ancient-garden-70007.herokuapp.com/api/editFoodPlace",
         {
+            foodPlaceID,
             newName,
-            newLoc,
+            newLocation,
             newPrice,
             newDesc,
             newOpen,
@@ -190,13 +239,16 @@ export const editFoodPlace = (
             newFoodTypes,
             owner
         })
+        axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto`, {
+            foodPlaceID,
+            foodPlacePhoto
+        })
         .then(response => {
-            console.log(response.data)
             dispatch({
                 type: EDIT_FOOD_PLACE,
                 payload: {
                     newName,
-                    newLoc,
+                    newLocation,
                     newPrice,
                     newDesc,
                     newOpen,
@@ -204,7 +256,8 @@ export const editFoodPlace = (
                     newDays,
                     newFoodTypes,
                     owner,
-                    foodPlaceId
+                    foodPlaceID,
+                    foodPlacePhoto
                 }
             })
         })
@@ -229,7 +282,8 @@ export const addFoodPlace = (
     closeTime,
     daysOpen,
     foodTypes,
-    owner
+    owner,
+    picture
 ) => {
     return (dispatch) => {
         axios.post("https://ancient-garden-70007.herokuapp.com/api/addFoodPlace",
@@ -245,7 +299,6 @@ export const addFoodPlace = (
             owner
         })
         .then(response => {
-            console.log(response.data)
             dispatch({
                 type: ADD_FOOD_PLACE,
                 payload: {
@@ -257,12 +310,26 @@ export const addFoodPlace = (
                     closeTime,
                     daysOpen,
                     foodTypes,
-                    owner
+                    owner,
+                    picture
                 }
             })
         })
         .catch(error => {
             console.log(error.message)
+        })
+    }
+}
+
+export const deleteFoodPlace = (foodPlaceId) => {
+    return (dispatch) => {
+        axios.delete(`https://ancient-garden-70007.herokuapp.com/api/removeFoodPlace/${foodPlaceId}`)
+        .then(response => {
+            console.log(response.data)
+            dispatch({
+                type: DELETE_FOOD_PLACE,
+                payload: foodPlaceId
+            })
         })
     }
 }

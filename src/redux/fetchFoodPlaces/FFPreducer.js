@@ -21,7 +21,10 @@ const fetchFoodPlacesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                foodPlaces: action.payload,
+                foodPlaces: [
+                    ...state.foodPlaces,
+                    action.payload
+                ],
                 error: ''
             }
         case FETCH_FOOD_PLACES_FAILURE:

@@ -1,38 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    // editFoodPlace,
+    editFoodPlace,
     editingFoodPlace,
-    // addFoodPlace,
+    addFoodPlace,
     addingFoodPlace,
-    enableSave,
-    disableSave
+    // enableSave,
+    // disableSave
 } from '../redux';
 // import axios from 'axios';
 
-function AddFoodPlace() {
+function AddEditFoodPlace() {
     const profile = useSelector(state => state.profile)
     const foodPlaceEdited = profile.editingData
     const dispatch = useDispatch()
     const [state, setState] = useState({
-        foodPlaceName: (editingFoodPlace ? foodPlaceEdited.Food_place_name : ""),
+        foodPlaceName: profile.addingFoodPlace ? "" : foodPlaceEdited.Food_place_name,
         location: "",
         loc1: false,
         loc2: false,
         loc3: false,
         loc4: false,
         invalidLocation: false,
-        priceRange: (editingFoodPlace ? foodPlaceEdited.Price_range : "<60"),
-        description: (editingFoodPlace ? foodPlaceEdited.Description : ""),
-        openingTime: "",
+        priceRange: profile.addingFoodPlace ? "<60" : foodPlaceEdited.Price_range,
+        description: profile.addingFoodPlace ? "" : foodPlaceEdited.Description,
+        picture: profile.addingFoodPlace ? "" : foodPlaceEdited.Picture,
+        openingTime: "800",
         openingHour: "8",
         openingMin: "00",
         openingPeriod: "AM",
-        closingTime: "",
+        closingTime: "2000",
         closingHour: "8",
         closingMin: "00",
         closingPeriod: "PM",
-        foodTypes: "",
+        foodTypes: profile.addingFoodPlace ? "" : foodPlaceEdited.Food_types,
         daysOpen: "",
         Sun: false,
         Mon: false,
@@ -46,26 +47,15 @@ function AddFoodPlace() {
         showInvalid: false
     })
 
-    // useEffect(() => {
-    //     axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces`)
-    //         .then(response => {
-    //         console.log(response.data)
-    //     })
-    // }, [profile])
-
     // reason why need ng sari-sariling useEffect: https://codesandbox.io/s/mutable-surf-nynlx?file=/src/index.js
-
-    // VALIDATION: checks if input in each field is valid
 
     // checks if at least one location is selected
     useEffect(() => {
         if (!state.loc1 && !state.loc2 && !state.loc3 && !state.loc4) {
             setState(state => ({ ...state, invalidLocation: true }))
-            console.log("dapat nagtrue yung loc")
         } else {
             setState(state => ({ ...state, invalidLocation: false }))
         }
-        console.log("locations", state.invalidLocation)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.loc1, state.loc2, state.loc3, state.loc4, state.showInvalid])
 
@@ -73,11 +63,9 @@ function AddFoodPlace() {
     useEffect(() => {
         if (!state.Sun && !state.Mon && !state.Tue && !state.Wed && !state.Thu && !state.Fri && !state.Sat) {
             setState(state => ({ ...state, invalidDaysOpen: true }))
-            console.log("dapat nagtrue yung days")
         } else {
             setState(state => ({ ...state, invalidDaysOpen: false }))
         }
-        console.log("days", state.invalidDaysOpen)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.Sun, state.Mon, state.Tue, state.Wed, state.Thu, state.Fri, state.Sat, state.showInvalid])
 
@@ -92,7 +80,7 @@ function AddFoodPlace() {
     }, [state.foodPlaceName, state.foodTypes, state.description, state.showInvalid])
 
     // adds 1200 when the opening or closing period is PM
-    
+
     useEffect(() => {
         const openingTime = state.openingHour.concat(state.openingMin)
         if (state.openingPeriod === "PM") {
@@ -133,15 +121,15 @@ function AddFoodPlace() {
     };
 
     // const handlePictureChange = (event) => {
-    //     setState({ ...state, Picture: URL.createObjectURL(event.target.files[0]) })
+    //     console.log("Edit this")
+    //     setState({ ...state, picture: URL.createObjectURL(event.target.files[0]) })
     // };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        console.log(state.invalidDaysOpen, state.invalidLocation, state.blankField)
-        if (!state.showInvalid) {
-            setState({ ...state, showInvalid: !state.showInvalid })
-        } else if (!state.invalidDaysOpen && !state.invalidLocation && !state.blankField){
+        if (!state.showInvalid && (state.foodTypes === "" || state.description === "" || state.foodPlaceName === "")) {
+            setState({ ...state, showInvalid: true })
+        } else if (!state.invalidDaysOpen && !state.invalidLocation && !state.blankField) {
             const daysOpen = state.daysOpen.split('').sort().join('')
             const location = state.location.slice(0, -2)
             console.log(
@@ -153,34 +141,39 @@ function AddFoodPlace() {
                 state.closingTime,
                 daysOpen,
                 state.foodTypes,
-                profile.User_id
+                profile.Username,
+                foodPlaceEdited.Food_place_id,
+                state.picture
             )
             if (profile.editingFoodPlace) {
-                // dispatch(editFoodPlace(
-                //     state.foodPlaceName,
-                //     location,
-                //     state.priceRange,
-                //     state.description,
-                //     state.openingTime,
-                //     state.closingTime,
-                //     daysOpen,
-                //     state.foodTypes,
-                //     profile.User_id
-                // ))
+                dispatch(editFoodPlace(
+                    state.foodPlaceName,
+                    location,
+                    state.priceRange,
+                    state.description,
+                    state.openingTime,
+                    state.closingTime,
+                    daysOpen,
+                    state.foodTypes,
+                    profile.Username,
+                    foodPlaceEdited.Food_place_id,
+                    state.picture
+                ))
                 dispatch(editingFoodPlace({}))
             }
             if (profile.addingFoodPlace) {
-                // dispatch(addFoodPlace(
-                //     state.foodPlaceName,
-                //     location,
-                //     state.priceRange,
-                //     state.description,
-                //     state.openingTime,
-                //     state.closingTime,
-                //     daysOpen,
-                //     state.foodTypes,
-                //     profile.User_id
-                // ))
+                dispatch(addFoodPlace(
+                    state.foodPlaceName,
+                    location,
+                    state.priceRange,
+                    state.description,
+                    state.openingTime,
+                    state.closingTime,
+                    daysOpen,
+                    state.foodTypes,
+                    profile.Username,
+                    state.picture
+                ))
                 dispatch(addingFoodPlace())
             }
         }
@@ -190,7 +183,7 @@ function AddFoodPlace() {
         event.preventDefault();
         if (profile.editingFoodPlace) {
             dispatch(editingFoodPlace({}))
-        } else {
+        } else if(profile.addingFoodPlace) {
             dispatch(addingFoodPlace())
         }
         // dispatch(cancelChanges())
@@ -198,7 +191,7 @@ function AddFoodPlace() {
     const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
     return (
-        <div>
+        <div className="addEditFoodPlace">
             <form onSubmit={handleFormSubmit}>
                 {(profile.addingFoodPlace &&
                     <h5>Add a Food Place</h5>
@@ -206,26 +199,42 @@ function AddFoodPlace() {
                 {(profile.editingFoodPlace &&
                     <h5>Edit Food Place</h5>
                 )}
-                {/* <div className="foodPlacePicContainer">
-                    <img
-                        src={state.Picture ? state.Picture : defaultPic}
-                        alt="Food Place"
-                        className="foodPlacePic" />
+                {(state.picture === "" &&
+                    <div className="addEditPic"></div>
+                )}
+                {(state.picture !== "" &&
+                    <div className="addEditPic">
+                        <img
+                            src={state.picture}
+                            alt="Food Place Photo"
+                            className="foodPlacePic" />
+                    </div>
+                )}
+                <div className="foodPlaceInputContainer">
+                    <p>Food Place Photo</p>
+                    <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
+                    <input
+                        onChange={handleInputChange}
+                        className="foodPlaceInput"
+                        type="text"
+                        name="picture"
+                        defaultValue={profile.addingFoodPlace ? "" : foodPlaceEdited.Picture}
+                    />
                 </div>
-                <input
+                {/* <input
                     onChange={handlePictureChange}
                     type="file"
                     accept="image/*"
-                    name="Picture"
+                    name="picture"
                     id="file"
                     style={{ display: "none" }} />
-                <p><label htmlFor="file" className="uploadImageBtn">Upload Image</label></p> */}
-                <div className="addFoodPlaceTile">
+                <p><label htmlFor="file" className="uploadFPImageBtn">Upload Image</label></p> */}
+                <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Place Name</p>
                         <input
                             onChange={handleInputChange}
-                            className="editInput"
+                            className="foodPlaceInput"
                             type="text"
                             name="foodPlaceName"
                             maxLength="50"
@@ -254,7 +263,7 @@ function AddFoodPlace() {
                         </select>
                     </div>
                 </div>
-                <div className="addFoodPlaceTile">
+                <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Location</p>
                         <div className="checkboxes">
@@ -376,7 +385,7 @@ function AddFoodPlace() {
                         </div>
                     </div>
                 </div>
-                <div className="addFoodPlaceTile">
+                <div className="inlineFlex">
                     <div className={state.invalidLocation ? "show" : "hide"}>
                         Please choose at least one location.
                     </div>
@@ -384,7 +393,7 @@ function AddFoodPlace() {
                         Please choose at least one day.
                     </div>
                 </div>
-                <div className="addFoodPlaceTile">
+                <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Opening Time</p>
                         <select
@@ -395,7 +404,10 @@ function AddFoodPlace() {
                         >
                             {(hourOptions.map(hour => {
                                 return (
-                                    <option key={hour} value={hour}>{hour}</option>
+                                    <option
+                                        key={hour}
+                                        value={hour === 12 ? 0 : hour}
+                                    >{hour}</option>
                                 )
                             }))}
                         </select>
@@ -428,7 +440,10 @@ function AddFoodPlace() {
                         >
                             {(hourOptions.map(hour => {
                                 return (
-                                    <option key={hour} value={hour}>{hour}</option>
+                                    <option
+                                        key={hour}
+                                        value={hour === 12 ? 0 : hour}
+                                    >{hour}</option>
                                 )
                             }))}
                         </select>
@@ -452,13 +467,13 @@ function AddFoodPlace() {
                         </select>
                     </div>
                 </div>
-                <div className="addFoodPlaceTile">
+                <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Types</p>
-                        <p style={{ fontStyle: "italic", marginTop: "5px" }}>Please separate the food types with a comma (e.g. Meat, Vegetable, Snacks, Ice Cream)</p>
+                        <p style={{ fontStyle: "italic", marginTop: "5px" }}>Separate the food types with a comma (e.g. Meat, Vegetable, Snacks, Ice Cream)</p>
                         <input
                             onChange={handleInputChange}
-                            className="editInput"
+                            className="foodPlaceInput"
                             type="text"
                             name="foodTypes"
                         />
@@ -469,7 +484,7 @@ function AddFoodPlace() {
                         <p>Description</p>
                         <textarea
                             onChange={handleInputChange}
-                            className="editInput"
+                            className="foodPlaceInput"
                             name="description"
                             maxLength="280"
                             defaultValue={profile.editingFoodPlace
@@ -485,21 +500,20 @@ function AddFoodPlace() {
                 <div>
                     {(profile.editingFoodPlace &&
                         <button
-                            className="editProfileBtn margin-lr-10"
+                            className="addEditFoodPlaceBtn margin-lr-10"
                             type="submit"
-                            // disabled={profile.disabledSaveBtn}
+                        // disabled={profile.disabledSaveBtn}
                         >Edit Food Place</button>
                     )}
                     {(profile.addingFoodPlace &&
                         <button
-                            className="editProfileBtn margin-lr-10"
+                            className="dashboardItemBtn margin-lr-10"
                             type="submit"
-                            // disabled={profile.disabledSaveBtn}
                         >Add Food Place</button>
                     )}
                     <button
                         type="button"
-                        className="editProfileBtn margin-lr-10"
+                        className="dashboardItemBtn margin-lr-10"
                         onClick={handleCancel}
                     >Cancel</button>
                 </div>
@@ -508,4 +522,4 @@ function AddFoodPlace() {
     );
 }
 
-export default AddFoodPlace;
+export default AddEditFoodPlace;

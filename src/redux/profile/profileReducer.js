@@ -8,10 +8,12 @@ import {
     CHECK_EMAIL,
     SAVE_CHANGES,
     CANCEL_CHANGES,
+    // DELETE_ACCOUNT,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
-    ADD_FOOD_PLACE
+    ADD_FOOD_PLACE,
+    DELETE_FOOD_PLACE
 } from './profileTypes';
 
 // need to add napapalitan na picture
@@ -20,7 +22,7 @@ const initialState = {
     Name: "",
     Username: "",
     Email: "",
-    Picture: "",
+    Picture: null,
     User_type: "",
     Password: "",
     ownedFoodPlaces: [],
@@ -33,8 +35,8 @@ const initialState = {
     addingFoodPlace: false
 }
 
-const profileReducer = (state=initialState, action) => {
-    switch(action.type){
+const profileReducer = (state = initialState, action) => {
+    switch (action.type) {
         case FETCH_PROFILE:
             return {
                 ...state,
@@ -44,7 +46,7 @@ const profileReducer = (state=initialState, action) => {
                 Email: action.payload.Email,
                 Picture: action.payload.Picture,
                 User_type: action.payload.User_type,
-                Password: action.payload.Password
+                Password: action.payload.Password,
             }
         case FETCH_OWN_FOODPLACE:
             return {
@@ -80,6 +82,7 @@ const profileReducer = (state=initialState, action) => {
                 emailAvailable: action.payload.infoValid
             }
         case SAVE_CHANGES:
+            console.log(action.payload.newName, action.payload.newPicturePath)
             return {
                 ...state,
                 Name: action.payload.newName,
@@ -107,19 +110,20 @@ const profileReducer = (state=initialState, action) => {
                 ownedFoodPlaces: [
                     ...state.ownedFoodPlaces,
                     state.ownedFoodPlaces.map(foodPlace => {
-                        return foodPlace.Food_place_id === action.payload.foodPlaceId ? 
-                        {
-                            Food_place_id: action.payload.foodPlaceId,
-                            Food_place_name: action.payload.newName,
-                            Location: action.payload.newLoc,
-                            Price_range: action.payload.newPrice,
-                            Description: action.payload.newDesc,
-                            Opening_time: action.payload.newOpen,
-                            Closing_time: action.payload.newClose,
-                            Days_open: action.payload.newDays,
-                            User_id: action.payload.owner
-                        }
-                        : {...foodPlace}
+                        return foodPlace.Food_place_id === action.payload.foodPlaceId ?
+                            {
+                                Food_place_id: action.payload.foodPlaceId,
+                                Food_place_name: action.payload.newName,
+                                Location: action.payload.newLoc,
+                                Price_range: action.payload.newPrice,
+                                Description: action.payload.newDesc,
+                                Opening_time: action.payload.newOpen,
+                                Closing_time: action.payload.newClose,
+                                Days_open: action.payload.newDays,
+                                User_id: action.payload.owner,
+                                Picture: action.payload.picture
+                            }
+                            : { ...foodPlace }
                     })
                 ]
             }
@@ -134,17 +138,26 @@ const profileReducer = (state=initialState, action) => {
                 ownedFoodPlaces: [
                     ...state.ownedFoodPlaces,
                     {
-                        Food_place_id: action.payload.owner,
-                        Food_place_name: action.payload.foodplaceName,
+                        Food_place_id: action.payload.foodPlaceId,
+                        Food_place_name: action.payload.foodPlaceName,
                         Location: action.payload.location,
                         Price_range: action.payload.priceRange,
                         Description: action.payload.description,
                         Opening_time: action.payload.openTime,
                         Closing_time: action.payload.closeTime,
                         Days_open: action.payload.daysOpen,
-                        User_id: action.payload.owner
+                        User_id: action.payload.owner,
+                        Picture: action.payload.foodPlacePhoto,
+                        Comments: []
                     }
                 ]
+            }
+        case DELETE_FOOD_PLACE:
+            return {
+                ...state,
+                ownedFoodPlaces: state.ownedFoodPlaces.filter(foodPlace => 
+                    foodPlace.Food_place_id !== action.payload
+                )
             }
         default: return state
     }

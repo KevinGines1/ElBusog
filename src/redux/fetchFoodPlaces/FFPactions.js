@@ -13,7 +13,7 @@ export const fetchFoodPlacesRequest = () => {
     }
 }
 
-export const fetchFoodPlacesSuccess = foodPlaces => {
+export const fetchFoodPlacesSuccess = (foodPlaces) => {
     return {
         type: FETCH_FOOD_PLACES_SUCCESS,
         payload: foodPlaces
@@ -33,7 +33,23 @@ export const fetchFoodPlaces = () => {
         axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
             .then(response => {
                 const foodPlaces = response.data
-                dispatch(fetchFoodPlacesSuccess(foodPlaces))
+                foodPlaces.map(foodPlace => {
+                    axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/${foodPlace.Food_place_id}`)
+                        .then(response => {
+                            let Picture = ""
+                            if (response.data.length === 0) {
+                                Picture = null
+                            } else {
+                                Picture = response.data[0].Picture
+                            }
+                            const collatedFoodPlace = {
+                                ...foodPlace,
+                                Picture: Picture
+                            }
+                            dispatch(fetchFoodPlacesSuccess(collatedFoodPlace))
+                            // console.log(collatedFoodPlace)
+                        })
+                })
             })
             .catch(error => {
                 const errorMessage = error.message

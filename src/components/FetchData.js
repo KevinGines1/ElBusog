@@ -1,20 +1,33 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchProfile, fetchFoodPlaces } from '../redux';
-// import axios from 'axios';
+import axios from 'axios';
 
-// NOT WORKING:
-// axios.patch("https://ancient-garden-70007.herokuapp.com/api/editFoodPlace", {
-//     newName: "Cora's 2",
-//     newLocation: "within UPLB",
-//     newPrice: ">100",
-//     newDesc: "Tita Cora's is a small store located near dorms and apartments inside Raymundo Gate that offers a variety of student-friendly meals. It has a warm atmosphere due to its family-like setting with a single long table to seat its customers.",
-//     newOpen: null,
-//     closeTime: null,
-//     newDays: "12345",
-//     newFoodTypes: "Meat, Vegetables",
-//     owner: "tita_cora1"
+axios.get("https://ancient-garden-70007.herokuapp.com/api/getAllUsers")
+    .then(response => {
+        console.log(response.data)
+    })
+axios.get("https://ancient-garden-70007.herokuapp.com/api/photos/17")
+    .then(response => {
+        console.log(response.data)
+    })
+    .catch(error => {
+        console.log(error.message)
+    })
+
+    axios.delete(`https://ancient-garden-70007.herokuapp.com/api/removeFoodPlace/16`)
+    .then(response => {
+        console.log(response.data, "Removed cora's 2")
+    })
+// axios.post("https://ancient-garden-70007.herokuapp.com/api/addComment", {
+//     userID: 5,
+//     foodPlaceID: 5,
+//     rating: 5,
+//     comment: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "
 // })
+//     .then(response => {
+//         console.log(response.data)
+//     })
 
 // axios.patch("https://ancient-garden-70007.herokuapp.com/api/profile/update",
 //     {
@@ -36,8 +49,10 @@ import { fetchProfile, fetchFoodPlaces } from '../redux';
 
 function FetchData() {
     const dispatch = useDispatch()
+    const username = "tita_cora1"
+
     useEffect(() => {
-        dispatch(fetchProfile("tita_cora1"))
+        dispatch(fetchProfile(username))
         dispatch(fetchFoodPlaces())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
