@@ -1,0 +1,16 @@
+.fixedNavbar .userHover a:hover {
+    background-color: transparent;
+}
+
+.userThumb {
+    margin: 0 20px;
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+.myProfileLink {
+    text-decoration: none;
+}
