@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from '../redux/store.js';
+import store from '../redux/randomizer/store.js';
 import Nav from '../components/Nav';
 import StickyNavbar from '../components/StickyNavbar';
 import Footer from '../components/Footer';
