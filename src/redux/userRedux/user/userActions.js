@@ -29,23 +29,6 @@ export const fetchUsersFailure = error => {
 	}
 }
 
-//api request
-export const fetchUsers = () => {
-	return (dispatch) => {
-		dispatch(fetchUsersRequest)
-		axios.get('http://ancient-garden-70007.herokuapp.com/api/getAllUsers')
-			
-		.then(response => {
-			const users = response.data
-			dispatch(fetchUsersSuccess(users))
-		})
-		.catch(error => {
-			const errorMsg = error.message
-			dispatch(fetchUsersFailure(errorMsg))
-		})
-	}
-}
-
 export const addUserFailure = error => {
 	return {
 		type: ADD_USER_FAILURE,
