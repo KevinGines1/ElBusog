@@ -13,7 +13,7 @@ function Profile() {
     }
     const profile = useSelector(state => state.profile)
 
-    return profile.User_type !== "" ? (
+    return profile.isLoggedIn && profile.User_type !== "" ? (
         <div className="Profile" style={background}>
             <div className="rowcenter">
                 {(!profile.isEditing &&
@@ -37,9 +37,17 @@ function Profile() {
 
             </div>
         </div>
-    ) : (
+    ) : !profile.isLoggedIn ? (
+        <div className="Profile" style={background}>
+            <div className="rowcenter">
+                <div className="col-5 profileTiles notLoggedIn">
+                    <h6>Log in or sign up to view your profile.</h6>
+                </div>
+            </div>
+        </div>
+        ) : (
             <LoadingPage />
-        )
+            )
 }
 
 export default Profile;

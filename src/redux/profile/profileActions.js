@@ -3,18 +3,16 @@ import {
     FETCH_PROFILE,
     FETCH_OWN_FOODPLACE,
     EDIT_PROFILE,
-    DISABLE_SAVE,
-    ENABLE_SAVE,
     CHECK_USERNAME,
     CHECK_EMAIL,
     SAVE_CHANGES,
     CANCEL_CHANGES,
-    // DELETE_ACCOUNT,
+    DELETE_ACCOUNT,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
     ADD_FOOD_PLACE,
-    DELETE_FOOD_PLACE
+    DELETE_FOOD_PLACE,
 } from './profileTypes';
 
 // FETCH DATA ACTIONS
@@ -26,14 +24,18 @@ export const fetchProfile = (username) => {
                 const userProfile = response.data[0]
                 axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllUsers`)
                     .then(response => {
-                        const User_id = userProfile.User_id - 1
-                        const Password = response.data[User_id].Password
-                        dispatch({
-                            type: FETCH_PROFILE,
-                            payload: {
-                                ...userProfile,
-                                Password: Password
+                        response.data.map(user => {
+                            if (user.User_id === userProfile.User_id) {
+                                console.log(user)
+                                dispatch({
+                                    type: FETCH_PROFILE,
+                                    payload: {
+                                        ...userProfile,
+                                        Password: user.Password
+                                    }
+                                })
                             }
+                            return null
                         })
                     })
                 if (userProfile.User_type === "Business_owner") {
@@ -56,16 +58,18 @@ export const fetchOwnFoodPlace = (userID) => {
                             const Comments = response.data
                             let totalRating = 0
                             let count = 0
-                            let avgRating = 0
-                            Comments.map(comment => { 
+                            Comments.map(comment => {
                                 totalRating += comment.Rating
                                 count += 1
                                 return null
                             })
-                            avgRating = Math.round((totalRating/count)*10)/10
-                            axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/5`)
+                            const avgRating = Math.round((totalRating / count) * 10) / 10
+                            axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/${foodPlace.Food_place_id}`)
                                 .then(response => {
-                                    const foodPlacePic = response.data[0].Picture
+                                    let foodPlacePic = null
+                                    if (response.data.length !== 0) {
+                                        foodPlacePic = response.data[0].Picture
+                                    }
                                     const collatedFoodPlaceData = {
                                         ...foodPlace,
                                         Comments: Comments,
@@ -91,18 +95,6 @@ export const fetchOwnFoodPlace = (userID) => {
 export const editProfile = () => {
     return {
         type: EDIT_PROFILE
-    }
-}
-
-export const disableSave = () => {
-    return {
-        type: DISABLE_SAVE
-    }
-}
-
-export const enableSave = () => {
-    return {
-        type: ENABLE_SAVE
     }
 }
 
@@ -161,6 +153,7 @@ export const saveChanges = (
                 accType
             })
             .then(response => {
+                console.log(response.data)
                 dispatch({
                     type: SAVE_CHANGES,
                     payload: {
@@ -186,21 +179,35 @@ export const cancelChanges = () => {
     }
 }
 
-export const deleteAccount = (username) => {
-    console.log("Doesn't actually delete yet, will try after merging", username)
-    // add logout on delete (baka mas ok na sa fetch data reducer 'to)
-
-    // axios.delete(`https://ancient-garden-70007.herokuapp.com/api/remove/customer/${username}`)
-    //     .then(response => {
-    //         console.log(response.data)
-    //         dispatch({
-    //             type: DELETE_ACCOUNT,
-    //             payload: username
-    //         })
-    //     })
-    //     .catch(error => {
-    //         console.log(error.message)
-    //     })
+export const deleteAccount = (username, accType) => {
+    // add logout on delete
+    return (dispatch) => {
+        if (accType === "Customer") {
+            axios.delete(`https://ancient-garden-70007.herokuapp.com/api/remove/customer/${username}`)
+                .then(response => {
+                    console.log(response.data)
+                    dispatch({
+                        type: DELETE_ACCOUNT,
+                        payload: username
+                    })
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+        }
+        if (accType === "Business_owner") {
+            axios.delete(`https://ancient-garden-70007.herokuapp.com/api/remove/owner/${username}`)
+                .then(response => {
+                    console.log(response.data)
+                    dispatch({
+                        type: DELETE_ACCOUNT
+                    })
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+        }
+    }
 }
 
 // DASHBOARD ACTIONS
@@ -223,47 +230,70 @@ export const editFoodPlace = (
     newFoodTypes,
     owner,
     foodPlaceID,
-    foodPlacePhoto
+    foodPlacePhoto,
+    oldFoodPlacePhoto
 ) => {
+    console.log(
+        newName,
+        newLocation,
+        newPrice,
+        newDesc,
+        newOpen,
+        newClose,
+        newDays,
+        newFoodTypes,
+        owner,
+        foodPlaceID,
+        foodPlacePhoto,
+        oldFoodPlacePhoto)
     return (dispatch) => {
         axios.patch("https://ancient-garden-70007.herokuapp.com/api/editFoodPlace",
-        {
-            foodPlaceID,
-            newName,
-            newLocation,
-            newPrice,
-            newDesc,
-            newOpen,
-            newClose,
-            newDays,
-            newFoodTypes,
-            owner
-        })
-        axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto`, {
-            foodPlaceID,
-            foodPlacePhoto
-        })
-        .then(response => {
-            dispatch({
-                type: EDIT_FOOD_PLACE,
-                payload: {
-                    newName,
-                    newLocation,
-                    newPrice,
-                    newDesc,
-                    newOpen,
-                    newClose,
-                    newDays,
-                    newFoodTypes,
-                    owner,
-                    foodPlaceID,
-                    foodPlacePhoto
-                }
+            {
+                foodPlaceID,
+                newName,
+                newLocation,
+                newPrice,
+                newDesc,
+                newOpen,
+                newClose,
+                newDays,
+                newFoodTypes,
+                owner
             })
-        })
-        .catch(error => {
-            console.log(error.message)
-        })
+            .then(response => {
+                console.log(response.data)
+                if (foodPlacePhoto !== oldFoodPlacePhoto) {
+                    axios.post(`https://ancient-garden-70007.herokuapp.com/api/remove/photo/${foodPlaceID}`, { oldFoodPlacePhoto })
+                        .then(response => {
+                            console.log(foodPlaceID, response.data)
+                        })
+                }
+                axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto/`, {
+                    foodPlaceID, foodPlacePhoto
+                })
+                    .then(response => {
+                        console.log(response.data)
+                        dispatch({
+                            type: EDIT_FOOD_PLACE,
+                            payload: {
+                                newName,
+                                newLocation,
+                                newPrice,
+                                newDesc,
+                                newOpen,
+                                newClose,
+                                newDays,
+                                newFoodTypes,
+                                owner,
+                                foodPlaceID,
+                                foodPlacePhoto
+                            }
+                        })
+                    })
+                    .catch(error => {
+                        console.log(error.message)
+                    })
+            })
     }
 }
 
@@ -283,53 +313,65 @@ export const addFoodPlace = (
     daysOpen,
     foodTypes,
     owner,
-    picture
+    foodPlacePhoto
 ) => {
     return (dispatch) => {
         axios.post("https://ancient-garden-70007.herokuapp.com/api/addFoodPlace",
-        {
-            foodPlaceName,
-            location,
-            priceRange,
-            description,
-            openTime,
-            closeTime,
-            daysOpen,
-            foodTypes,
-            owner
-        })
-        .then(response => {
-            dispatch({
-                type: ADD_FOOD_PLACE,
-                payload: {
-                    foodPlaceName,
-                    location,
-                    priceRange,
-                    description,
-                    openTime,
-                    closeTime,
-                    daysOpen,
-                    foodTypes,
-                    owner,
-                    picture
-                }
+            {
+                foodPlaceName,
+                location,
+                priceRange,
+                description,
+                openTime,
+                closeTime,
+                daysOpen,
+                foodTypes,
+                owner
             })
-        })
-        .catch(error => {
-            console.log(error.message)
-        })
+            .then(response => {
+                const foodPlaceID = response.data[0].Food_place_id
+                axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto/`, {
+                    foodPlaceID, foodPlacePhoto
+                })
+                    .then(response => {
+                        console.log(response.data)
+                        dispatch({
+                            type: ADD_FOOD_PLACE,
+                            payload: {
+                                foodPlaceID,
+                                foodPlaceName,
+                                location,
+                                priceRange,
+                                description,
+                                openTime,
+                                closeTime,
+                                daysOpen,
+                                foodTypes,
+                                owner,
+                                foodPlacePhoto
+                            }
+                        })
+                    })
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
     }
 }
 
-export const deleteFoodPlace = (foodPlaceId) => {
+export const deleteFoodPlace = (foodPlaceID, foodPlacePhoto) => {
     return (dispatch) => {
-        axios.delete(`https://ancient-garden-70007.herokuapp.com/api/removeFoodPlace/${foodPlaceId}`)
-        .then(response => {
-            console.log(response.data)
-            dispatch({
-                type: DELETE_FOOD_PLACE,
-                payload: foodPlaceId
+        axios.delete(`https://ancient-garden-70007.herokuapp.com/api/removeFoodPlace/${foodPlaceID}`)
+            .then(response => {
+                console.log(response.data)
+                dispatch({
+                    type: DELETE_FOOD_PLACE,
+                    payload: foodPlaceID
+                })
             })
-        })
+        axios.post(`https://ancient-garden-70007.herokuapp.com/api/remove/photo/${foodPlaceID}`, { foodPlacePhoto })
+            .then(response => {
+                console.log(response.data)
+            })
     }
 }

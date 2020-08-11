@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addingFoodPlace } from '../redux';
 import AddEditFoodPlace from '../components/AddEditFoodPlace';
 import DashboardItemButtons from './DashboardItemButtons';
+import foodIcon from '../ElbusogCSS/foodIcon.png';
+import Ratings from 'react-ratings-declarative';
 
 function Dashboard() {    
     const profile = useSelector(state => state.profile)
@@ -13,7 +15,7 @@ function Dashboard() {
         <div className="col-7 tile margin-lr-10 margin-tb-10 profileTiles businessOwnerDashboard">
             <h3>Dashboard</h3>
             {ownedFoodPlaces.map(foodPlace => (
-                <div key={foodPlace.Food_place_id} className="dashboardItemContainer">
+                <div key={foodPlace.Food_place_name} className="dashboardItemContainer">
                     {(profile.editingData.Food_place_id === foodPlace.Food_place_id &&
                         <AddEditFoodPlace />
                     )}
@@ -22,18 +24,30 @@ function Dashboard() {
                             <div className="foodPlaceDetails">
                                 <div className="foodPlacePic">
                                     <img
-                                        src={foodPlace.Picture}
+                                        src={foodPlace.Picture === null ? foodIcon : foodPlace.Picture}
                                         alt="FoodPlace"
                                     />
                                 </div>
                                 <div className="foodPlaceTitle">{foodPlace.Food_place_name}</div>
                                 {(isNaN(foodPlace.Rating) &&
-                                    <p>No Rating</p>
+                                    <p className="rating">No Rating</p>
                                 )}
                                 {(!isNaN(foodPlace.Rating) &&
-                                    <p>{foodPlace.Rating}</p>
+                                    <Ratings 
+                                        rating = {foodPlace.Rating}
+                                        widgetDimensions="15px"
+                                        widgetEmptyColors="#a6a6a6"
+                                        widgetRatedColors="rgb(242, 242, 242, 0.9)"
+                                        widgetSpacings="1px"
+                                    >
+                                        <Ratings.Widget />
+                                        <Ratings.Widget />
+                                        <Ratings.Widget />
+                                        <Ratings.Widget />
+                                        <Ratings.Widget />
+                                    </Ratings>
                                 )}
-                                {/* FOR STAR RATING: https://www.npmjs.com/package/react-star-ratings */}
+                                {/* FOR STAR RATING: https://github.com/ekeric13/react-ratings-declarative */}
 
                                 <DashboardItemButtons foodPlace={foodPlace} />
 
@@ -44,7 +58,19 @@ function Dashboard() {
                                     {foodPlace.Comments.length !== 0 &&
                                     foodPlace.Comments.map(comment => (
                                         <div key={comment.Comment} className="commentContainer">
-                                            <p className="rating">{comment.Rating} stars</p>
+                                        <Ratings 
+                                            rating = {comment.Rating}
+                                            widgetDimensions="12px"
+                                            widgetEmptyColors="#737373"
+                                            widgetRatedColors="#e07f3e"
+                                            widgetSpacings="0.5px"
+                                        >
+                                            <Ratings.Widget />
+                                            <Ratings.Widget />
+                                            <Ratings.Widget />
+                                            <Ratings.Widget />
+                                            <Ratings.Widget />
+                                        </Ratings>
                                             <p className="datePosted">{comment.Date_posted.slice(0, 10)}</p>
                                             <p className="comment">{comment.Comment}</p>
                                         </div>

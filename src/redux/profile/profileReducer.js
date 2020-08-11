@@ -2,18 +2,16 @@ import {
     FETCH_PROFILE,
     FETCH_OWN_FOODPLACE,
     EDIT_PROFILE,
-    DISABLE_SAVE,
-    ENABLE_SAVE,
     CHECK_USERNAME,
     CHECK_EMAIL,
     SAVE_CHANGES,
     CANCEL_CHANGES,
-    // DELETE_ACCOUNT,
+    DELETE_ACCOUNT,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
     ADD_FOOD_PLACE,
-    DELETE_FOOD_PLACE
+    DELETE_FOOD_PLACE,
 } from './profileTypes';
 
 // need to add napapalitan na picture
@@ -27,12 +25,12 @@ const initialState = {
     Password: "",
     ownedFoodPlaces: [],
     isEditing: false,
-    disabledSaveBtn: true,
     usernameAvailable: true,
     emailAvailable: true,
     editingFoodPlace: false,
     editingData: {},
-    addingFoodPlace: false
+    addingFoodPlace: false,
+    isLoggedIn: true
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -61,16 +59,6 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 isEditing: !state.isEditing
             }
-        case DISABLE_SAVE:
-            return {
-                ...state,
-                disabledSaveBtn: true
-            }
-        case ENABLE_SAVE:
-            return {
-                ...state,
-                disabledSaveBtn: false
-            }
         case CHECK_USERNAME:
             return {
                 ...state,
@@ -82,7 +70,6 @@ const profileReducer = (state = initialState, action) => {
                 emailAvailable: action.payload.infoValid
             }
         case SAVE_CHANGES:
-            console.log(action.payload.newName, action.payload.newPicturePath)
             return {
                 ...state,
                 Name: action.payload.newName,
@@ -98,6 +85,11 @@ const profileReducer = (state = initialState, action) => {
                 usernameAvailable: true,
                 emailAvailable: true
             }
+        case DELETE_ACCOUNT:
+            return {
+                ...initialState,
+                isLoggedIn: false
+            }
         case EDITING_FOOD_PLACE:
             return {
                 ...state,
@@ -107,25 +99,25 @@ const profileReducer = (state = initialState, action) => {
         case EDIT_FOOD_PLACE:
             return {
                 ...state,
-                ownedFoodPlaces: [
-                    ...state.ownedFoodPlaces,
-                    state.ownedFoodPlaces.map(foodPlace => {
-                        return foodPlace.Food_place_id === action.payload.foodPlaceId ?
+                ownedFoodPlaces: 
+                    state.ownedFoodPlaces.map(foodPlace =>
+                        foodPlace.Food_place_id === action.payload.foodPlaceID ?
                             {
-                                Food_place_id: action.payload.foodPlaceId,
+                                ...foodPlace,
+                                Food_place_id: action.payload.foodPlaceID,
                                 Food_place_name: action.payload.newName,
-                                Location: action.payload.newLoc,
+                                Location: action.payload.newLocation,
                                 Price_range: action.payload.newPrice,
                                 Description: action.payload.newDesc,
                                 Opening_time: action.payload.newOpen,
                                 Closing_time: action.payload.newClose,
+                                Food_types: action.payload.newFoodTypes,
                                 Days_open: action.payload.newDays,
                                 User_id: action.payload.owner,
-                                Picture: action.payload.picture
+                                Picture: action.payload.foodPlacePhoto
                             }
                             : { ...foodPlace }
-                    })
-                ]
+                    )
             }
         case ADDING_FOOD_PLACE:
             return {
@@ -138,7 +130,7 @@ const profileReducer = (state = initialState, action) => {
                 ownedFoodPlaces: [
                     ...state.ownedFoodPlaces,
                     {
-                        Food_place_id: action.payload.foodPlaceId,
+                        Food_place_id: action.payload.foodPlaceID,
                         Food_place_name: action.payload.foodPlaceName,
                         Location: action.payload.location,
                         Price_range: action.payload.priceRange,
@@ -146,6 +138,7 @@ const profileReducer = (state = initialState, action) => {
                         Opening_time: action.payload.openTime,
                         Closing_time: action.payload.closeTime,
                         Days_open: action.payload.daysOpen,
+                        Food_types: action.payload.foodTypes,
                         User_id: action.payload.owner,
                         Picture: action.payload.foodPlacePhoto,
                         Comments: []

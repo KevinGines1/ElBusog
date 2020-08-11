@@ -5,13 +5,10 @@ import {
     checkUsername,
     checkEmail,
     saveChanges,
-    cancelChanges
+    cancelChanges,
+    deleteAccount
 } from '../redux';
-// import ImageUploader from 'react-images-upload';
 import defaultPic from '../ElbusogCSS/user.png';
-
-// Add loading sa delay ng pag-save ng changes
-// delete code for invalidName, invalidUsername, invalidEmail if maxLength is ok
 
 function EditProfile() {
     const profile = useSelector(state => state.profile)
@@ -30,14 +27,6 @@ function EditProfile() {
         invalidAccType: false,
         deletingAccount: false 
     })
-
-    // npm install compression
-    // var express = require('express')
-    // var bodyParser = require('body-parser')
-
-    // var app = express()
-    // app.use(bodyParser.json({limit: "10mb"}))
-    // app.use(bodyParser.urlencoded({extended: true, limit: "10mb"}))
 
     // VALIDATION: checks if input in each field is valid
 
@@ -72,8 +61,7 @@ function EditProfile() {
         if (
             state.Name !== "" &&
             state.Username !== "" &&
-            state.Email !== "" &&
-            state.Picture !== ""
+            state.Email !== ""
         ) {
             setState({ ...state, blankField: false })
         } else {
@@ -84,21 +72,6 @@ function EditProfile() {
         } else if (state.passwordsMatch === false) {
             setState({ ...state, passwordsMatch: true })
         }
-
-        // enables save button if there are no blank fields and input lengths are valid 
-        // if (
-        //     state.Name !== "" &&
-        //     state.Username !== "" &&
-        //     state.Email !== "" &&
-        //     state.Picture !== "" &&
-        //     state.passwordsMatch
-        // ) {
-        //     if (profile.disabledSaveBtn === true) {
-        //         dispatch(enableSave())
-        //     }
-        // } else {
-        //     dispatch(disableSave())
-        // }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
@@ -116,24 +89,20 @@ function EditProfile() {
         setState({ ...state, [target.name]: target.value })
     };
 
-    const handlePictureChange = (event) => {
-        let files = event.target.files
-        let reader = new FileReader()
-        reader.readAsDataURL(files[0])
-        reader.onload = (event) => {
-            const image={file: event.target.result}
-            console.log(image, image.file)
-            setState({ ...state, Picture: image.file })
-        }
-    };
-
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        let Picture = state.Picture
+        if(Picture === ""){
+            Picture = profile.Picture
+        }
+        let Password = state.Password
+        if(Password === ""){
+            Password = profile.Password
+        }
         if (
             state.Name !== "" &&
             state.Username !== "" &&
             state.Email !== "" &&
-            state.Picture !== "" &&
             state.passwordsMatch &&
             profile.usernameAvailable &&
             profile.emailAvailable &&
@@ -145,8 +114,8 @@ function EditProfile() {
                 state.Name,
                 state.Username,
                 state.Email,
-                state.Password,
-                state.Picture,
+                Password,
+                Picture,
                 state.User_type
             ))
             dispatch(editProfile())
@@ -159,42 +128,35 @@ function EditProfile() {
         dispatch(cancelChanges())
     }
 
-    const deleteAccount = () => {
-        setState(state => ({...state, deletingAccount: true}))
-        console.log("Deleting account")
+    const confirmDelete = () => {
+        setState(state => ({...state, deletingAccount: !state.deletingAccount}))
     }
-
+    
     return (
         <div className="editProfileContainer col-4 tile margin-lr-10 margin-tb-10 profileTiles">
             <form onSubmit={handleFormSubmit}>
                 <h3>Edit Profile</h3>
                 <div className="myProfilePic">
                     <img
-                        src={state.Picture ? state.Picture : defaultPic}
+                        src={state.Picture
+                            ? state.Picture
+                            : profile.Picture !== null
+                            ? profile.Picture
+                            : defaultPic}
                         alt="Profile"
                     />
                 </div>
-                {/* <ImageUploader
-                    buttonText="Upload image"
-                    buttonStyles={{margin: "0"}}
-                    onChange={handlePictureChange}
-                    imgExtension={['.jpg', '.png']}
-                    accept="image/*"
-                    withPreview={true}
-                    singleImage={true}
-                    label=""
-                    fileContainerStyle={{backgroundColor: "transparent", boxShadow: "none", padding: "0", margin:"0"}}
-                    withIcon={false}
-                /> */}
-                <input
-                    onChange={handlePictureChange}
-                    type="file"
-                    className="uploadImage"
-                    accept="image/*"
-                    name="Picture"
-                    id="file"
-                    style={{ display: "none" }} />
-                <p><label htmlFor="file" className="uploadImageBtn">Upload Image</label></p>
+                <div className="editDetail">
+                    <p>Upload Photo</p>
+                    <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
+                    <input
+                        onChange={handleInputChange}
+                        className="editInput"
+                        type="text"
+                        name="Picture"
+                        defaultValue={profile.Picture}
+                    />
+                </div>
                 <div className="editDetail">
                     <p>Name</p>
                     <input
@@ -250,16 +212,6 @@ function EditProfile() {
                     </div>
                 </div>
                 <div className="changePassword">
-                    {/* <p>Password</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="password"
-                        name="oldPassword"
-                    />
-                    <div className={state.incorrectPassword ? "show" : "hide"}>
-                        Incorrect Password
-                    </div> */}
                     <p>New Password</p>
                     <input
                         onChange={handleInputChange}
@@ -285,8 +237,22 @@ function EditProfile() {
                     <button
                         className="deleteAccBtn"
                         type="button"
-                        onClick={deleteAccount}
+                        onClick={confirmDelete}
                     >Delete Account</button>
+                    {(state.deletingAccount &&
+                    <div className="profileConfirmDelete">
+                        <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
+                        <button
+                            className="confirmDeleteBtn"
+                            onClick={dispatch(deleteAccount(profile.Username, profile.User_type))}
+                        >Yes</button>
+                        <button
+                            className="confirmDeleteBtn"
+                            type="button"
+                            onClick={confirmDelete}
+                        >No</button>
+                    </div>
+                    )}
                 </div>
                 <div>
                     <button

@@ -1,14 +1,16 @@
 .foodTypes {
     color: #404040;
     font-style: italic;
-    margin-top: 8px;
+    margin: 5px 5px 0 5px;
+    font-size: min(8vw,16px);
 }
 
 .priceRange {
     font-size: min(8vw,17px);
     font-style: italic;
-    color: #e07f3e;
+    color: #404040;
     font-weight: 600;
+    margin-top: 10px;
 }
 
 .foodTile {
@@ -40,6 +42,7 @@
 .seeMore {
     display: inline-block;
     margin-top: 15px;
+    margin-bottom: 60px;
     padding: 5px 10px;
     border-radius: 30px;
     border: 1px solid#737373;

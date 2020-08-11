@@ -7,19 +7,39 @@ import homeBanner from '../ElbusogCSS/uplbBanner.jpg';
 import recomBanner from '../ElbusogCSS/cakeBanner.png';
 import defaultFoodPic from '../ElbusogCSS/foodPlace.png';
 import LoadingPage from '../LoadingPage';
+import Ratings from 'react-ratings-declarative';
 
 function Home() {
     const foodPlacesData = useSelector(state => state.foodPlacesData)
     const foodPlaces = foodPlacesData.foodPlaces
 
-    // not sure if the loading and error message will work
+    const foodTiles =[]
+    foodPlaces.map(foodPlace =>
+        foodTiles.push(
+            <div key={foodPlace.Food_place_id} className="col-3 tile margin-lr-10 foodTile">
+                <img className="foodIcon" src={foodPlace.Picture ? foodPlace.Picture : defaultFoodPic} alt="Food place" />
+                <h4>{foodPlace.Food_place_name}</h4>
+                <Ratings 
+                    rating = {foodPlace.Rating}
+                    widgetDimensions="18px"
+                    widgetEmptyColors="#b3b3b3"
+                    widgetRatedColors="#e07f3e"
+                    widgetSpacings="1.5px"
+                >
+                    <Ratings.Widget />
+                    <Ratings.Widget />
+                    <Ratings.Widget />
+                    <Ratings.Widget />
+                    <Ratings.Widget />
+                </Ratings>
+                <p className="priceRange">Price Range: {foodPlace.Price_range}</p>
+                <p className="foodTypes">{foodPlace.Food_types}</p>
+                <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
+            </div>
+        )
+    )
 
-    // return foodPlacesData.loading ? (
-    //     <h5>Loading</h5>
-    // ) : foodPlacesData.error ? (
-    //     <h5>{foodPlacesData.error}</h5>
-    // ) : (
-    return !foodPlaces[13] ? (
+    return !foodPlaces[3] ? (
         <LoadingPage />
     ) : (
             <div style={{ backgroundImage: `url(${recomBanner})` }}>
@@ -32,22 +52,17 @@ function Home() {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <div className="banner" style={{width: "100%", height: "min(40vw, 350px)"}}></div>
+                            <div className="banner" style={{ width: "100%", height: "min(40vw, 350px)" }}></div>
                             {/* <img className="banner" src={recomBanner} alt="Cake Banner" /> */}
                             <h2 className="title">Our Recommendations</h2>
                         </div>
                     </div>
                     <div className="rowcenter margin-tb-40">
-                        <div className="col-3 tile margin-lr-10 foodTile">
-                            <img className="foodIcon" src={foodPlaces[0].Picture ? foodPlaces[0].Picture : defaultFoodPic} alt="Name of food place" />
-                            <h4>{foodPlaces[0].Food_place_name}</h4>
-                            <p className="priceRange">Price Range: {foodPlaces[0].Price_range}</p>
-                            <p className="foodTypes">{foodPlaces[0].Food_types}</p>
-                            <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
-                        </div>
-                        <div className="col-3 tile margin-lr-10 foodTile">
+                        {foodTiles}
+                        {/* <div className="col-3 tile margin-lr-10 foodTile">
                             <img className="foodIcon" src={foodPlaces[1].Picture ? foodPlaces[1].Picture : defaultFoodPic} alt="Name of food place" />
                             <h4>{foodPlaces[1].Food_place_name}</h4>
+                            <p className="priceRange">{foodPlaces[1].Rating}</p>
                             <p className="priceRange">Price Range: {foodPlaces[1].Price_range}</p>
                             <p className="foodTypes">{foodPlaces[1].Food_types}</p>
                             <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
@@ -55,6 +70,7 @@ function Home() {
                         <div className="col-3 tile margin-lr-10 foodTile">
                             <img className="foodIcon" src={foodPlaces[2].Picture ? foodPlaces[2].Picture : defaultFoodPic} alt="Name of food place" />
                             <h4>{foodPlaces[2].Food_place_name}</h4>
+                            <p className="priceRange">{foodPlaces[2].Rating}</p>
                             <p className="priceRange">Price Range: {foodPlaces[2].Price_range}</p>
                             <p className="foodTypes">{foodPlaces[2].Food_types}</p>
                             <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
@@ -62,10 +78,11 @@ function Home() {
                         <div className="col-3 tile margin-lr-10 foodTile">
                             <img className="foodIcon" src={foodPlaces[3].Picture ? foodPlaces[3].Picture : defaultFoodPic} alt="Name of food place" />
                             <h4>{foodPlaces[3].Food_place_name}</h4>
+                            <p className="priceRange">{foodPlaces[3].Rating}</p>
                             <p className="priceRange">Price Range: {foodPlaces[3].Price_range}</p>
                             <p className="foodTypes">{foodPlaces[3].Food_types}</p>
                             <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="rowcenter">
                         <Link className="button margin-tb-20 seeMore" to="/foodplaces">

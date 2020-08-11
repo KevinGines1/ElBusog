@@ -1,59 +1,62 @@
 import axios from 'axios'
 import {
-    FETCH_FOOD_PLACES_REQUEST,
-    FETCH_FOOD_PLACES_SUCCESS,
-    FETCH_FOOD_PLACES_FAILURE
+    FETCH_FOOD_PLACES
 } from './FFPtypes'
-
-// not sure if fetch request, success, and failure are needed
-
-export const fetchFoodPlacesRequest = () => {
-    return {
-        type: FETCH_FOOD_PLACES_REQUEST
-    }
-}
-
-export const fetchFoodPlacesSuccess = (foodPlaces) => {
-    return {
-        type: FETCH_FOOD_PLACES_SUCCESS,
-        payload: foodPlaces
-    }
-}
-
-export const fetchFoodPlacesFailure = error => {
-    return {
-        type: FETCH_FOOD_PLACES_FAILURE,
-        payload: error
-    }
-}
 
 export const fetchFoodPlaces = () => {
     return (dispatch) => {
-        dispatch(fetchFoodPlacesRequest)
         axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
             .then(response => {
                 const foodPlaces = response.data
-                foodPlaces.map(foodPlace => {
-                    axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/${foodPlace.Food_place_id}`)
-                        .then(response => {
-                            let Picture = ""
-                            if (response.data.length === 0) {
-                                Picture = null
-                            } else {
-                                Picture = response.data[0].Picture
-                            }
-                            const collatedFoodPlace = {
-                                ...foodPlace,
-                                Picture: Picture
-                            }
-                            dispatch(fetchFoodPlacesSuccess(collatedFoodPlace))
-                            // console.log(collatedFoodPlace)
-                        })
-                })
+                foodPlaces.map(foodPlace => 
+                    dispatch(fetchFoodPlacesReview(foodPlace, foodPlace.Food_place_id))
+                )
             })
             .catch(error => {
-                const errorMessage = error.message
-                dispatch(fetchFoodPlacesFailure(errorMessage))
+                console.log(error.message)
             })
+    }
+}
+
+export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
+    return (dispatch) => {
+        axios.get(`https://ancient-garden-70007.herokuapp.com/api/comments/${foodPlaceID}`)
+        .then(response => {
+            const Comments = response.data
+            let totalRating = 0
+            let count = 0
+            Comments.map(comment => { 
+                totalRating += comment.Rating
+                count += 1
+                return null
+            })
+            const avgRating = Math.round((totalRating/count)*10)/10
+            if(avgRating >= 3.5){
+                dispatch(fetchFoodPlacesPhotos(foodPlace, foodPlaceID, avgRating))
+            }
+        })
+    }
+}
+
+export const fetchFoodPlacesPhotos = (foodPlace, foodPlaceID, rating) => {
+    return (dispatch) => {
+        axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/${foodPlaceID}`)
+        .then(response => {
+            let Picture = ""
+            if (response.data.length === 0) {
+                Picture = null
+            } else {
+                Picture = response.data[0].Picture
+            }
+            const collatedFoodPlace = {
+                ...foodPlace,
+                Picture: Picture,
+                Rating: rating
+            }
+            dispatch({
+                type: FETCH_FOOD_PLACES,
+                payload: collatedFoodPlace
+            })
+        })
     }
 }

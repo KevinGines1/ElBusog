@@ -8,6 +8,15 @@
     padding: 50px 10px;
 }
 
+.notLoggedIn {
+    text-align: center;
+    border-radius: 10px;
+}
+
+.notLoggedIn h6 {
+    margin-top: 50%
+}
+
 .customerDashboard {
     background-color: rgb(166, 166, 166, 0.9);
     color: #595959;
@@ -84,26 +93,6 @@
 .profileBtn:hover {
     border-color: #e07f3e;
     background-color: #e07f3e;
-    color: #f2f2f2;
-}
-
-.deleteAccBtn {
-    margin-top: 10px;
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: 1px solid#ff291a;
-    background-color: transparent;
-    color: #ff291a;
-    font-family: sans-serif;
-    font-size: min(7vw, 14px);
-    text-decoration: none;
-    transition: 0.2s;
-    outline: none;
-}
-
-.deleteAccBtn:hover {
-    border-color: transparent;
-    background-color: rgb(255, 41, 26, 0.8);
     color: #f2f2f2;
 }
 
@@ -215,15 +204,68 @@
 
 .show {
     display: block;
-    color: #ff1a1a;
     font-size: min(7vw, 14px);
-    margin-top: 5px;
+    border-radius: 5px;
+    padding: 3px 8px;
+    background-color: rgb(255, 41, 26, 0.7);
+    margin: 10px 5px 0 5px;
+    color: #f2f2f2;
 }
 
 .profileBtn:hover:disabled {
     background-color: transparent;
     color: #737373;
     border-color: #737373;
+}
+
+.deleteAccBtn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid#ff291a;
+    background-color: transparent;
+    color: #ff291a;
+    font-family: sans-serif;
+    font-size: min(7vw, 14px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.deleteAccBtn:hover {
+    border-color: transparent;
+    background-color: rgb(255, 41, 26, 0.8);
+    color: #f2f2f2;
+}
+
+.profileConfirmDelete {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 41, 26, 0.8);
+    color: #f2f2f2;
+}
+
+.profileConfirmDelete .confirmDeleteMsg {
+    color: #f2f2f2;
+    font-size: min(8vw, 15px);
+}
+
+.confirmDeleteBtn {
+    margin: 10px 5px 0 5px;
+    border-radius: 30px;
+    padding: 3px 8px;
+    border: 1px solid rgb(242, 242, 242, 0.8);
+    background-color: transparent;
+    color: rgb(242, 242, 242, 0.8);
+    transition: 0.2s;
+    outline: none;
+}
+
+.confirmDeleteBtn:hover {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: #1a1a1a;
 }
 
 /* DASHBOARD CLASSES */
@@ -258,7 +300,6 @@
     border-radius: 5px;
     color: #1a1a1a;
     border: 1px solid rgb(242, 242, 242, 0.5);
-    /* height:240px; */
 }
 
 .foodPlaceDetails p {
@@ -268,18 +309,19 @@
 .foodPlaceTitle {
     font-size: min(10vw, 22px);
     font-weight: 700;
-    color: #1a1a1a;
+    font-style: italic;
+    color: rgb(242, 242, 242, 0.95);
+    margin-top: 5px;
 }
 
 .dashboardItem .allCommentsContainer {
     font-size: min(9vw, 20px);
     color: #1a1a1a;
     width: 100%;
-    height:240px;
+    height: 250px;
     padding: 15px;
     background-color: rgb(242, 242, 242, 0.5);
     border-radius: 5px;
-    /* text-align: left; */
 }
 
 .commentsTitle {
@@ -305,9 +347,10 @@
     /* border: 2px solid #404040; */
 }
 
-.commentContainer .rating {
-    font-size: min(7.5vw, 15px);
-    color: #1a1a1a;
+.foodPlaceDetails .rating {
+    font-size: min(7vw, 15px);
+    color: rgb(242, 242, 242, 0.8);
+    font-style: italic;
 }
 
 .commentContainer .datePosted {
@@ -335,21 +378,21 @@
 
 .dashboardItemBtn {
     margin: 15px 3px 0 3px;
-    padding: 5px 10px;
+    padding: 5px 8px;
     border-radius: 30px;
-    border: 1px solid transparent;
-    background-color: rgb(225, 225, 225, 0.6);
-    color: #737373;
+    border: 1px solid rgb(225, 225, 225, 0.6);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.6);
     font-family: sans-serif;
-    font-size: min(7vw, 14px);
+    font-size: min(7vw, 13px);
     text-decoration: none;
     transition: 0.2s;
     outline: none;
 }
 
 .dashboardItemBtn:hover {
-    border-color: #f2f2f2;
-    background-color: #f2f2f2;
+    border-color: transparent;
+    background-color: rgb(242, 242, 242, 0.8);
     color: #404040;
 }
 
@@ -362,14 +405,20 @@
 }
 
 .confirmDeleteContainer .dashboardItemBtn {
-    border-color: transparent;
-    background-color: #d9d9d9;
-    color: #737373;
+    border-color: rgb(225, 225, 225, 0.8);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.8);
 }
 
 .confirmDeleteContainer .dashboardItemBtn:hover {
     background-color: #f2f2f2;
+    border-color: #f2f2f2;
     color: #404040;
+}
+
+.confirmDeleteContainer .confirmDeleteMsg {
+    color: #de6d21;
+    font-weight: 600;
 }
 
 /* EDIT FOOD PLACE CLASSES */
@@ -407,19 +456,21 @@
 .addEditFoodPlaceBtn {
     padding: 5px 8px;
     border-radius: 30px;
-    border: 1px solid transparent;
-    background-color: rgb(200, 200, 200, 0.5);
-    color: #737373;
+    border: 1px solid rgb(225, 225, 225, 0.8);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.8);
     font-family: sans-serif;
     font-size: min(7vw, 14px);
     text-decoration: none;
     transition: 0.2s;
     outline: none;
+    margin-top: 15px;
 }
 
 .addEditFoodPlaceBtn:hover {
     color: #1a1a1a;
-    background-color: rgb(242, 242, 242, 0.5);
+    background-color: rgb(242, 242, 242, 0.8);
+    border-color: transparent;
 }
 
 .descriptionTile {
@@ -498,12 +549,4 @@
     display: inline-block;
     padding: 3px;
     margin: 0px 3px 0px 3px;
-}
-
-.addEditFoodPlace .show {
-    border-radius: 5px;
-    padding: 3px 8px;
-    background-color: rgb(255, 41, 26, 0.7);
-    margin: 5px;
-    color: #f2f2f2;
 }

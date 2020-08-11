@@ -16,7 +16,7 @@ function DashboardItemButtons(props) {
     }
 
     const dispatchDelete = () => {
-        dispatch(deleteFoodPlace(props.foodPlace.Food_place_id))
+        dispatch(deleteFoodPlace(props.foodPlace.Food_place_id, props.foodPlace.Picture))
         setState({ confirmDelete: false })
     }
 

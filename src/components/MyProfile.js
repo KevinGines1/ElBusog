@@ -1,8 +1,7 @@
-import React, { setState } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import defaultPic from '../ElbusogCSS/user.png';
 import { editProfile } from '../redux';
-import axios from 'axios';
 
 function MyProfile() {
     const profile = useSelector(state => state.profile)

@@ -5,10 +5,7 @@ import {
     editingFoodPlace,
     addFoodPlace,
     addingFoodPlace,
-    // enableSave,
-    // disableSave
 } from '../redux';
-// import axios from 'axios';
 
 function AddEditFoodPlace() {
     const profile = useSelector(state => state.profile)
@@ -47,6 +44,7 @@ function AddEditFoodPlace() {
         showInvalid: false
     })
 
+    console.log()
     // reason why need ng sari-sariling useEffect: https://codesandbox.io/s/mutable-surf-nynlx?file=/src/index.js
 
     // checks if at least one location is selected
@@ -101,6 +99,10 @@ function AddEditFoodPlace() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.closingHour, state.closingPeriod, state.closingMin])
 
+    useEffect(() => {
+
+    })
+
     const handleInputChange = (event) => {
         const { target } = event;
         if (target.name.length === 3) {
@@ -116,35 +118,24 @@ function AddEditFoodPlace() {
                 setState({ ...state, [target.name]: false, location: state.location.replace(target.value + ', ', '') })
             }
         } else {
-            setState({ ...state, [target.name]: target.value })
+            setState(state => ({ ...state, [target.name]: target.value }))
         }
     };
 
     // const handlePictureChange = (event) => {
-    //     console.log("Edit this")
     //     setState({ ...state, picture: URL.createObjectURL(event.target.files[0]) })
     // };
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (!state.showInvalid && (state.foodTypes === "" || state.description === "" || state.foodPlaceName === "")) {
-            setState({ ...state, showInvalid: true })
-        } else if (!state.invalidDaysOpen && !state.invalidLocation && !state.blankField) {
+        if (state.foodTypes !== "" && state.description !== "" && state.foodPlaceName !== "" && state.location !== "" && state.daysOpen !== "" && !state.blankField && state.Picture !== "") {
+            let Picture = state.picture
+            if(state.picture === ""){
+                Picture = foodPlaceEdited.Picture
+            }
             const daysOpen = state.daysOpen.split('').sort().join('')
             const location = state.location.slice(0, -2)
-            console.log(
-                state.foodPlaceName,
-                location,
-                state.priceRange,
-                state.description,
-                state.openingTime,
-                state.closingTime,
-                daysOpen,
-                state.foodTypes,
-                profile.Username,
-                foodPlaceEdited.Food_place_id,
-                state.picture
-            )
+
             if (profile.editingFoodPlace) {
                 dispatch(editFoodPlace(
                     state.foodPlaceName,
@@ -157,7 +148,8 @@ function AddEditFoodPlace() {
                     state.foodTypes,
                     profile.Username,
                     foodPlaceEdited.Food_place_id,
-                    state.picture
+                    Picture,
+                    foodPlaceEdited.Picture
                 ))
                 dispatch(editingFoodPlace({}))
             }
@@ -172,10 +164,12 @@ function AddEditFoodPlace() {
                     daysOpen,
                     state.foodTypes,
                     profile.Username,
-                    state.picture
+                    Picture
                 ))
                 dispatch(addingFoodPlace())
             }
+        } else if (!state.showInvalid) {
+            setState({ ...state, showInvalid: true })
         }
     }
 
@@ -183,10 +177,9 @@ function AddEditFoodPlace() {
         event.preventDefault();
         if (profile.editingFoodPlace) {
             dispatch(editingFoodPlace({}))
-        } else if(profile.addingFoodPlace) {
+        } else if (profile.addingFoodPlace) {
             dispatch(addingFoodPlace())
         }
-        // dispatch(cancelChanges())
     }
     const hourOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
@@ -205,8 +198,11 @@ function AddEditFoodPlace() {
                 {(state.picture !== "" &&
                     <div className="addEditPic">
                         <img
-                            src={state.picture}
-                            alt="Food Place Photo"
+                            src={state.picture !== ""
+                                ? state.picture
+                                : foodPlaceEdited.Picture
+                            }
+                            alt="Food Place"
                             className="foodPlacePic" />
                     </div>
                 )}
@@ -243,9 +239,6 @@ function AddEditFoodPlace() {
                                 : ""
                             }
                         />
-                        {/* <div className={state.invalidName ? "show" : "hide"}>
-                        Name must be less than 31 characters.
-                    </div> */}
                     </div>
                     <div className="editDetail">
                         <p>Price Range</p>
@@ -476,6 +469,7 @@ function AddEditFoodPlace() {
                             className="foodPlaceInput"
                             type="text"
                             name="foodTypes"
+                            defaultValue={profile.addingFoodPlace ? "" : foodPlaceEdited.Food_types}
                         />
                     </div>
                 </div>
@@ -502,18 +496,17 @@ function AddEditFoodPlace() {
                         <button
                             className="addEditFoodPlaceBtn margin-lr-10"
                             type="submit"
-                        // disabled={profile.disabledSaveBtn}
                         >Edit Food Place</button>
                     )}
                     {(profile.addingFoodPlace &&
                         <button
-                            className="dashboardItemBtn margin-lr-10"
+                            className="addEditFoodPlaceBtn margin-lr-10"
                             type="submit"
                         >Add Food Place</button>
                     )}
                     <button
                         type="button"
-                        className="dashboardItemBtn margin-lr-10"
+                        className="addEditFoodPlaceBtn margin-lr-10"
                         onClick={handleCancel}
                     >Cancel</button>
                 </div>
