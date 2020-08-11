@@ -45,7 +45,7 @@ class CreateAccount extends Component {
   }
 
   render() {
-    const { Name, Username, Email, Password, Picture, User_type } = this.state;
+    const { Name, Username, Email, Password, Picture } = this.state;  // removed User_type because it is not used (aug. 11)
 
     return (
       <form onSubmit={this.handleFormSubmit}>
