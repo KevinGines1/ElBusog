@@ -4,8 +4,8 @@ import store from '../redux/store'
 import './App.css';
 
 import UserContainer from '../components/UserContainer'
-import CreateAccount from '../page/CreateAccount'
-import Login from '../page/Login'
+import CreateAccount from '../pages/CreateAccount'
+import Login from '../pages/Login'
 
 function App() {
   return (
