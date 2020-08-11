@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.png';
 import defaultPic from '../assets/user.png';
 import ProfileDropdown from '../components/ProfileDropdown';
-import { connect } from 'react-redux';
 
 // const mapStateToProps = state => {
 //     return{
