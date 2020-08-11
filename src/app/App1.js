@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux'
-import store from '../redux/store'
+import store from '../redux/userRedux/store'
 import './App.css';
 
 import UserContainer from '../components/UserContainer'

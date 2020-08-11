@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { addUser } from '../redux/user/userActions'
+import { addUser } from '../redux/userRedux/user/userActions'
 
 const INITIAL_STATE = {
   Name: '',
