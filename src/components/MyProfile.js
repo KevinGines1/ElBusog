@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import defaultPic from '../ElbusogCSS/user.png';
+import defaultPic from '../assets/user.png';
 import { editProfile } from '../redux';
 
 function MyProfile() {

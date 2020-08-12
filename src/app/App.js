@@ -8,7 +8,7 @@ import Footer from '../components/Footer';
 // import FetchData from '../components/FetchData';
 
 // import Home from '../pages/Home';
-import Profile from '../pages/Profile';
+// import Profile from '../pages/Profile';
 import About from '../pages/About';
 
 import './App.css';
@@ -22,7 +22,7 @@ const App = () => (
         <StickyNavbar/>
         <Switch>
           {/* <Route path="/" exact component={Home} /> */}
-          <Route path="/profile" component={Profile} />
+          {/* <Route path="/profile" component={Profile} /> */}
           <Route path="/about" component={About} />
         </Switch>
         <Footer/>
