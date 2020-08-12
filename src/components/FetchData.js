@@ -4,7 +4,7 @@ import { fetchProfile, fetchFoodPlaces } from '../redux';
 
 function FetchData() {
     const dispatch = useDispatch()
-    const username = "eiz"
+    const username = "MotherZeit420"
 
     useEffect(() => {
         dispatch(fetchProfile(username))

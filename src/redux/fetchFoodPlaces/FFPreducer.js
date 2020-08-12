@@ -7,7 +7,7 @@ const initialState = {
 }
 
 const fetchFoodPlacesReducer = (state = initialState, action) => {
-    switch(action.type){
+    switch (action.type) {
         case FETCH_FOOD_PLACES:
             if(state.foodPlaces.length < 4){
                 return {

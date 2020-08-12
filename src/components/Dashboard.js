@@ -55,11 +55,11 @@ function Dashboard() {
                             <div className="allCommentsContainer">
                                 <div className="commentsTitle"> Comments </div>
                                 <div className="scrollingComments">
-                                    {foodPlace.Comments.length !== 0 &&
-                                    foodPlace.Comments.map(comment => (
-                                        <div key={comment.Comment} className="commentContainer">
+                                    {foodPlace.Reviews.length !== 0 &&
+                                    foodPlace.Reviews.map(review => (
+                                        <div key={review.Comment} className="commentContainer">
                                         <Ratings 
-                                            rating = {comment.Rating}
+                                            rating = {review.Rating}
                                             widgetDimensions="12px"
                                             widgetEmptyColors="#737373"
                                             widgetRatedColors="#e07f3e"
@@ -71,8 +71,8 @@ function Dashboard() {
                                             <Ratings.Widget />
                                             <Ratings.Widget />
                                         </Ratings>
-                                            <p className="datePosted">{comment.Date_posted.slice(0, 10)}</p>
-                                            <p className="comment">{comment.Comment}</p>
+                                            <p className="datePosted">{review.Date_posted.slice(0, 10)}</p>
+                                            <p className="comment">{review.Comment}</p>
                                         </div>
                                     ))}
                                 </div>

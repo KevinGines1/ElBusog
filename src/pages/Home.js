@@ -39,7 +39,7 @@ function Home() {
         )
     )
 
-    return !foodPlaces[3] ? (
+    return !foodPlaces[0] ? (
         <LoadingPage />
     ) : (
             <div style={{ backgroundImage: `url(${recomBanner})` }}>
@@ -53,39 +53,14 @@ function Home() {
                     <div className="row">
                         <div className="col-12">
                             <div className="banner" style={{ width: "100%", height: "min(40vw, 350px)" }}></div>
-                            {/* <img className="banner" src={recomBanner} alt="Cake Banner" /> */}
                             <h2 className="title">Our Recommendations</h2>
                         </div>
                     </div>
                     <div className="rowcenter margin-tb-40">
                         {foodTiles}
-                        {/* <div className="col-3 tile margin-lr-10 foodTile">
-                            <img className="foodIcon" src={foodPlaces[1].Picture ? foodPlaces[1].Picture : defaultFoodPic} alt="Name of food place" />
-                            <h4>{foodPlaces[1].Food_place_name}</h4>
-                            <p className="priceRange">{foodPlaces[1].Rating}</p>
-                            <p className="priceRange">Price Range: {foodPlaces[1].Price_range}</p>
-                            <p className="foodTypes">{foodPlaces[1].Food_types}</p>
-                            <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
-                        </div>
-                        <div className="col-3 tile margin-lr-10 foodTile">
-                            <img className="foodIcon" src={foodPlaces[2].Picture ? foodPlaces[2].Picture : defaultFoodPic} alt="Name of food place" />
-                            <h4>{foodPlaces[2].Food_place_name}</h4>
-                            <p className="priceRange">{foodPlaces[2].Rating}</p>
-                            <p className="priceRange">Price Range: {foodPlaces[2].Price_range}</p>
-                            <p className="foodTypes">{foodPlaces[2].Food_types}</p>
-                            <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
-                        </div>
-                        <div className="col-3 tile margin-lr-10 foodTile">
-                            <img className="foodIcon" src={foodPlaces[3].Picture ? foodPlaces[3].Picture : defaultFoodPic} alt="Name of food place" />
-                            <h4>{foodPlaces[3].Food_place_name}</h4>
-                            <p className="priceRange">{foodPlaces[3].Rating}</p>
-                            <p className="priceRange">Price Range: {foodPlaces[3].Price_range}</p>
-                            <p className="foodTypes">{foodPlaces[3].Food_types}</p>
-                            <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
-                        </div> */}
                     </div>
                     <div className="rowcenter">
-                        <Link className="button margin-tb-20 seeMore" to="/foodplaces">
+                        <Link className="button margin-tb-20 seeMore" to="/foodPlaces">
                             See More Food Places
                         </Link>
                     </div>

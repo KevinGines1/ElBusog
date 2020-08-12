@@ -141,7 +141,7 @@ const profileReducer = (state = initialState, action) => {
                         Food_types: action.payload.foodTypes,
                         User_id: action.payload.owner,
                         Picture: action.payload.foodPlacePhoto,
-                        Comments: []
+                        Reviews: []
                     }
                 ]
             }

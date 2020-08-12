@@ -22,6 +22,8 @@ function AddEditFoodPlace() {
         priceRange: profile.addingFoodPlace ? "<60" : foodPlaceEdited.Price_range,
         description: profile.addingFoodPlace ? "" : foodPlaceEdited.Description,
         picture: profile.addingFoodPlace ? "" : foodPlaceEdited.Picture,
+        invalidPicture: false,
+        imgSrcInvalid: false,
         openingTime: "800",
         openingHour: "8",
         openingMin: "00",
@@ -43,9 +45,17 @@ function AddEditFoodPlace() {
         blankField: false,
         showInvalid: false
     })
-
-    console.log()
     // reason why need ng sari-sariling useEffect: https://codesandbox.io/s/mutable-surf-nynlx?file=/src/index.js
+
+    // checks if a link is provided
+    useEffect(() => {
+        if ((state.picture === "" && profile.addingFoodPlace) || state.imgSrcInvalid) {
+            setState(state => ({ ...state, invalidPicture: true }))
+        } else {
+            setState(state => ({ ...state, invalidPicture: false }))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.picture, state.imgSrcInvalid, state.showInvalid])
 
     // checks if at least one location is selected
     useEffect(() => {
@@ -99,9 +109,13 @@ function AddEditFoodPlace() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.closingHour, state.closingPeriod, state.closingMin])
 
-    useEffect(() => {
+    const imgSrcInvalid= () => {
+        setState(state => ({...state, imgSrcInvalid: true}))
+    }
 
-    })
+    const imgSrcValid = () => {
+        setState(state => ({...state, imgSrcInvalid: false}))
+    }
 
     const handleInputChange = (event) => {
         const { target } = event;
@@ -122,13 +136,9 @@ function AddEditFoodPlace() {
         }
     };
 
-    // const handlePictureChange = (event) => {
-    //     setState({ ...state, picture: URL.createObjectURL(event.target.files[0]) })
-    // };
-
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (state.foodTypes !== "" && state.description !== "" && state.foodPlaceName !== "" && state.location !== "" && state.daysOpen !== "" && !state.blankField && state.Picture !== "") {
+        if (state.foodTypes !== "" && state.description !== "" && state.foodPlaceName !== "" && state.location !== "" && state.daysOpen !== "" && !state.blankField && !state.invalidPicture && ((profile.addingFoodPlace && state.picture !== "") || profile.editingFoodPlace)) {
             let Picture = state.picture
             if(state.picture === ""){
                 Picture = foodPlaceEdited.Picture
@@ -198,6 +208,8 @@ function AddEditFoodPlace() {
                 {(state.picture !== "" &&
                     <div className="addEditPic">
                         <img
+                            onError={imgSrcInvalid}
+                            onLoad={imgSrcValid}
                             src={state.picture !== ""
                                 ? state.picture
                                 : foodPlaceEdited.Picture
@@ -216,15 +228,10 @@ function AddEditFoodPlace() {
                         name="picture"
                         defaultValue={profile.addingFoodPlace ? "" : foodPlaceEdited.Picture}
                     />
+                    <div className={state.invalidPicture ? "show" : "hide"}>
+                        Please enter an image's link.
+                    </div>
                 </div>
-                {/* <input
-                    onChange={handlePictureChange}
-                    type="file"
-                    accept="image/*"
-                    name="picture"
-                    id="file"
-                    style={{ display: "none" }} />
-                <p><label htmlFor="file" className="uploadFPImageBtn">Upload Image</label></p> */}
                 <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Place Name</p>

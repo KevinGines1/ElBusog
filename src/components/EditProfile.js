@@ -20,6 +20,7 @@ function EditProfile() {
         Email: profile.Email,
         Password: "",
         Picture: profile.Picture,
+        imgSrcInvalid: false,
         User_type: profile.User_type,
         blankField: false,
         passwordsMatch: true,
@@ -84,6 +85,14 @@ function EditProfile() {
         state.blankField
     ])
 
+    const imgSrcInvalid= () => {
+        setState(state => ({...state, imgSrcInvalid: true}))
+    }
+
+    const imgSrcValid = () => {
+        setState(state => ({...state, imgSrcInvalid: false}))
+    }
+
     const handleInputChange = (event) => {
         const { target } = event;
         setState({ ...state, [target.name]: target.value })
@@ -106,6 +115,7 @@ function EditProfile() {
             state.passwordsMatch &&
             profile.usernameAvailable &&
             profile.emailAvailable &&
+            !state.imgSrcInvalid &&
             !state.invalidAccType
         ) {
             dispatch(saveChanges(
@@ -138,6 +148,8 @@ function EditProfile() {
                 <h3>Edit Profile</h3>
                 <div className="myProfilePic">
                     <img
+                        onError={imgSrcInvalid}
+                        onLoad={imgSrcValid}
                         src={state.Picture
                             ? state.Picture
                             : profile.Picture !== null
@@ -156,6 +168,9 @@ function EditProfile() {
                         name="Picture"
                         defaultValue={profile.Picture}
                     />
+                    <div className={state.imgSrcInvalid ? "show" : "hide"}>
+                        Please enter an image's link.
+                    </div>
                 </div>
                 <div className="editDetail">
                     <p>Name</p>
@@ -244,7 +259,7 @@ function EditProfile() {
                         <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
                         <button
                             className="confirmDeleteBtn"
-                            onClick={dispatch(deleteAccount(profile.Username, profile.User_type))}
+                            onClick={() => dispatch(deleteAccount(profile.Username, profile.User_type))}
                         >Yes</button>
                         <button
                             className="confirmDeleteBtn"

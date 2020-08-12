@@ -24,9 +24,9 @@ export const fetchProfile = (username) => {
                 const userProfile = response.data[0]
                 axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllUsers`)
                     .then(response => {
+                        console.log(response.data)
                         response.data.map(user => {
                             if (user.User_id === userProfile.User_id) {
-                                console.log(user)
                                 dispatch({
                                     type: FETCH_PROFILE,
                                     payload: {
@@ -55,11 +55,11 @@ export const fetchOwnFoodPlace = (userID) => {
                 foodPlaceData.map(foodPlace => {
                     axios.get(`https://ancient-garden-70007.herokuapp.com/api/comments/${foodPlace.Food_place_id}`)
                         .then(response => {
-                            const Comments = response.data
+                            const Reviews = response.data
                             let totalRating = 0
                             let count = 0
-                            Comments.map(comment => {
-                                totalRating += comment.Rating
+                            Reviews.map(review => {
+                                totalRating += review.Rating
                                 count += 1
                                 return null
                             })
@@ -72,7 +72,7 @@ export const fetchOwnFoodPlace = (userID) => {
                                     }
                                     const collatedFoodPlaceData = {
                                         ...foodPlace,
-                                        Comments: Comments,
+                                        Reviews: Reviews,
                                         Picture: foodPlacePic,
                                         Rating: avgRating
                                     }
@@ -244,7 +244,9 @@ export const editFoodPlace = (
         newFoodTypes,
         owner,
         foodPlaceID,
+        "NEW:",
         foodPlacePhoto,
+        "OLD:",
         oldFoodPlacePhoto)
     return (dispatch) => {
         axios.patch("https://ancient-garden-70007.herokuapp.com/api/editFoodPlace",
@@ -267,32 +269,32 @@ export const editFoodPlace = (
                         .then(response => {
                             console.log(foodPlaceID, response.data)
                         })
-                }
-                axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto/`, {
-                    foodPlaceID, foodPlacePhoto
-                })
-                    .then(response => {
-                        console.log(response.data)
-                        dispatch({
-                            type: EDIT_FOOD_PLACE,
-                            payload: {
-                                newName,
-                                newLocation,
-                                newPrice,
-                                newDesc,
-                                newOpen,
-                                newClose,
-                                newDays,
-                                newFoodTypes,
-                                owner,
-                                foodPlaceID,
-                                foodPlacePhoto
-                            }
+                    axios.post(`https://ancient-garden-70007.herokuapp.com/api/addPhoto/`, {
+                        foodPlaceID, foodPlacePhoto
+                    })
+                        .then(response => {
+                            console.log(response.data)
                         })
-                    })
-                    .catch(error => {
-                        console.log(error.message)
-                    })
+                        .catch(error => {
+                            console.log(error.message)
+                        })
+                }
+                dispatch({
+                    type: EDIT_FOOD_PLACE,
+                    payload: {
+                        newName,
+                        newLocation,
+                        newPrice,
+                        newDesc,
+                        newOpen,
+                        newClose,
+                        newDays,
+                        newFoodTypes,
+                        owner,
+                        foodPlaceID,
+                        foodPlacePhoto
+                    }
+                })
             })
     }
 }
