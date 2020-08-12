@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { addUser } from '../redux/userRedux/user/userActions'
+// import { addUser } from '../redux/userRedux/user/userActions'
+import { addUser } from '../redux'
 
 const INITIAL_STATE = {
   Name: '',
@@ -103,7 +104,7 @@ class CreateAccount extends Component {
             id="business"
             value="Business_owner"
           />
-          <label for="business">Business</label>
+          <label htmlFor="business">Business</label>
           <br/>
           <input
             onChange={this.handleInputChange}
@@ -112,7 +113,7 @@ class CreateAccount extends Component {
             id="customer"
             value="Customer"
           />
-          <label for="customer">Customer</label>
+          <label htmlFor="customer">Customer</label>
         </div>
 
         <br/><br/>
