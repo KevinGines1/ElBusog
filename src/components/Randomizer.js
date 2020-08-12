@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { randomizeAction, getAllFoodPlaces } from '../redux/randomizer';
+import { randomizeAction, getAllFoodPlaces } from '../redux';
 import banner from '../assets/cakeBanner.png';
 
 const mapDispatchToProps = dispatch => ({
@@ -11,7 +11,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return{
-        listOfFoodPlaces: state.listOfFoodPlaces
+        listOfFoodPlaces: state.zoren.listOfFoodPlaces
     }
 }
 

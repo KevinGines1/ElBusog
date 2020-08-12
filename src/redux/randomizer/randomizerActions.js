@@ -1,4 +1,4 @@
-import { RANDOMIZE_FOODPLACE, GET_ALL_FOOD_PLACES } from './types';
+import { RANDOMIZE_FOODPLACE, GET_ALL_FOOD_PLACES } from './randomizerTypes';
 
 // Actions
 export const randomizeAction = (payload) => ({

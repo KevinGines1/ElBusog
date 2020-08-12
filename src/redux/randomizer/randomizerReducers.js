@@ -1,4 +1,4 @@
-import { RANDOMIZE_FOODPLACE, GET_ALL_FOOD_PLACES } from './types.js'
+import { RANDOMIZE_FOODPLACE, GET_ALL_FOOD_PLACES } from './randomizerTypes.js'
 
 const INITIAL_STATE = {
     listOfFoodPlacesRanked: null,

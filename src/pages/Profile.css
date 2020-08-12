@@ -1,0 +1,552 @@
+.profileTiles {
+    background-color: rgb(242, 242, 242, 0.9);
+    margin-top: 110px;
+    margin-bottom: 50px;
+    color: #404040;
+    box-shadow: 2px 2px 10px #000000;
+    height: min(230vw, 550px);
+    padding: 50px 10px;
+}
+
+.notLoggedIn {
+    text-align: center;
+    border-radius: 10px;
+}
+
+.notLoggedIn h6 {
+    margin-top: 50%
+}
+
+.customerDashboard {
+    background-color: rgb(166, 166, 166, 0.9);
+    color: #595959;
+}
+
+.businessOwnerDashboard {
+    overflow-y: auto;
+}
+
+.myProfilePic {
+    display: inline-block;
+    overflow: hidden;
+    width: min(70vw, 200px);
+    height: min(70vw, 200px);
+    border: 3px solid #e07f3e;
+    border-radius: 50%;
+    margin-top: 10px;
+}
+
+.Profile img {
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
+}
+
+.name {
+    margin-top: 10px;
+    color: #404040;
+    font-size: min(12vw, 28px);
+}
+
+.userType{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: min(8vw, 17px);
+    color: #737373;
+    font-style: italic;
+}
+
+.username {
+    margin-top: 5px;
+    font-size: min(8vw, 17px);
+    color: #737373;
+}
+
+.email {
+    margin-top: 5px;
+    font-size: min(8vw, 17px);
+    color: #737373;
+}
+
+.dottedDivider {
+    width: 50px;
+    border-top: 5px dotted #e07f3e;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.profileBtn {
+    margin-top: 15px;
+    padding: 5px 10px;
+    border-radius: 30px;
+    border: 1px solid#737373;
+    background-color: transparent;
+    color: #737373;
+    font-family: sans-serif;
+    font-size: min(7vw, 14px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.profileBtn:hover {
+    border-color: #e07f3e;
+    background-color: #e07f3e;
+    color: #f2f2f2;
+}
+
+/* EDIT PROFILE CLASSES */
+
+.editProfileContainer {
+    font-family: sans-serif;
+    overflow-y: scroll;
+}
+
+.editProfileTitle {
+    text-align: center;
+}
+
+.uploadImageBtn {
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid#cccccc;
+    background-color: #cccccc;
+    color: #404040;
+    font-family: sans-serif;
+    font-size: min(7vw, 12px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.uploadImageBtn:hover {
+    border-color: #a6a6a6;
+    background-color: transparent;
+}
+
+.editInput {
+    background-color: transparent;
+    color: #404040;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1.5px solid #999999;
+    outline: none;
+    font-size: min(8vw, 15px);
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.editName {
+    width: 9em;
+    background-color: transparent;
+    color: #404040;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-color: #999999;
+    outline: none;
+    font-size: min(12vw, 28px);
+    font-family: sans-serif;
+    text-align: center;
+    font-weight: bold;
+}
+
+.editDetail p {
+    color: #999999;
+    font-size: min(7vw, 14px);
+}
+
+.editDetail {
+    display: flex-box;
+    margin-top: 5px;
+    background-color: transparent;
+    outline: none;
+}
+
+.changePassword {
+    display: inline-block;
+    padding: 0px 10px 13px 10px;
+    margin-top: 15px;
+    background-color: #cccccc;
+    border: 2px solid #cccccc;
+    border-radius: 10px;
+    outline: none;
+}
+
+.changePassword p {
+    margin-top: 10px;
+    color: #737373;
+    font-size: min(7vw, 14px);
+}
+
+.userTypeOptions {
+    background-color: #cccccc;
+    color: #404040;
+    margin-top: 1px;
+    padding: 2px;
+    font-size: min(8vw, 15px);
+    border-color: #cccccc;
+    border-radius: 3px;
+    outline: none;
+}
+
+.editDetail p {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    font-size: min(7vw, 14px);
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+    font-size: min(7vw, 14px);
+    border-radius: 5px;
+    padding: 3px 8px;
+    background-color: rgb(255, 41, 26, 0.7);
+    margin: 10px 5px 0 5px;
+    color: #f2f2f2;
+}
+
+.profileBtn:hover:disabled {
+    background-color: transparent;
+    color: #737373;
+    border-color: #737373;
+}
+
+.deleteAccBtn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid#ff291a;
+    background-color: transparent;
+    color: #ff291a;
+    font-family: sans-serif;
+    font-size: min(7vw, 14px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.deleteAccBtn:hover {
+    border-color: transparent;
+    background-color: rgb(255, 41, 26, 0.8);
+    color: #f2f2f2;
+}
+
+.profileConfirmDelete {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(255, 41, 26, 0.8);
+    color: #f2f2f2;
+}
+
+.profileConfirmDelete .confirmDeleteMsg {
+    color: #f2f2f2;
+    font-size: min(8vw, 15px);
+}
+
+.confirmDeleteBtn {
+    margin: 10px 5px 0 5px;
+    border-radius: 30px;
+    padding: 3px 8px;
+    border: 1px solid rgb(242, 242, 242, 0.8);
+    background-color: transparent;
+    color: rgb(242, 242, 242, 0.8);
+    transition: 0.2s;
+    outline: none;
+}
+
+.confirmDeleteBtn:hover {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: #1a1a1a;
+}
+
+/* DASHBOARD CLASSES */
+
+.dashboardMsg {
+    font-style: italic;
+    font-size: min(7vw, 14px)
+}
+
+.dashboardItemContainer {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: rgb(224, 117, 46, 0.9);
+    /* border: 2px solid #404040; */
+    border-radius: 10px;
+    color: #404040;
+}
+
+.dashboardItemContainer h5 {
+    color: #404040;
+}
+
+.dashboardItem {
+    display: flex;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.foodPlaceDetails {
+    padding: 20px 10px;
+    margin-right: 8px;
+    border-radius: 5px;
+    color: #1a1a1a;
+    border: 1px solid rgb(242, 242, 242, 0.5);
+}
+
+.foodPlaceDetails p {
+    font-size: min(8vw, 16px);
+}
+
+.foodPlaceTitle {
+    font-size: min(10vw, 22px);
+    font-weight: 700;
+    font-style: italic;
+    color: rgb(242, 242, 242, 0.95);
+    margin-top: 5px;
+}
+
+.dashboardItem .allCommentsContainer {
+    font-size: min(9vw, 20px);
+    color: #1a1a1a;
+    width: 100%;
+    height: 250px;
+    padding: 15px;
+    background-color: rgb(242, 242, 242, 0.5);
+    border-radius: 5px;
+}
+
+.commentsTitle {
+    font-size: min(9vw, 20px);
+    font-weight: 700;
+    color: #de6d21;
+}
+
+.scrollingComments {
+    height: 85%;
+    margin-top: 5px;
+    padding-right: 5px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+
+.commentContainer {
+    background-color: rgb(242, 242, 242, 0.6);
+    text-align: left;
+    margin-top: 6px;
+    padding: 10px;
+    border-radius: 5px;
+    /* border: 2px solid #404040; */
+}
+
+.foodPlaceDetails .rating {
+    font-size: min(7vw, 15px);
+    color: rgb(242, 242, 242, 0.8);
+    font-style: italic;
+}
+
+.commentContainer .datePosted {
+    font-size: min(7vw, 13px);
+    font-style: italic;
+    color: #808080;
+}
+
+.commentContainer .comment {
+    font-size: min(8vw, 16px);
+}
+
+.foodPlacePic {
+    display: inline-block;
+    overflow: hidden;
+    width: min(60vw, 100px);
+    height: min(60vw, 100px);
+    border-color: transparent;
+    border-radius: 50%;
+}
+
+.dashboardItemButtons {
+    width: 10em;
+}
+
+.dashboardItemBtn {
+    margin: 15px 3px 0 3px;
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 1px solid rgb(225, 225, 225, 0.6);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.6);
+    font-family: sans-serif;
+    font-size: min(7vw, 13px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+}
+
+.dashboardItemBtn:hover {
+    border-color: transparent;
+    background-color: rgb(242, 242, 242, 0.8);
+    color: #404040;
+}
+
+.confirmDeleteContainer {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(225, 225, 225, 0.6);
+    color: #1a1a1a;
+}
+
+.confirmDeleteContainer .dashboardItemBtn {
+    border-color: rgb(225, 225, 225, 0.8);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.8);
+}
+
+.confirmDeleteContainer .dashboardItemBtn:hover {
+    background-color: #f2f2f2;
+    border-color: #f2f2f2;
+    color: #404040;
+}
+
+.confirmDeleteContainer .confirmDeleteMsg {
+    color: #de6d21;
+    font-weight: 600;
+}
+
+/* EDIT FOOD PLACE CLASSES */
+
+.addEditFoodPlace {
+    padding: 10px;
+}
+
+.addEditFoodPlace h5 {
+    color: #1a1a1a;
+    font-size: min(11vw, 23px);
+}
+
+.inlineFlex {
+    display: inline-flex;
+    justify-content: center;
+    width: 90%;
+    margin-top: 10px;
+}
+
+.inlineFlex .editDetail {
+    margin: 0 10px 0 10px;
+}
+
+.addEditPic {
+    margin: 10px;
+    display: inline-block;
+    overflow: hidden;
+    width: min(60vw, 100px);
+    height: min(60vw, 100px);
+    border: 3px solid rgb(242, 242, 242, 0.5);
+    border-radius: 50%;
+}
+
+.addEditFoodPlaceBtn {
+    padding: 5px 8px;
+    border-radius: 30px;
+    border: 1px solid rgb(225, 225, 225, 0.8);
+    background-color: transparent;
+    color: rgb(225, 225, 225, 0.8);
+    font-family: sans-serif;
+    font-size: min(7vw, 14px);
+    text-decoration: none;
+    transition: 0.2s;
+    outline: none;
+    margin-top: 15px;
+}
+
+.addEditFoodPlaceBtn:hover {
+    color: #1a1a1a;
+    background-color: rgb(242, 242, 242, 0.8);
+    border-color: transparent;
+}
+
+.descriptionTile {
+    display: inline-block;
+    width: 80%;
+}
+
+.descriptionTile p {
+    color: #404040;
+}
+
+.descriptionTile textarea {
+    background-color: rgb(242, 242, 242, 0.5);
+    border-radius: 5px;
+    resize: none;
+    width: 80%;
+    height: 100px;
+    padding: 10px;
+    border-color: transparent;
+    text-align: left;
+}
+
+.inlineFlex input {
+    font-size: min(9vw, 18px);
+}
+
+.foodPlaceInputContainer p {
+    font-size: min(7vw, 14px);
+    color: #404040;
+}
+
+.foodPlaceInput {
+    background-color: rgb(242, 242, 242, 0.5);
+    border-color: transparent;
+    border-radius: 5px;
+    outline: none;
+    font-size: min(8vw, 16px);
+    font-family: sans-serif;
+    text-align: left;
+}
+
+.inlineFlex p {
+    color: #404040;
+}
+
+.editTime {
+    background-color: rgb(242, 242, 242, 0.5);
+    color: #1a1a1a;
+    margin: 2px 2px 0 2px;
+    padding: 2px;
+    font-size: min(8vw, 15px);
+    border-radius: 3px;
+    border-color: transparent;
+    outline: none;
+}
+
+.editPrice {
+    background-color: rgb(242, 242, 242, 0.5);
+    color: #1a1a1a;
+    margin-top: 1px;
+    padding: 2px;
+    font-size: min(8vw, 15px);
+    border-color: transparent;
+    border-radius: 3px;
+    outline: none;
+}
+
+.checkboxes {
+    background-color: rgb(242, 242, 242, 0.5);
+    border-color: transparent;
+    border-radius: 5px;
+}
+
+.checkboxes label {
+    color: #1a1a1a;
+    display: inline-block;
+    padding: 3px;
+    margin: 0px 3px 0px 3px;
+}
