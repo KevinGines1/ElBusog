@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './Nav.css';
-import '../ElbusogCSS/ElbusogCSS.css';
-import logo from '../ElbusogCSS/logo.png';
-import defaultPic from '../ElbusogCSS/user.png';
+import logo from '../assets/logo.png';
+import defaultPic from '../assets/user.png';
 
 function Nav() {
     const profilePic = useSelector(state => state.profile.Picture)

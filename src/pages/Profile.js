@@ -4,7 +4,7 @@ import LoadingPage from '../LoadingPage';
 import EditProfile from '../components/EditProfile';
 import Dashboard from '../components/Dashboard';
 import MyProfile from '../components/MyProfile';
-import profileBG from '../ElbusogCSS/uplbBanner.jpg';
+import profileBG from '../assets/uplbBanner.jpg';
 import './Profile.css';
 
 function Profile() {

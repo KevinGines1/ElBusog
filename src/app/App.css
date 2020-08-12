@@ -62,7 +62,7 @@ body {
 /* -----HEADINGS AND PARAGRAPH */
 @font-face {
     font-family: Satisfy;
-    src: url(Satisfy-Regular.ttf);
+    src: url(../assets/Satisfy-Regular.ttf);
 }
 
 h1 {

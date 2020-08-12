@@ -1,11 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import '../ElbusogCSS/ElbusogCSS.css';
 import './Home.css';
-import homeBanner from '../ElbusogCSS/uplbBanner.jpg';
-import recomBanner from '../ElbusogCSS/cakeBanner.png';
-import defaultFoodPic from '../ElbusogCSS/foodPlace.png';
+import homeBanner from '../assets/uplbBanner.jpg';
+import recomBanner from '../assets/cakeBanner.png';
+import defaultFoodPic from '../assets/foodPlace.png';
 import LoadingPage from '../LoadingPage';
 import Ratings from 'react-ratings-declarative';
 

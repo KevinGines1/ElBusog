@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addingFoodPlace } from '../redux';
 import AddEditFoodPlace from '../components/AddEditFoodPlace';
 import DashboardItemButtons from './DashboardItemButtons';
-import foodIcon from '../ElbusogCSS/foodIcon.png';
+import foodIcon from '../assets/foodIcon.png';
 import Ratings from 'react-ratings-declarative';
 
 function Dashboard() {    

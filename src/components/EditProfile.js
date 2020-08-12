@@ -8,7 +8,7 @@ import {
     cancelChanges,
     deleteAccount
 } from '../redux';
-import defaultPic from '../ElbusogCSS/user.png';
+import defaultPic from '../assets/user.png';
 
 function EditProfile() {
     const profile = useSelector(state => state.profile)
