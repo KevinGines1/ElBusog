@@ -386,7 +386,7 @@ magdagdag lang kayo dito */
     display: inline-block;
     padding: 15px 30px;
     border-radius: 30px;
-    border: 1px solid #ffc000;
+    border: 1px solid #e07f3e;
     background-color: white;
     color: black;
     font-family: 'Source Sans Pro', sans-serif;
@@ -395,7 +395,7 @@ magdagdag lang kayo dito */
 }
 
 .button:hover {
-    background-color: #ffc000;
+    background-color: #e07f3e;
     color: white;
 }
 
@@ -403,7 +403,7 @@ magdagdag lang kayo dito */
     display: inline-block;
     padding: 15px 30px;
     border-radius: 30px;
-    border: 1px solid #ffc000;
+    border: 1px solid #e0752e;
     background-color: rgba(0,0,0,0.7);
     color: white;
     text-align: center;
@@ -411,10 +411,10 @@ magdagdag lang kayo dito */
     font-size: 18px;
     text-decoration: none;
     transition: 0.2s;
-}
+} 
 
 .buttonTranslucent:hover {
-    background-color: #ffc000;
+    background-color: #e0752e;
     color: white;
 }
 
@@ -422,7 +422,7 @@ magdagdag lang kayo dito */
 .textbox {
     width: 100%;
     padding: 15px;
-    border: 1px solid #ffc000;
+    border: 1px solid #e07f3e;
     border-radius: 30px;
     font-size: 18px;
 }

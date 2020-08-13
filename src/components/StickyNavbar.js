@@ -69,12 +69,16 @@ function StickyNavbar(props) {
                     </div>
                 </div>
             )}
-            {profileDropdownVisible &&
-                <ProfileDropdown/>
-            }
-            {leftNavbarVisible &&
-                <LeftNavbar/>
-            }
+            <div onClick={() => toggleDropdown(false)}>
+                {profileDropdownVisible &&
+                    <ProfileDropdown/>
+                }
+            </div>
+            <div onClick={() => toggleLeftNavbar(false)}>
+                {leftNavbarVisible &&
+                    <LeftNavbar/>
+                }
+            </div>
         </div>
     )
 }

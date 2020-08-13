@@ -11,6 +11,7 @@ import Nav from '../components/Nav';
 import StickyNavbar from '../components/StickyNavbar';
 import Footer from '../components/Footer';
 import FetchData from '../components/FetchData.js';
+import ScrollToTop from '../components/ScrollToTop';
 
 //pages
 import Home from '../pages/Home';
@@ -24,9 +25,9 @@ const App = () => (
   <Provider store={store}>
     <FetchData />
     <Router>
+      <ScrollToTop/>
       <div className="App">
         <Nav/>
-        {/* <Nav1 /> */}
         <StickyNavbar/>
         <Switch>
           <Route path="/login" exact component={Login} />
