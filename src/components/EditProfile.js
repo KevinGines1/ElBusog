@@ -143,145 +143,146 @@ function EditProfile() {
     }
     
     return (
-        <div className="editProfileContainer col-4 tile margin-lr-10 margin-tb-10 profileTiles">
-            <form onSubmit={handleFormSubmit}>
-                <h3>Edit Profile</h3>
-                <div className="myProfilePic">
-                    <img
-                        onError={imgSrcInvalid}
-                        onLoad={imgSrcValid}
-                        src={state.Picture
-                            ? state.Picture
-                            : profile.Picture !== null
-                            ? profile.Picture
-                            : defaultPic}
-                        alt="Profile"
-                    />
-                </div>
-                <div className="editDetail">
-                    <p>Upload Photo</p>
-                    <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="text"
-                        name="Picture"
-                        defaultValue={profile.Picture}
-                    />
-                    <div className={state.imgSrcInvalid ? "show" : "hide"}>
-                        Please enter an image's link.
+        <div className="col-4">
+            <div className="editProfileContainer tile margin-lr-10 margin-tb-10 profileTiles">
+                <form onSubmit={handleFormSubmit}>
+                    <h3>Edit Profile</h3>
+                    <div className="myProfilePic">
+                        <img
+                            onError={imgSrcInvalid}
+                            onLoad={imgSrcValid}
+                            src={state.Picture
+                                ? state.Picture
+                                : profile.Picture !== null
+                                ? profile.Picture
+                                : defaultPic}
+                            alt="Profile"
+                        />
                     </div>
-                </div>
-                <div className="editDetail">
-                    <p>Name</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editName"
-                        type="text"
-                        name="Name"
-                        maxLength="30"
-                        defaultValue={profile.Name}
-                    />
-                </div>
-                <div className="editDetail">
-                    <p>Account Type</p>
-                    <select
-                        onChange={handleInputChange}
-                        className="userTypeOptions"
-                        name="User_type"
-                        defaultValue={profile.User_type}
-                    >
-                        <option value="Customer">Customer</option>
-                        <option value="Business_owner">Business Owner</option>
-                    </select>
-                    <div className={state.invalidAccType ? "show" : "hide"}>
-                        Please delete your businesses first before switching to a Customer account.
+                    <div className="editDetail">
+                        <p>Upload Photo</p>
+                        <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="text"
+                            name="Picture"
+                            defaultValue={profile.Picture}
+                        />
+                        <div className={state.imgSrcInvalid ? "show" : "hide"}>
+                            Please enter an image's link.
+                        </div>
                     </div>
-                </div>
-                <div className="editDetail">
-                    <p>Username</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="text"
-                        name="Username"
-                        maxLength="15"
-                        defaultValue={profile.Username}
-                    />
-                    <div className={profile.usernameAvailable ? "hide" : "show"}>
-                        Username is already taken
+                    <div className="editDetail">
+                        <p>Name</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editName"
+                            type="text"
+                            name="Name"
+                            maxLength="30"
+                            defaultValue={profile.Name}
+                        />
                     </div>
-                </div>
-                <div className="editDetail">
-                    <p>Email</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="text"
-                        name="Email"
-                        maxLength="25"
-                        defaultValue={profile.Email}
-                    />
-                    <div className={profile.emailAvailable ? "hide" : "show"}>
-                        Email is already taken
+                    <div className="editDetail">
+                        <p>Account Type</p>
+                        <select
+                            onChange={handleInputChange}
+                            className="userTypeOptions"
+                            name="User_type"
+                            defaultValue={profile.User_type}
+                        >
+                            <option value="Customer">Customer</option>
+                            <option value="Business_owner">Business Owner</option>
+                        </select>
+                        <div className={state.invalidAccType ? "show" : "hide"}>
+                            Please delete your businesses first before switching to a Customer account.
+                        </div>
                     </div>
-                </div>
-                <div className="changePassword">
-                    <p>New Password</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="password"
-                        name="Password"
-                    />
-                    <p>Confirm Password</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="editInput"
-                        type="password"
-                        name="confirmPassword"
-                    />
-                    <div className={state.passwordsMatch ? "hide" : "show"}>
-                        Passwords do not match
+                    <div className="editDetail">
+                        <p>Username</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="text"
+                            name="Username"
+                            maxLength="15"
+                            defaultValue={profile.Username}
+                        />
+                        <div className={profile.usernameAvailable ? "hide" : "show"}>
+                            Username is already taken
+                        </div>
                     </div>
-                </div>
-                <div className={state.blankField ? "show" : "hide"}>
-                    Please do not leave any field blank.
-                </div>
-                <div>
-                    <button
-                        className="deleteAccBtn"
-                        type="button"
-                        onClick={confirmDelete}
-                    >Delete Account</button>
-                    {(state.deletingAccount &&
-                    <div className="profileConfirmDelete">
-                        <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
+                    <div className="editDetail">
+                        <p>Email</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="text"
+                            name="Email"
+                            maxLength="25"
+                            defaultValue={profile.Email}
+                        />
+                        <div className={profile.emailAvailable ? "hide" : "show"}>
+                            Email is already taken
+                        </div>
+                    </div>
+                    <div className="changePassword">
+                        <p>New Password</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="password"
+                            name="Password"
+                        />
+                        <p>Confirm Password</p>
+                        <input
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="password"
+                            name="confirmPassword"
+                        />
+                        <div className={state.passwordsMatch ? "hide" : "show"}>
+                            Passwords do not match
+                        </div>
+                    </div>
+                    <div className={state.blankField ? "show" : "hide"}>
+                        Please do not leave any field blank.
+                    </div>
+                    <div>
                         <button
-                            className="confirmDeleteBtn"
-                            onClick={() => dispatch(deleteAccount(profile.Username, profile.User_type))}
-                        >Yes</button>
-                        <button
-                            className="confirmDeleteBtn"
+                            className="deleteAccBtn"
                             type="button"
                             onClick={confirmDelete}
-                        >No</button>
+                        >Delete Account</button>
+                        {(state.deletingAccount &&
+                        <div className="profileConfirmDelete">
+                            <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
+                            <button
+                                className="confirmDeleteBtn"
+                                onClick={() => dispatch(deleteAccount(profile.Username, profile.User_type))}
+                            >Yes</button>
+                            <button
+                                className="confirmDeleteBtn"
+                                type="button"
+                                onClick={confirmDelete}
+                            >No</button>
+                        </div>
+                        )}
                     </div>
-                    )}
-                </div>
-                <div>
-                    <button
-                        className="profileBtn margin-lr-10"
-                        type="submit"
-                    >Save Changes</button>
-                    <button
-                        type="button"
-                        className="profileBtn margin-lr-10"
-                        onClick={handleCancel}
-                    >Cancel</button>
-                </div>
-            </form>
-
+                    <div>
+                        <button
+                            className="profileBtn margin-lr-10"
+                            type="submit"
+                        >Save Changes</button>
+                        <button
+                            type="button"
+                            className="profileBtn margin-lr-10"
+                            onClick={handleCancel}
+                        >Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 }

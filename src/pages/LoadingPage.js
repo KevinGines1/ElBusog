@@ -7,7 +7,7 @@ function LoadingPage(props) {
     }
 
     return (
-        <div className="rowcenter col-12" style={style}>
+        <div className="row force-center" style={style}>
             <h2>Please wait...</h2>
         </div>
     );

@@ -12,22 +12,18 @@
     text-align: center;
 }
 
-.left-navbar a {
-    color: black;
-    text-align: center;
-    padding: 0 30px;
-    font-family: sans-serif;
+a {
     text-decoration: none;
 }
 
 .left-navbar-entry {
-    padding: 20px;
+    color: black;
+    text-align: center;
+    font-family: sans-serif;
+    padding: 20px 50px;
 }
 
 .left-navbar-entry:hover {
     background-color: #e0752e;
-}
-
-.left-navbar-entry:hover a{
     color: white;
 }

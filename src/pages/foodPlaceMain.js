@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import FoodPlace from './foodPlace';
+import banner from '../assets/uplbBanner.jpg';
+// UNCOMMENT IF YOU WILL USE FoodPlace
+// import FoodPlace from './foodPlace';
 
 class FoodPlaceMain extends Component {
   /*
@@ -17,9 +19,16 @@ class FoodPlaceMain extends Component {
     //const { foodPlaces } = this.state;
     return (
       <div>
-        <h1>foodPlaceMain</h1>
+        <div style={{backgroundImage: `url(${banner})`}}>
+            <div className="row">
+                <div className="col-12">
+                    <img className="banner" src={banner} alt="Welcome Banner" />
+                    <h1 className="title">Food Places</h1>
+                </div>
+            </div>
+        </div>
 
-        <Link to = '/foodplaces/:postId'>foodPlace</Link>
+        <Link to = '/foodplace/:postId'>foodPlace</Link>
       </div>
     );
   }

@@ -12,22 +12,18 @@
     text-align: center;
 }
 
-.profile-dropdown a {
-    color: black;
-    text-align: center;
-    padding: 0 30px;
-    font-family: sans-serif;
+a {
     text-decoration: none;
 }
 
 .profile-dropdown-entry {
-    padding: 20px;
+    color: black;
+    text-align: center;
+    font-family: sans-serif;
+    padding: 20px 50px;
 }
 
 .profile-dropdown-entry:hover {
     background-color: #e0752e;
-}
-
-.profile-dropdown-entry:hover a{
     color: white;
 }

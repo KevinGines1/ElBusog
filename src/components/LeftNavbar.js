@@ -4,15 +4,21 @@ import '../components/LeftNavbar.css'
 
 const ProfileDropdown = () => (
     <div className="left-navbar">
-        <div className="left-navbar-entry"><Link to="/">
-            Home
-        </Link></div>
-        <div className="left-navbar-entry"><Link to="/food">
-            Food
-        </Link></div>
-        <div className="left-navbar-entry"><Link to="/about">
-            About
-        </Link></div>
+        <Link to="/">
+            <div className="left-navbar-entry">
+                Home
+            </div>
+        </Link>
+        <Link to="/foodplace">
+            <div className="left-navbar-entry">
+                Browse
+            </div>
+        </Link>
+        <Link to="/about">
+            <div className="left-navbar-entry">
+                About
+            </div>
+        </Link>
     </div>
 )
 

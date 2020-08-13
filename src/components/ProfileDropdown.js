@@ -4,12 +4,16 @@ import '../components/ProfileDropdown.css'
 
 const ProfileDropdown = () => (
     <div className="profile-dropdown">
-        <div className="profile-dropdown-entry"><Link to="/profile">
-            My Account
-        </Link></div>
-        <div className="profile-dropdown-entry"><Link to="/">
-            Logout
-        </Link></div>
+        <Link to="/profile">
+            <div className="profile-dropdown-entry">
+                My Account
+            </div>
+        </Link>
+        <Link to="/">
+            <div className="profile-dropdown-entry">
+                Logout
+            </div>
+        </Link>
     </div>
 )
 

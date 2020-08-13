@@ -52,56 +52,32 @@ class Randomizer extends React.Component {
             }, this.handleFormSubmit);
         }
         else if(this.state.questionNumber === 0){
-            if(choice === 1) {
-                this.setState({constraints_budget: "<60"});
-            }
-            else if(choice === 2) {
-                this.setState({constraints_budget: "60-100"});
-            }
-            else if(choice === 3) {
-                this.setState({constraints_budget: ">100"});
-            }
-            else if(choice === 6) {
-                this.setState({constraints_budget: "any"});
+            switch (choice) {
+                case 1: this.setState({constraints_budget: "<60"}); break;
+                case 2: this.setState({constraints_budget: "60-100"}); break;
+                case 3: this.setState({constraints_budget: ">100"}); break;
+                default: this.setState({constraints_budget: "any"});
             }
             this.setState({questionNumber: 1})
         }
         else if(this.state.questionNumber === 1){
-            if(choice === 1) {
-                this.setState({constraints_location: "within UPLB"});
-            }
-            else if(choice === 2) {
-                this.setState({constraints_location: "Raymundo"});
-            }
-            else if(choice === 3) {
-                this.setState({constraints_location: "Grove"});
-            }
-            else if(choice === 4) {
-                this.setState({constraints_location: "Demarces"});
-            }
-            else if(choice === 6) {
-                this.setState({constraints_location: "any"});
+            switch (choice) {
+                case 1: this.setState({constraints_location: "within UPLB"}); break;
+                case 2: this.setState({constraints_location: "Raymundo"}); break;
+                case 3: this.setState({constraints_location: "Grove"}); break;
+                case 4: this.setState({constraints_location: "Demarces"}); break;
+                default: this.setState({constraints_location: "any"});
             }
             this.setState({questionNumber: 2})
         }
         else if(this.state.questionNumber === 2){
-            if(choice === 1) {
-                this.setState({constraints_type: "Meat"}, this.handleFormSubmit);
-            }
-            else if(choice === 2) {
-                this.setState({constraints_type: "Vegetable"}, this.handleFormSubmit);
-            }
-            else if(choice === 3) {
-                this.setState({constraints_type: "Seafood"}, this.handleFormSubmit);
-            }
-            else if(choice === 4) {
-                this.setState({constraints_type: "Snacks"}, this.handleFormSubmit);
-            }
-            else if(choice === 5) {
-                this.setState({constraints_type: "Ice Cream"}, this.handleFormSubmit);
-            }
-            else if(choice === 6) {
-                this.setState({constraints_type: "any"}, this.handleFormSubmit);
+            switch (choice) {
+                case 1: this.setState({constraints_type: "Meat"}, this.handleFormSubmit); break;
+                case 2: this.setState({constraints_type: "Vegetable"}, this.handleFormSubmit); break;
+                case 3: this.setState({constraints_type: "Seafood"}, this.handleFormSubmit); break;
+                case 4: this.setState({constraints_type: "Snacks"}, this.handleFormSubmit); break;
+                case 5: this.setState({constraints_type: "Ice Cream"}, this.handleFormSubmit); break;
+                default: this.setState({constraints_type: "any"}, this.handleFormSubmit);
             }
         }
     }

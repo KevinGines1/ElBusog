@@ -1,6 +1,6 @@
 import React from 'react';
-import Randomizer from '../components/Randomizer';
 import banner from '../assets/uplbBanner.jpg';
+import logo from '../assets/logo.svg';
 
 const About = () => (
     <div>
@@ -12,13 +12,16 @@ const About = () => (
                 </div>
             </div>
         </div>
+        <div className="row margin-tb-30 force-center">
+            <img src={logo} width="200px" alt="Elbusog Logo"/>
+        </div>
         <div className="row margin-tb-40">
             <div className="row">
                 <h2 className="force-center">Objectives</h2>
             </div>
             <div className="rowcenter">
                 <div className="col-8 padding-lr-10">
-                    <p>The developers are committed in promoting a diverse and friendly community. Elbusog, a food place finding website, allows users to search for local food establishments around UPLB. This website allows users to find the most suitable food place with respect to their needs such as budget, location, and food type. The objective of this website is to assist users in narrowing their options and at the same time, find the most ideal food place. It also acts as a tool in promoting local business establishments, boosting the local economy.</p>
+                    <p className="justify">The developers are committed in promoting a diverse and friendly community. Elbusog, a food place finding website, allows users to search for local food establishments around UPLB. This website allows users to find the most suitable food place with respect to their needs such as budget, location, and food type. The objective of this website is to assist users in narrowing their options and at the same time, find the most ideal food place. It also acts as a tool in promoting local business establishments, boosting the local economy.</p>
                 </div>
             </div>
         </div>
@@ -66,8 +69,6 @@ const About = () => (
                 </div>
             </div>
         </div>
-        {/* For demo only, remove randomizer after merge */}
-        <Randomizer/>
     </div>
 );
 

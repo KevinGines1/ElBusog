@@ -25,9 +25,11 @@ function Profile() {
                 )}
 
                 {(profile.User_type === "Customer" &&
-                    <div className="col-7 tile margin-lr-10 margin-tb-10 profileTiles customerDashboard">
-                        <h3>Dashboard</h3>
-                        <p className="dashboardMsg">Please switch to a Business Owner account to add a business</p>
+                    <div className="col-7">
+                        <div className="tile margin-lr-10 margin-tb-10 profileTiles customerDashboard">
+                            <h3>Dashboard</h3>
+                            <p className="dashboardMsg">Please switch to a Business Owner account to add a business</p>
+                        </div>
                     </div>
                 )}
                 
