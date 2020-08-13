@@ -17,7 +17,7 @@ function MyProfile() {
                         alt="Profile"
                     />
                 </div>
-                <h5 className="name">{profile.Name}</h5>
+                <h6 className="name">{profile.Name}</h6>
                 <p className="userType italic">
                     {profile.User_type === "Customer"
                         ? "Customer"
