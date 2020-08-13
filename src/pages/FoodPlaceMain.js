@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import banner from '../assets/uplbBanner.jpg';
 // UNCOMMENT IF YOU WILL USE FoodPlace
-// import FoodPlace from './foodPlace';
+// import FoodPlace from './FoodPlace';
 
 class FoodPlaceMain extends Component {
   /*

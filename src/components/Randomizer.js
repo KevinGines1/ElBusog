@@ -51,6 +51,9 @@ class Randomizer extends React.Component {
                 constraints_type: "any"
             }, this.handleFormSubmit);
         }
+        else if(choice === 7) {
+            this.setState({questionNumber: 0});
+        }
         else if(this.state.questionNumber === 0){
             switch (choice) {
                 case 1: this.setState({constraints_budget: "<60"}); break;
@@ -149,12 +152,20 @@ class Randomizer extends React.Component {
             <div>
                 <div className="row">
                     <div className="col-12">
-                        <img className="banner" src={banner} alt="Banner" onClick={() => this.handleClick(0)}/>
+                        <img
+                            className="banner-no-height"
+                            style={{height: "300px"}}
+                            src={banner}
+                            alt="Banner"
+                            onClick={() => this.handleClick(0)}/>
                         <h5 className="pretitle">Want to eat but can't decide where?</h5>
-                        <h2 className="title" onClick={() => this.handleClick(0)}>Get an instant recommendation!</h2>
+                        <h2
+                            className="title"
+                            style={{textDecoration: 'underline', textDecorationThickness: '1px'}}
+                            onClick={() => this.handleClick(0)}>Get instant recommendation!</h2>
                     </div>
                 </div>
-                <div className="banner padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
+                <div className="banner-auto-height padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
                     <div className="row">
                         <h4 className="col-12 force-center white">...or choose your preferences</h4>
                     </div>
@@ -174,6 +185,9 @@ class Randomizer extends React.Component {
                             <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
                         }
                         <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(6)}>{questions[this.state.questionNumber][6]}</button>
+                    </div>
+                    <div className="row force-center">
+                        <button className="button margin-tb-10 seeMore" onClick={() => this.handleClick(7)}>Retry</button>
                     </div>
                 </div>
             </div>

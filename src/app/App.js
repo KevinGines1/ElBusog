@@ -15,7 +15,7 @@ import FetchData from '../components/FetchData.js';
 //pages
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
-import FoodPlace from '../pages/foodPlaceMain';
+import FoodPlace from '../pages/FoodPlaceMain';
 import About from '../pages/About';
 import CreateAccount from '../pages/CreateAccount'
 import Login from '../pages/Login'

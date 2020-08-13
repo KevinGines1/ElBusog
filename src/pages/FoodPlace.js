@@ -1,5 +1,5 @@
 import React from 'react';
-import Rate from '../components/rate';
+import Rate from '../components/Rate';
 
 function FoodPlace() {
   return (

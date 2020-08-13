@@ -35,36 +35,42 @@ const About = () => (
             <div className="rowcenter">
                 <div className="col-4">
                     <div className="tile margin-tb-10 margin-lr-10">
-                        a
+                        <h6>a</h6>
+                        <p>aa</p>
                     </div>
                 </div>
                 <div className="col-4">
                     <div className="tile margin-tb-10 margin-lr-10">
-                        b
-                    </div>
-                </div>
-            </div>
-            <div className="rowcenter">
-                <div className="col-4">
-                    <div className="tile margin-tb-10 margin-lr-10">
-                        c
-                    </div>
-                </div>
-                <div className="col-4">
-                    <div className="tile margin-tb-10 margin-lr-10">
-                        d
+                        <h6>b</h6>
+                        <p>bb</p>
                     </div>
                 </div>
             </div>
             <div className="rowcenter">
                 <div className="col-4">
                     <div className="tile margin-tb-10 margin-lr-10">
-                        e
+                        <h6>c</h6>
+                        <p>cc</p>
                     </div>
                 </div>
                 <div className="col-4">
                     <div className="tile margin-tb-10 margin-lr-10">
-                        f
+                        <h6>d</h6>
+                        <p>dd</p>
+                    </div>
+                </div>
+            </div>
+            <div className="rowcenter">
+                <div className="col-4">
+                    <div className="tile margin-tb-10 margin-lr-10">
+                        <h6>e</h6>
+                        <p>ee</p>
+                    </div>
+                </div>
+                <div className="col-4">
+                    <div className="tile margin-tb-10 margin-lr-10">
+                        <h6>f</h6>
+                        <p>ff</p>
                     </div>
                 </div>
             </div>
