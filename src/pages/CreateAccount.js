@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
 import { addUser } from '../redux'
-
+import { Link } from 'react-router-dom';
 const INITIAL_STATE = {
   Name: '',
   Username: '',
@@ -50,74 +50,92 @@ class CreateAccount extends Component {
 
     return (
       <form onSubmit={this.handleFormSubmit}>
-        <h1 className="LOGIN">Create Account</h1>
-        <label>Name: </label>
-        <input
-          onChange={this.handleInputChange}
-          type="text"
-          name="Name"
-          value={Name}
-          placeholder="Name"
-        />
-        <br/><br/>
-        <label>Username: </label>
-        <input
-          onChange={this.handleInputChange}
-          type="text"
-          name="Username"
-          value={Username}
-          placeholder="Username"
-        />
-        <br/><br/>
-        <label>Email: </label>
-        <input
-          onChange={this.handleInputChange}
-          type="email"
-          name="Email"
-          value={Email}
-          placeholder="Email"
-        />
-        <br/><br/>
-        <label>Password: </label>
-        <input
-          onChange={this.handleInputChange}
-          type="password"
-          name="Password"
-          value={Password}
-          placeholder="Password"
-        />
-        <br/><br/>
-        <label>Picture: </label>
-        <input
-          onChange={this.handleInputChange}
-          type="text"
-          name="Picture"
-          value={Picture}
-          placeholder="Enter image URL"
-        />
-        <div><br/>
-          <label>Account Type</label><br/>
+        <div className="logintile">
+          <Link to=""><button className="buttonBack">←</button></Link>
+          <h2 className="force-center">Register</h2>
           <input
+            className="logintextbox"
             onChange={this.handleInputChange}
-            type="radio"
-            name="User_type"
-            id="business"
-            value="Business_owner"
+            type="text"
+            name="Name"
+            value={Name}
+            placeholder="Name"
           />
-          <label htmlFor="business">Business</label>
-          <br/>
+          <br/><br/>
           <input
+            className="logintextbox"
             onChange={this.handleInputChange}
-            type="radio"
-            name="User_type"
-            id="customer"
-            value="Customer"
+            type="text"
+            name="Username"
+            value={Username}
+            placeholder="Username"
           />
-          <label htmlFor="customer">Customer</label>
-        </div>
+          <br/><br/>
+          <input
+            className="logintextbox"
+            onChange={this.handleInputChange}
+            type="email"
+            name="Email"
+            value={Email}
+            placeholder="Email"
+          />
+          <br/><br/>
+          <input
+            className="logintextbox"
+            onChange={this.handleInputChange}
+            type="password"
+            name="Password"
+            value={Password}
+            placeholder="Password"
+          />
+          <br/><br/>
+          <input
+            className="logintextbox"
+            onChange={this.handleInputChange}
+            type="text"
+            name="Picture"
+            value={Picture}
+            placeholder="Enter image URL"
+          /><br/><br/>
+          <div className="rowcenter">
+          <label>Account Type:</label>
 
-        <br/><br/>
-        <button type="submit" className="buttonz">Create Account</button>
+          <div className="padding-lr-20"></div>
+            
+          <label className="radContainer">Business
+            <input 
+              onChange={this.handleInputChange}
+              type="radio" 
+              name="User_type"
+              id="business"
+              value="Business_owner"
+              />
+            <span className="radButton"></span>
+          </label>
+
+          <div className="padding-lr-20"></div>
+
+          <label className="radContainer">Customer
+            <input 
+              onChange={this.handleInputChange}
+              type="radio" 
+              name="User_type"
+              id="customer"
+              value="Customer"
+              />
+            <span className="radButton"></span>
+        </label>
+
+
+          </div>
+
+          <br/><br/>
+          <div className="force-center" >
+            <button type="submit" className="button ">Register</button>
+            <div className="padding-lr-10"></div>
+          <Link to="/login"><button className="button ">Sign In</button></Link>
+        </div>
+        </div>
       </form>
     );
   }

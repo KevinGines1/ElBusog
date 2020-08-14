@@ -420,6 +420,28 @@ magdagdag lang kayo dito */
     color: white;
 }
 
+
+.buttonBack {
+    margin-left: 17px;
+    position: absolute;
+    padding-top: 5px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    border: 0px solid #e07f3e;
+    background-color: white;
+    color: black;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 30px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+.buttonBack:hover {
+    background-color: #e07f3e;
+    color: white;
+}
+
 /* -----TEXTBOX */
 .textbox {
     width: 100%;
@@ -427,6 +449,17 @@ magdagdag lang kayo dito */
     border: 1px solid #e07f3e;
     border-radius: 30px;
     font-size: 18px;
+}
+
+.logintextbox {
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 30px;
+    font-size: 18px;
+    outline: none;
 }
 
 /* -----TILES */
@@ -447,7 +480,19 @@ magdagdag lang kayo dito */
     text-align: center;
 }
 
-
+.logintile {
+    padding-top: 20px;
+    padding-bottom: 50px;
+    margin-top: 100px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5%;
+    background-color: white;
+    box-shadow: 2px 2px 20px 5px #888888;
+    width: 60%;
+    height: 60%;
+    border-radius: 10px;
+}
 
 
 /* -----FOOTER */
@@ -456,4 +501,71 @@ magdagdag lang kayo dito */
     padding: 30px 50px 150px 50px;
     background-color: #111;
     color: #BBB;
+}
+
+
+/* -----AARONS RADIO BUTTONS */
+
+/* The container */
+.radContainer {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 18px;;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.radButton {
+  position: absolute;
+  top: -5px;
+  left: -10px;
+  height: 40px;
+  width: 40px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radContainer:hover input ~ .radButton {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radContainer input:checked ~ .radButton {
+  background-color: orange;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radButton:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radContainer input:checked ~ .radButton:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radContainer .radButton:after {
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: white;
 }
