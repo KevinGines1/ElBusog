@@ -8,9 +8,14 @@ export const fetchFoodPlaces = () => {
         axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
             .then(response => {
                 const foodPlaces = response.data
-                foodPlaces.map(foodPlace =>
+                foodPlaces.forEach((foodPlace) => {
                     dispatch(fetchFoodPlacesReview(foodPlace, foodPlace.Food_place_id))
-                )
+                    dispatch({
+                        type: FETCH_FOOD_PLACES,
+                        payload: foodPlace
+                    })}
+                    )
+                
             })
             .catch(error => {
                 console.log(error.message)

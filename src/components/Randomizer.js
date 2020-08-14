@@ -1,17 +1,15 @@
 import React from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
-import { randomizeAction, getAllFoodPlaces } from '../redux';
+import { randomizeAction } from '../redux';
 import banner from '../assets/cakeBanner.png';
 
 const mapDispatchToProps = dispatch => ({
     randomize: (payload) => dispatch(randomizeAction(payload)),
-    getallfoodplaces: (payload) => dispatch(getAllFoodPlaces(payload))
 });
 
 const mapStateToProps = state => {
     return{
-        listOfFoodPlaces: state.zoren.listOfFoodPlaces
+        listOfFoodPlaces: state.zeit.foodPlacesData.listOfFoodPlaces
     }
 }
 
@@ -22,20 +20,6 @@ const questions = [
 ]
 
 class Randomizer extends React.Component {
-    componentDidMount() {
-        axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
-        .then(response => {
-            console.log(response.data)
-            this.props.getallfoodplaces(response.data);
-        })
-    }
-
-    // async componentDidMount() { // so much cleaner, i suggest 
-    //     const response = await axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
-    //     console.log(response.data)
-    //     this.props.getallfoodplaces(response.data) // add food places to state
-    // }
-
     state = {
         questionNumber: 0,
         constraints_budget: "",
