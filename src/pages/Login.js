@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { loginUser } from '../redux/userRedux/user/userActions'
 import { loginUser } from '../redux'
-import logo from '../assets/logo.svg';
+// import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
 
 const INITIAL_STATE = {

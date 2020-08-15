@@ -1,17 +1,7 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { randomizeAction } from '../redux';
 import banner from '../assets/cakeBanner.png';
-
-const mapDispatchToProps = dispatch => ({
-    randomize: (payload) => dispatch(randomizeAction(payload)),
-});
-
-const mapStateToProps = state => {
-    return{
-        listOfFoodPlaces: state.zeit.foodPlacesData.listOfFoodPlaces
-    }
-}
 
 const questions = [
     ["How much is your budget?", "Less than P60", "P60-P100", "More than P100", null, null, "I don't care"],
@@ -19,73 +9,74 @@ const questions = [
     ["What food are you craving for?", "Meat", "Vegetable", "Seafood", "Snacks", "Ice Cream", "I don't care"],
 ]
 
-class Randomizer extends React.Component {
-    state = {
-        questionNumber: 0,
-        constraints_budget: "",
-        constraints_location: "",
-        constraints_type: "",
-    }
+function Randomizer() {
+    const listOfFoodPlaces = useSelector(state => state.zeit.foodPlacesData.listOfFoodPlaces);
+    const dispatch = useDispatch()
+
+    const [budget, setBudget] = useState('');
+    const [location, setLocation] = useState('');
+    const [type, setType] = useState('');
+    const [questionNumber, setQuestionNumber] = useState(0);
     
-    handleClick = (choice) => {
+    const handleClick = (choice) => {
         if(choice === 0) {
-            this.setState({
-                constraints_budget: "any",
-                constraints_location: "any",
-                constraints_type: "any"
-            }, this.handleFormSubmit);
+            setBudget('any');
+            setLocation('any');
+            setType('any');
+            handleFormSubmit();
         }
         else if(choice === 7) {
-            this.setState({questionNumber: 0});
+            setQuestionNumber(0);
         }
-        else if(this.state.questionNumber === 0){
+        else if(questionNumber === 0){
             switch (choice) {
-                case 1: this.setState({constraints_budget: "<60"}); break;
-                case 2: this.setState({constraints_budget: "60-100"}); break;
-                case 3: this.setState({constraints_budget: ">100"}); break;
-                default: this.setState({constraints_budget: "any"});
+                case 1: setBudget('<60'); break;
+                case 2: setBudget('60-100'); break;
+                case 3: setBudget('>100'); break;
+                default: setBudget('any');
             }
-            this.setState({questionNumber: 1})
+            setQuestionNumber(1)
         }
-        else if(this.state.questionNumber === 1){
+        else if(questionNumber === 1){
             switch (choice) {
-                case 1: this.setState({constraints_location: "within UPLB"}); break;
-                case 2: this.setState({constraints_location: "Raymundo"}); break;
-                case 3: this.setState({constraints_location: "Grove"}); break;
-                case 4: this.setState({constraints_location: "Demarces"}); break;
-                default: this.setState({constraints_location: "any"});
+                case 1: setLocation('within UPLB'); break;
+                case 2: setLocation('Raymundo'); break;
+                case 3: setLocation('Grove'); break;
+                case 4: setLocation('Demarces'); break;
+                default: setLocation('any');
             }
-            this.setState({questionNumber: 2})
+            setQuestionNumber(2)
         }
-        else if(this.state.questionNumber === 2){
+        else if(questionNumber === 2){
             switch (choice) {
-                case 1: this.setState({constraints_type: "Meat"}, this.handleFormSubmit); break;
-                case 2: this.setState({constraints_type: "Vegetable"}, this.handleFormSubmit); break;
-                case 3: this.setState({constraints_type: "Seafood"}, this.handleFormSubmit); break;
-                case 4: this.setState({constraints_type: "Snacks"}, this.handleFormSubmit); break;
-                case 5: this.setState({constraints_type: "Ice Cream"}, this.handleFormSubmit); break;
-                default: this.setState({constraints_type: "any"}, this.handleFormSubmit);
+                case 1: setType('Meat'); break;
+                case 2: setType('Vegetable'); break;
+                case 3: setType('Seafood'); break;
+                case 4: setType('Snacks'); break;
+                case 5: setType('Ice Cream'); break;
+                default: setType('any');
             }
+            handleFormSubmit();
         }
     }
 
-    foodPlaceRanker = () => {
+    const foodPlaceRanker = () => {
         var date = new Date();
         var day = date.getDay();                                // day of the week (0-6 is Sunday-Saturday)
         var hour = date.getHours() * 100 + date.getMinutes()    // hour in 24-hour format (0-23)
         // make an array of user preferences (constraints)
-        const userPref = [this.state.constraints_budget, this.state.constraints_location, this.state.constraints_type];
+        const userPref = [budget, location, type];
         // populate the foodPlaceScores with {name: score} objects for every food place
         var foodPlaceScores = [];
-        this.props.listOfFoodPlaces.forEach((currentValue) => {
+        listOfFoodPlaces.forEach((currentValue) => {
             // food place needs to be open on current time and day of the week
             if(((hour > currentValue.Opening_time && hour < currentValue.Closing_time) || currentValue.Opening_time === null) && currentValue.Days_open.includes(day)) {
                 foodPlaceScores.push({...currentValue, score: 0});
             }
         })
-        console.log(foodPlaceScores);
+        // console.log(foodPlaceScores);
 
-        this.props.listOfFoodPlaces.forEach((currentValue) => {
+        listOfFoodPlaces.forEach((currentValue) => {
             // check if the price range of food place is similar to user preference
             // right budget rewards 3 points, right location rewards 1 point, right type rewards 2 points
             if(currentValue.Price_range === userPref[0]) {
@@ -125,59 +116,56 @@ class Randomizer extends React.Component {
         return foodPlaceScores;
     }
 
-    handleFormSubmit = () => {
+    const handleFormSubmit = () => {
         //dispatch the ranked food places to listOfFoodPlacesRanked in redux store
-        this.props.randomize(this.foodPlaceRanker());
-        console.log(this.state);
+        dispatch(randomizeAction(foodPlaceRanker()))
+        console.log(budget, location, type);
     }
 
-    render(){
-        return(
-            <div>
-                <div className="row">
-                    <div className="col-12">
-                        <img
-                            className="banner-no-height"
-                            style={{height: "300px"}}
-                            src={banner}
-                            alt="Banner"
-                            onClick={() => this.handleClick(0)}/>
-                        <h5 className="pretitle">Want to eat but can't decide where?</h5>
-                        <h2
-                            className="title"
-                            style={{textDecoration: 'underline', textDecorationThickness: '1px'}}
-                            onClick={() => this.handleClick(0)}>Get instant recommendation!</h2>
-                    </div>
-                </div>
-                <div className="banner-auto-height padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
-                    <div className="row">
-                        <h4 className="col-12 force-center white">...or choose your preferences</h4>
-                    </div>
-                    <div className="row margin-tb-20">
-                        <h5 className="col-12 force-center white">{questions[this.state.questionNumber][0]}</h5>
-                    </div>
-                    <div className="rowcenter">
-                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(1)}>{questions[this.state.questionNumber][1]}</button>
-                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(2)}>{questions[this.state.questionNumber][2]}</button>
-                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(3)}>{questions[this.state.questionNumber][3]}</button>
-                    </div>
-                    <div className="rowcenter">
-                        {questions[this.state.questionNumber][4] !== null &&
-                            <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(4)}>{questions[this.state.questionNumber][4]}</button>
-                        }
-                        {questions[this.state.questionNumber][5] !== null &&
-                            <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(5)}>{questions[this.state.questionNumber][5]}</button>
-                        }
-                        <button className="col-3 buttonTranslucent" onClick={() => this.handleClick(6)}>{questions[this.state.questionNumber][6]}</button>
-                    </div>
-                    <div className="row force-center">
-                        <button className="button margin-tb-10 seeMore" onClick={() => this.handleClick(7)}>Retry</button>
-                    </div>
+    return(
+        <div>
+            <div className="row">
+                <div className="col-12">
+                    <img
+                        className="banner-no-height"
+                        style={{height: "300px"}}
+                        src={banner}
+                        alt="Banner"
+                        onClick={() => handleClick(0)}/>
+                    <h5 className="pretitle">Want to eat but can't decide where?</h5>
+                    <h2
+                        className="title"
+                        style={{textDecoration: 'underline', textDecorationThickness: '1px'}}
+                        onClick={() => handleClick(0)}>Get instant recommendation!</h2>
                 </div>
             </div>
-        );
-    }
+            <div className="banner-auto-height padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
+                <div className="row">
+                    <h4 className="col-12 force-center white">...or choose your preferences</h4>
+                </div>
+                <div className="row margin-tb-20">
+                    <h5 className="col-12 force-center white">{questions[questionNumber][0]}</h5>
+                </div>
+                <div className="rowcenter">
+                    <button className="col-3 buttonTranslucent" onClick={() => handleClick(1)}>{questions[questionNumber][1]}</button>
+                    <button className="col-3 buttonTranslucent" onClick={() => handleClick(2)}>{questions[questionNumber][2]}</button>
+                    <button className="col-3 buttonTranslucent" onClick={() => handleClick(3)}>{questions[questionNumber][3]}</button>
+                </div>
+                <div className="rowcenter">
+                    {questions[questionNumber][4] !== null &&
+                        <button className="col-3 buttonTranslucent" onClick={() => handleClick(4)}>{questions[questionNumber][4]}</button>
+                    }
+                    {questions[questionNumber][5] !== null &&
+                        <button className="col-3 buttonTranslucent" onClick={() => handleClick(5)}>{questions[questionNumber][5]}</button>
+                    }
+                    <button className="col-3 buttonTranslucent" onClick={() => handleClick(6)}>{questions[questionNumber][6]}</button>
+                </div>
+                <div className="row force-center">
+                    <button className="button margin-tb-10 seeMore" onClick={() => handleClick(7)}>Retry</button>
+                </div>
+            </div>
+        </div>
+    );
 }
 
-export default connect (mapStateToProps, mapDispatchToProps)(Randomizer);
-// export default connect (mapDispatchToProps)(Randomizer);
+export default Randomizer;
