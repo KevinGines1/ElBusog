@@ -511,6 +511,10 @@ magdagdag lang kayo dito */
     border-radius: 10px;
 }
 
+.map {
+    width: 400px;
+    height: 400px;
+}
 
 /* -----FOOTER */
 .footer {

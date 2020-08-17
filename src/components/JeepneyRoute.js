@@ -33,10 +33,10 @@ function JeepneyRoute() {
     }
 
     return(
-        <div className="rowcenter">
+        <div className="rowcenter margin-tb-10">
             <div className="col-6">
                 <div className="tile margin-lr-10">
-                    <h4>Directions</h4>
+                    <h4>Jeepney Directions</h4>
                     {buttonVisible
                     ?   <button className="button" onClick={() => getLocation()}>Get commute directions</button>
                     :   jeepRoute
