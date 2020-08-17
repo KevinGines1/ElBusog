@@ -28,7 +28,7 @@ const fetchFoodPlacesReducer = (state = initialState, action) => {
                     ],
                 }
             }
-            break;
+            else return state;
         default: return state
     }
 }

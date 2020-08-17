@@ -10,14 +10,13 @@ export const randomizeAction = (payload) => ({
 
 export const getJeepRoute = (lat, lng, id) => {
 	return (dispatch) => {
-		axios.get(`https://ancient-garden-70007.herokuapp.com/api/${lat}%${lng}&${id}`)
+		axios.get(`https://ancient-garden-70007.herokuapp.com/api/locate/${lat}&${lng}&${id}`)
 		.then(response => {
-			console.log(response.data)
+			// console.log(response.data)
 			dispatch({
 				type: GET_JEEP_STOP,
 				payload: response.data
 			})
-			alert(response.data.msg)
 		})
 	}
 }

@@ -120,6 +120,16 @@ p {
     text-align: justify;
 }
 
+.left-desktop-center-phone {
+    text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+    .left-desktop-center-phone {
+        text-align: center;
+    }
+}
+
 /* make text white */
 .white {
     color: white;
@@ -258,7 +268,7 @@ magdagdag lang kayo dito */
     width: 50px;
     height: 50px;
     margin-bottom: 5px;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 
 /* -----STICKY NAVBAR */
@@ -341,7 +351,7 @@ magdagdag lang kayo dito */
 
 /* -----IMAGES */
 .navbarLogo {
-    margin: 8px 20px 0px 20px;
+    margin: 8px 20px 0px 10px;
     width: 60px;
     height: 60px;
 }
@@ -381,6 +391,12 @@ magdagdag lang kayo dito */
 .foodLargePic {
     width: 100%;
     height: 100%;
+}
+
+.devPics {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
 
 /* -----BUTTONS */
@@ -483,6 +499,7 @@ magdagdag lang kayo dito */
 .logintile {
     padding-top: 20px;
     padding-bottom: 50px;
+    padding-left: 30px;
     margin-top: 100px;
     margin-left: 20%;
     margin-right: 20%;
@@ -494,6 +511,10 @@ magdagdag lang kayo dito */
     border-radius: 10px;
 }
 
+.map {
+    width: 90%;
+    height: 400px;
+}
 
 /* -----FOOTER */
 .footer {

@@ -98,11 +98,11 @@ class CreateAccount extends Component {
             placeholder="Enter image URL"
           /><br/><br/>
           <div className="rowcenter">
-          <label>Account Type:</label>
+          <label className="col-3 margin-tb-10">Account Type:</label>
 
-          <div className="padding-lr-20"></div>
+          {/* <div className="padding-lr-20"></div> */}
             
-          <label className="radContainer">Business
+          <label className="radContainer col-3 padding-lr-20 margin-tb-10">Business
             <input 
               onChange={this.handleInputChange}
               type="radio" 
@@ -113,9 +113,9 @@ class CreateAccount extends Component {
             <span className="radButton"></span>
           </label>
 
-          <div className="padding-lr-20"></div>
+          {/* <div className="padding-lr-20"></div> */}
 
-          <label className="radContainer">Customer
+          <label className="radContainer col-3 padding-lr-20 margin-tb-10">Customer
             <input 
               onChange={this.handleInputChange}
               type="radio" 
