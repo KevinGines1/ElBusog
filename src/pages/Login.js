@@ -22,14 +22,12 @@ class Login extends Component {
     event.preventDefault();
 
     if (this.state.username && this.state.password) {
-      console.log(this.state)
+
       const { username, password } = this.state;
 
       //call action creator
-      const boi = this.props.loginUser({ username, password });
-      console.log("boi")
-      console.log(boi)
-      console.log("boi")
+      this.props.loginUser({ username, password });
+      
       //clear user input
       this.setState({
         username:'',

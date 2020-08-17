@@ -6,7 +6,8 @@ import {
 	REGISTER,
 	ADD_USER_FAILURE,
 	LOGIN_USER,
-	LOGIN_FAIL
+	LOGIN_FAIL,
+	GET_PROFILE
 } from './userTypes'
 
 export const fetchUsersRequest = () => {
@@ -74,6 +75,13 @@ export const loginUser = userObj => {
 
 		.then(response => {
 			console.log(response.data)
+
+			//get user profile if login is correct
+			if(response.data.authorized === true) {
+				dispatch(getUser(userObj.username))
+				
+			}
+
 			dispatch({
 				type: LOGIN_USER,
 				payload: response.data
@@ -83,6 +91,32 @@ export const loginUser = userObj => {
 		.catch(error =>{
 			const errorMsg = error.message
 			dispatch(loginFail(errorMsg))
+		})
+	}
+}
+
+export const getUser = username => {
+	return (dispatch) => {
+
+		const urlString = "https://ancient-garden-70007.herokuapp.com/api/profile/"
+		const url = urlString.concat(username)
+		console.log(url)
+		axios.get(url, username, {
+     		headers : { 'Content-Type': 
+            'application/json' }
+		})
+
+		.then(response => {
+
+			console.log(response.data)
+			dispatch({
+				type: GET_PROFILE,
+				payload: response.data
+			})
+
+		})
+		.catch(error =>{
+
 		})
 	}
 }
