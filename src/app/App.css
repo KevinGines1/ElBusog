@@ -120,6 +120,16 @@ p {
     text-align: justify;
 }
 
+.left-desktop-center-phone {
+    text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+    .left-desktop-center-phone {
+        text-align: center;
+    }
+}
+
 /* make text white */
 .white {
     color: white;
@@ -381,6 +391,12 @@ magdagdag lang kayo dito */
 .foodLargePic {
     width: 100%;
     height: 100%;
+}
+
+.devPics {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
 }
 
 /* -----BUTTONS */

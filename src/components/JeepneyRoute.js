@@ -41,7 +41,9 @@ function JeepneyRoute() {
                     ?   <button className="button" onClick={() => getLocation()}>Get commute directions</button>
                     :   jeepRoute
                         ?   coordsAvailable
-                            ?   <p>Ride a <strong>{jeepRoute}</strong> jeep in <strong>{jeepRideStart}</strong> and stop at <strong>{jeepRideStop}</strong></p>
+                            ?   (jeepRideStart === jeepRideStop)
+                                ?   <p>Just walking distance from where you are!</p>
+                                :   <p>Ride a <strong>{jeepRoute}</strong> jeep in <strong>{jeepRideStart}</strong> and stop at <strong>{jeepRideStop}</strong></p>
                             :   <p>Ride a <strong>{jeepRoute}</strong> jeep and stop at <strong>{jeepRideStop}</strong>.<br/> Enable location to get more detailed commute directions.</p>
                         :   <p>Loading...</p>}
                 </div>
