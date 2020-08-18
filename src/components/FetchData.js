@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchProfile, fetchFoodPlaces } from '../redux';
 
 function FetchData() {
     const dispatch = useDispatch()
-    const username = "MotherZeit420"
+    const username = useSelector(state => state.aaron.user.userInfo.Username);
 
     useEffect(() => {
-        dispatch(fetchProfile(username))
+        if(username) {
+            dispatch(fetchProfile(username))
+        }
         dispatch(fetchFoodPlaces())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
