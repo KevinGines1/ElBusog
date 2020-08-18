@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
-import { checkUsername, checkEmail } from '../redux'
+import { test, checkEmail } from '../redux'
 import { Link } from 'react-router-dom';
+
 const INITIAL_STATE = {
   Name: '',
   Username: '',
@@ -11,6 +12,12 @@ const INITIAL_STATE = {
   Picture: '',
   User_type: '',
 };
+
+const mapDispatchToProps = dispatch => {
+  return {
+    test : (username) =>dispatch(test(username))
+  }
+}
 
 class CreateAccount extends Component {
   state = INITIAL_STATE;
@@ -27,8 +34,10 @@ class CreateAccount extends Component {
     console.log(this.state.Username)
     const theEmail = this.state.Email
     const theUsername = this.state.Username
-    this.props.checkUsername(theUsername)
-    this.props.checkEmail(theEmail)
+    console.log(typeof(this.props.test))
+    console.log(this.props.test)
+    this.props.test(theUsername)
+    //this.props.checkEmail(theEmail)
 
     // if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
     //   console.log(this.state)
@@ -148,4 +157,4 @@ class CreateAccount extends Component {
   }
 }
 
-export default connect(null, {checkUsername, checkEmail})(CreateAccount);
+export default connect(null, mapDispatchToProps)(CreateAccount);

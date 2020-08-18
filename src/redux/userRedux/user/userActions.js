@@ -67,15 +67,18 @@ export const checkEmail = email => {
 }
 
 
-export const checkUsername = username => {
+export const test = username => {
+	console.log("HAHAHAHAHHAHAHAAH")
 	return (dispatch) => {
 		
-		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', username, {
+		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', {username}, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
 
 		.then(response => {
+			console.log(username)
+			console.log("WEWEWEWE")
 			console.log(response.data)
 			console.log("checkUsername")
 
@@ -88,8 +91,7 @@ export const checkUsername = username => {
 			})
 		})
 		.catch(error =>{
-			// const errorMsg = error.message
-			// dispatch(addUserFailure(errorMsg))
+			console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
 		})
 	}
 }
