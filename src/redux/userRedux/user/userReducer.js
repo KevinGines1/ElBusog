@@ -68,7 +68,7 @@ const userReducer = (state = initialState, action) =>{
 			return {
 				...state,
 				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true}
-		}
+			}
 		case CHECK_USERNAME: return {
 			...state
 		}

@@ -125,7 +125,7 @@ export const loginUser = userObj => {
 			//get user profile if login is correct
 			if(response.data.authorized === true) {
 				dispatch(getUser(userObj.username))
-				
+				localStorage.setItem('token', response.data.token)
 			}
 
 			dispatch({
@@ -168,7 +168,35 @@ export const getUser = username => {
 	}
 }
 
+export const getUserFromToken = token => {
+	return (dispatch) => {
+
+		const url = "https://ancient-garden-70007.herokuapp.com/api/verifyToken/"
+		// const url = urlString.concat(username)
+		console.log(url)
+		axios.post(url, {token}, {
+     		headers : { 'Content-Type': 
+            'application/json' }
+		})
+
+		.then(response => {
+			console.log(response.data.userInfo)
+			var payload = response.data.userInfo
+			payload.isLoggedIn = true		//use this only if logging in
+			dispatch({
+				type: GET_PROFILE,
+				payload: payload
+			})
+
+		})
+		.catch(error =>{
+			alert("For security purposes, please log-in again.")
+		})
+	}
+}
+
 export const logoutUser = () => {
+	localStorage.removeItem('token')
 	return {
 		type: LOGOUT_USER
 	}
