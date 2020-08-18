@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
-import { test, checkEmail } from '../redux'
+import { verifyUsername, verifyEmail } from '../redux'
 import { Link } from 'react-router-dom';
 
 const INITIAL_STATE = {
@@ -15,7 +15,8 @@ const INITIAL_STATE = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    test : (username) =>dispatch(test(username))
+    verifyUsername : (username) =>dispatch(verifyUsername(username)),
+    verifyEmail : (email) =>dispatch(verifyEmail(email))
   }
 }
 
@@ -30,14 +31,8 @@ class CreateAccount extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    console.log("inForms")
-    console.log(this.state.Username)
-    const theEmail = this.state.Email
-    const theUsername = this.state.Username
-    console.log(typeof(this.props.test))
-    console.log(this.props.test)
-    this.props.test(theUsername)
-    //this.props.checkEmail(theEmail)
+    this.props.verifyUsername(this.state.Username)
+    this.props.verifyEmail(this.state.Email)
 
     // if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
     //   console.log(this.state)

@@ -40,20 +40,15 @@ export const addUserFailure = error => {
 	}
 }
 
-export const checkEmail = email => {
+export const verifyEmail = email => {
 	return (dispatch) => {
-			
-		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', email, {
+		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', {email}, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
-
 		.then(response => {
+			console.log("verifyEmail")
 			console.log(response.data)
-
-			if(response.data.infoValid === true) {
-				alert(email)
-			}
 
 			dispatch({
 				type: CHECK_EMAIL
@@ -67,23 +62,15 @@ export const checkEmail = email => {
 }
 
 
-export const test = username => {
-	console.log("HAHAHAHAHHAHAHAAH")
+export const verifyUsername = username => {
 	return (dispatch) => {
-		
 		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', {username}, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
-
 		.then(response => {
-			console.log(username)
-			console.log("WEWEWEWE")
+			console.log("verifyUsername")
 			console.log(response.data)
-			console.log("checkUsername")
-
-			//alert(response.data.msg)
-
 
 			dispatch({
 				type: CHECK_USERNAME
@@ -91,7 +78,7 @@ export const test = username => {
 			})
 		})
 		.catch(error =>{
-			console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
+			//console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
 		})
 	}
 }
