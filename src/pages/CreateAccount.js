@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
-import { addUser } from '../redux'
+import { checkUsername, checkEmail } from '../redux'
 import { Link } from 'react-router-dom';
 const INITIAL_STATE = {
   Name: '',
@@ -23,25 +23,32 @@ class CreateAccount extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
-      console.log(this.state)
-      const {Name, Username, Email, Password, Picture, User_type } = this.state;
+    console.log("inForms")
+    console.log(this.state.Username)
+    const theEmail = this.state.Email
+    const theUsername = this.state.Username
+    this.props.checkUsername(theUsername)
+    this.props.checkEmail(theEmail)
 
-      //call action creator
-      this.props.addUser({ Name, Username, Email, Password, Picture, User_type });
+    // if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
+    //   console.log(this.state)
+    //   const {Name, Username, Email, Password, Picture, User_type } = this.state;
 
-      //clear user input
-      this.setState({
-        Name: '',
-        Username: '',
-        Email: '',
-        Password: '',
-        Picture: '',
-        User_type: '',
-      })
-    } else {
-      alert("Please fill in the information before submitting!");
-    }
+    //   //call action creator
+    //   this.props.addUser({ Name, Username, Email, Password, Picture, User_type });
+
+    //   //clear user input
+    //   this.setState({
+    //     Name: '',
+    //     Username: '',
+    //     Email: '',
+    //     Password: '',
+    //     Picture: '',
+    //     User_type: '',
+    //   })
+    // } else {
+    //   alert("Please fill in the information before submitting!");
+    // }
     
   }
 
@@ -141,4 +148,4 @@ class CreateAccount extends Component {
   }
 }
 
-export default connect(null, {addUser})(CreateAccount);
+export default connect(null, {checkUsername, checkEmail})(CreateAccount);

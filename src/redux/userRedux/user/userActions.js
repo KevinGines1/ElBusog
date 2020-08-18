@@ -8,7 +8,9 @@ import {
 	LOGIN_USER,
 	LOGIN_FAIL,
 	GET_PROFILE,
-	LOGOUT_USER
+	LOGOUT_USER,
+	CHECK_USERNAME,
+	CHECK_EMAIL
 } from './userTypes'
 
 export const fetchUsersRequest = () => {
@@ -35,6 +37,60 @@ export const addUserFailure = error => {
 	return {
 		type: ADD_USER_FAILURE,
 		payload: error
+	}
+}
+
+export const checkEmail = email => {
+	return (dispatch) => {
+			
+		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', email, {
+     		headers : { 'Content-Type': 
+            'application/json' }
+		})
+
+		.then(response => {
+			console.log(response.data)
+
+			if(response.data.infoValid === true) {
+				alert(email)
+			}
+
+			dispatch({
+				type: CHECK_EMAIL
+			})
+		})
+		.catch(error =>{
+			// const errorMsg = error.message
+			// dispatch(addUserFailure(errorMsg))
+		})
+	}
+}
+
+
+export const checkUsername = username => {
+	return (dispatch) => {
+		
+		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', username, {
+	     		headers : { 'Content-Type': 
+	            'application/json' }
+			})
+
+		.then(response => {
+			console.log(response.data)
+			console.log("checkUsername")
+
+			//alert(response.data.msg)
+
+
+			dispatch({
+				type: CHECK_USERNAME
+
+			})
+		})
+		.catch(error =>{
+			// const errorMsg = error.message
+			// dispatch(addUserFailure(errorMsg))
+		})
 	}
 }
 

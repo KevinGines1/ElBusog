@@ -7,7 +7,9 @@ import {
 	LOGIN_USER,
 	LOGIN_FAIL,
 	GET_PROFILE,
-	LOGOUT_USER
+	LOGOUT_USER,
+	CHECK_USERNAME,
+	CHECK_EMAIL
 } from './userTypes'
 
 
@@ -66,7 +68,13 @@ const userReducer = (state = initialState, action) =>{
 			return {
 				...state,
 				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true}
-			}
+		}
+		case CHECK_USERNAME: return {
+			...state
+		}
+		case CHECK_EMAIL: return {
+			...state
+		}
 		
 		default: return state
 	}
