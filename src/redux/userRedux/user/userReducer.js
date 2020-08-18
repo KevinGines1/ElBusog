@@ -6,14 +6,15 @@ import {
 	ADD_USER_FAILURE,
 	LOGIN_USER,
 	LOGIN_FAIL,
-	GET_PROFILE
+	GET_PROFILE,
+	LOGOUT_USER
 } from './userTypes'
 
 
 const initialState = {
 	loading:  false,
 	users: [],
-	userInfo:{},
+	userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true},
 	error: ''
 }
 
@@ -61,7 +62,11 @@ const userReducer = (state = initialState, action) =>{
 			...state,
 			userInfo: action.payload,	
 		}
-
+		case LOGOUT_USER:
+			return {
+				...state,
+				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true}
+			}
 		
 		default: return state
 	}

@@ -7,7 +7,8 @@ import {
 	ADD_USER_FAILURE,
 	LOGIN_USER,
 	LOGIN_FAIL,
-	GET_PROFILE
+	GET_PROFILE,
+	LOGOUT_USER
 } from './userTypes'
 
 export const fetchUsersRequest = () => {
@@ -107,16 +108,23 @@ export const getUser = username => {
 		})
 
 		.then(response => {
-
 			console.log(response.data)
+			var payload = response.data[0]
+			payload.isLoggedIn = true		//use this only if logging in
 			dispatch({
 				type: GET_PROFILE,
-				payload: response.data
+				payload: payload
 			})
 
 		})
 		.catch(error =>{
 
 		})
+	}
+}
+
+export const logoutUser = () => {
+	return {
+		type: LOGOUT_USER
 	}
 }
