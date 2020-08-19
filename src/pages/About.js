@@ -9,6 +9,7 @@ import zeit from '../assets/devs/zeit.jpg';
 import zoren from '../assets/devs/zoren.jpg';
 import JeepneyRoute from '../components/JeepneyRoute';
 import FoodPlaceMap from '../components/FoodPlaceMap';
+import ImageUploader from '../components/ImageUploader';
 
 const About = () => (
     <div>
@@ -121,6 +122,7 @@ const About = () => (
         </div>
         <JeepneyRoute/>
         <FoodPlaceMap/>
+        <ImageUploader/>
     </div>
 );
 
