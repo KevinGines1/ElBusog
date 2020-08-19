@@ -6,6 +6,7 @@ import {
     addFoodPlace,
     addingFoodPlace,
 } from '../redux';
+import ImageUploader from './ImageUploader';
 
 function AddEditFoodPlace() {
     const profile = useSelector(state => state.zeit.profile)
@@ -22,8 +23,6 @@ function AddEditFoodPlace() {
         priceRange: profile.addingFoodPlace ? "<60" : foodPlaceEdited.Price_range,
         description: profile.addingFoodPlace ? "" : foodPlaceEdited.Description,
         picture: profile.addingFoodPlace ? "" : foodPlaceEdited.Picture,
-        invalidPicture: false,
-        imgSrcInvalid: false,
         openingTime: "800",
         openingHour: "8",
         openingMin: "00",
@@ -32,7 +31,13 @@ function AddEditFoodPlace() {
         closingHour: "8",
         closingMin: "00",
         closingPeriod: "PM",
-        foodTypes: profile.addingFoodPlace ? "" : foodPlaceEdited.Food_types,
+        foodTypes: "",
+        food1: false,
+        food2: false,
+        food3: false,
+        food4: false,
+        food5: false,
+        invalidFoodTypes: false,
         daysOpen: "",
         Sun: false,
         Mon: false,
@@ -48,14 +53,14 @@ function AddEditFoodPlace() {
     // reason why need ng sari-sariling useEffect: https://codesandbox.io/s/mutable-surf-nynlx?file=/src/index.js
 
     // checks if a link is provided
-    useEffect(() => {
-        if ((state.picture === "" && profile.addingFoodPlace) || state.imgSrcInvalid) {
-            setState(state => ({ ...state, invalidPicture: true }))
-        } else {
-            setState(state => ({ ...state, invalidPicture: false }))
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.picture, state.imgSrcInvalid, state.showInvalid])
+    // useEffect(() => {
+    //     if (state.picture === "" && profile.addingFoodPlace) {
+    //         setState(state => ({ ...state, invalidPicture: true }))
+    //     } else {
+    //         setState(state => ({ ...state, invalidPicture: false }))
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [state.picture, state.showInvalid])
 
     // checks if at least one location is selected
     useEffect(() => {
@@ -77,15 +82,24 @@ function AddEditFoodPlace() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.Sun, state.Mon, state.Tue, state.Wed, state.Thu, state.Fri, state.Sat, state.showInvalid])
 
+    useEffect(() => {
+        if (!state.food1 && !state.food2 && !state.food3 && !state.food4 && !state.food5) {
+            setState(state => ({ ...state, invalidFoodTypes: true }))
+        } else {
+            setState(state => ({ ...state, invalidFoodTypes: false }))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.food1, state.food2, state.food3, state.food4, state.food5, state.showInvalid])
+
     // checks if there are no blank fields
     useEffect(() => {
-        if (state.foodPlaceName === "" || state.foodTypes === "" || state.description === "") {
+        if (state.foodPlaceName === "" || state.description === "") {
             setState(state => ({ ...state, blankField: true }))
         } else if (state.blankField === true) {
             setState(state => ({ ...state, blankField: false }))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.foodPlaceName, state.foodTypes, state.description, state.showInvalid])
+    }, [state.foodPlaceName, state.description, state.showInvalid])
 
     // adds 1200 when the opening or closing period is PM
 
@@ -109,14 +123,6 @@ function AddEditFoodPlace() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.closingHour, state.closingPeriod, state.closingMin])
 
-    const imgSrcInvalid= () => {
-        setState(state => ({...state, imgSrcInvalid: true}))
-    }
-
-    const imgSrcValid = () => {
-        setState(state => ({...state, imgSrcInvalid: false}))
-    }
-
     const handleInputChange = (event) => {
         const { target } = event;
         if (target.name.length === 3) {
@@ -131,6 +137,12 @@ function AddEditFoodPlace() {
             } else {
                 setState({ ...state, [target.name]: false, location: state.location.replace(target.value + ', ', '') })
             }
+        } else if (target.name.length === 5) {
+            if (target.checked) {
+                setState({ ...state, [target.name]: true, foodTypes: state.foodTypes.concat(target.value + ', ') })
+            } else {
+                setState({ ...state, [target.name]: false, foodTypes: state.foodTypes.replace(target.value + ', ', '') })
+            }
         } else {
             setState(state => ({ ...state, [target.name]: target.value }))
         }
@@ -138,13 +150,14 @@ function AddEditFoodPlace() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        if (state.foodTypes !== "" && state.description !== "" && state.foodPlaceName !== "" && state.location !== "" && state.daysOpen !== "" && !state.blankField && !state.invalidPicture && ((profile.addingFoodPlace && state.picture !== "") || profile.editingFoodPlace)) {
-            let Picture = state.picture
-            if(state.picture === ""){
+        if (state.foodTypes !== "" && state.description !== "" && state.foodPlaceName !== "" && state.location !== "" && state.daysOpen !== "" && !state.blankField && ((profile.addingFoodPlace && profile.uploadedImage !== "") || profile.editingFoodPlace)) {
+            let Picture = profile.uploadedImage
+            if(Picture === "") {
                 Picture = foodPlaceEdited.Picture
             }
             const daysOpen = state.daysOpen.split('').sort().join('')
             const location = state.location.slice(0, -2)
+            const foodTypes = state.foodTypes.slice(0, -2)
 
             if (profile.editingFoodPlace) {
                 dispatch(editFoodPlace(
@@ -155,7 +168,7 @@ function AddEditFoodPlace() {
                     state.openingTime,
                     state.closingTime,
                     daysOpen,
-                    state.foodTypes,
+                    foodTypes,
                     profile.Username,
                     foodPlaceEdited.Food_place_id,
                     Picture,
@@ -172,7 +185,7 @@ function AddEditFoodPlace() {
                     state.openingTime,
                     state.closingTime,
                     daysOpen,
-                    state.foodTypes,
+                    foodTypes,
                     profile.Username,
                     Picture
                 ))
@@ -202,23 +215,22 @@ function AddEditFoodPlace() {
                 {(profile.editingFoodPlace &&
                     <h5>Edit Food Place</h5>
                 )}
-                {(state.picture === "" &&
+                {(state.picture === "" && profile.uploadedImage === "" &&
                     <div className="addEditPic"></div>
                 )}
-                {(state.picture !== "" &&
+                {((state.picture !== "" || profile.uploadedImage !== "") &&
                     <div className="addEditPic">
                         <img
-                            onError={imgSrcInvalid}
-                            onLoad={imgSrcValid}
-                            src={state.picture !== ""
-                                ? state.picture
-                                : foodPlaceEdited.Picture
+                            src={profile.uploadedImage
+                                ? profile.uploadedImage
+                                : state.picture
                             }
                             alt="Food Place"
                             className="foodPlacePic" />
                     </div>
                 )}
-                <div className="foodPlaceInputContainer">
+                <ImageUploader />
+                {/* <div className="foodPlaceInputContainer">
                     <p>Food Place Photo</p>
                     <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
                     <input
@@ -231,7 +243,7 @@ function AddEditFoodPlace() {
                     <div className={state.invalidPicture ? "show" : "hide"}>
                         Please enter an image's link.
                     </div>
-                </div>
+                </div> */}
                 <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Place Name</p>
@@ -470,14 +482,63 @@ function AddEditFoodPlace() {
                 <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Types</p>
-                        <p style={{ fontStyle: "italic", marginTop: "5px" }}>Separate the food types with a comma (e.g. Meat, Vegetable, Snacks, Ice Cream)</p>
-                        <input
-                            onChange={handleInputChange}
-                            className="foodPlaceInput"
-                            type="text"
-                            name="foodTypes"
-                            defaultValue={profile.addingFoodPlace ? "" : foodPlaceEdited.Food_types}
-                        />
+                        <div className="checkboxes">
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="food1"
+                                    value="Meat"
+                                    checked={state.food1}
+                                    onChange={handleInputChange}
+                                />
+                                Meat
+                            </label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="food2"
+                                    value="Vegetable"
+                                    checked={state.food2}
+                                    onChange={handleInputChange}
+                                />
+                                Vegetable
+                            </label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="food3"
+                                    value="Seafood"
+                                    checked={state.food3}
+                                    onChange={handleInputChange}
+                                />
+                                Seafood
+                            </label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="food4"
+                                    value="Ice Cream"
+                                    checked={state.food4}
+                                    onChange={handleInputChange}
+                                />
+                                Ice Cream
+                            </label>
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    name="food5"
+                                    value="Snacks"
+                                    checked={state.food5}
+                                    onChange={handleInputChange}
+                                />
+                                Snacks
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div className="inlineFlex">
+                    <div className={state.invalidFoodTypes ? "show" : "hide"}>
+                        Please choose at least one food type.
                     </div>
                 </div>
                 <div className="descriptionTile">

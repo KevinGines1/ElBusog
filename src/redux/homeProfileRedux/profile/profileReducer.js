@@ -4,6 +4,7 @@ import {
     EDIT_PROFILE,
     CHECK_USERNAME,
     CHECK_EMAIL,
+    CHECK_PASSWORD,
     SAVE_CHANGES,
     CANCEL_CHANGES,
     DELETE_ACCOUNT,
@@ -12,9 +13,9 @@ import {
     ADDING_FOOD_PLACE,
     ADD_FOOD_PLACE,
     DELETE_FOOD_PLACE,
+    UPLOAD_IMAGE
 } from './profileTypes';
 
-// need to add napapalitan na picture
 const initialState = {
     User_id: "",
     Name: "",
@@ -24,13 +25,15 @@ const initialState = {
     User_type: "",
     Password: "",
     ownedFoodPlaces: [],
-    isEditing: false,
+    editingProfile: false,
     usernameAvailable: true,
     emailAvailable: true,
+    correctPassword: true,
     editingFoodPlace: false,
     editingData: {},
     addingFoodPlace: false,
-    isLoggedIn: false
+    isLoggedIn: false,
+    uploadedImage: ""
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -45,7 +48,6 @@ const profileReducer = (state = initialState, action) => {
                 Picture: action.payload.Picture,
                 User_type: action.payload.User_type,
                 isLoggedIn: true
-                // Password: action.payload.Password,
             }
         case FETCH_OWN_FOODPLACE:
             return {
@@ -58,7 +60,7 @@ const profileReducer = (state = initialState, action) => {
         case EDIT_PROFILE:
             return {
                 ...state,
-                isEditing: !state.isEditing
+                editingProfile: !state.editingProfile
             }
         case CHECK_USERNAME:
             return {
@@ -70,9 +72,15 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 emailAvailable: action.payload.infoValid
             }
+        case CHECK_PASSWORD:
+            return {
+                ...state,
+                correctPassword: action.payload
+            }
         case SAVE_CHANGES:
             return {
                 ...state,
+                uploadedImage: "",
                 Name: action.payload.newName,
                 Username: action.payload.newUsername,
                 Email: action.payload.newEmail,
@@ -83,6 +91,7 @@ const profileReducer = (state = initialState, action) => {
         case CANCEL_CHANGES:
             return {
                 ...state,
+                uploadedImage: "",
                 usernameAvailable: true,
                 emailAvailable: true
             }
@@ -94,12 +103,14 @@ const profileReducer = (state = initialState, action) => {
         case EDITING_FOOD_PLACE:
             return {
                 ...state,
+                uploadedImage: "",
                 editingFoodPlace: !state.editingFoodPlace,
                 editingData: action.payload
             }
         case EDIT_FOOD_PLACE:
             return {
                 ...state,
+                uploadedImage: "",
                 ownedFoodPlaces: 
                     state.ownedFoodPlaces.map(foodPlace =>
                         foodPlace.Food_place_id === action.payload.foodPlaceID ?
@@ -123,11 +134,13 @@ const profileReducer = (state = initialState, action) => {
         case ADDING_FOOD_PLACE:
             return {
                 ...state,
+                uploadedImage: "",
                 addingFoodPlace: !state.addingFoodPlace
             }
         case ADD_FOOD_PLACE:
             return {
                 ...state,
+                uploadedImage: "",
                 ownedFoodPlaces: [
                     ...state.ownedFoodPlaces,
                     {
@@ -152,6 +165,11 @@ const profileReducer = (state = initialState, action) => {
                 ownedFoodPlaces: state.ownedFoodPlaces.filter(foodPlace => 
                     foodPlace.Food_place_id !== action.payload
                 )
+            }
+        case UPLOAD_IMAGE:
+            return {
+                ...state,
+                uploadedImage: action.payload
             }
         default: return state
     }

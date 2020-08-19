@@ -25,12 +25,12 @@ function DashboardItemButtons(props) {
                 <div>
                     <button
                         className="dashboardItemBtn"
-                        disabled={profile.addingFoodPlace || profile.isEditing}
+                        disabled={profile.addingFoodPlace || profile.editingProfile}
                         onClick={() => dispatch(editingFoodPlace(props.foodPlace))}
                     >Edit</button>
                     <button
                         className="dashboardItemBtn"
-                        disabled={profile.addingFoodPlace || profile.isEditing}
+                        disabled={profile.addingFoodPlace || profile.editingProfile}
                         onClick={() => confirmDelete()}
                     >Delete</button>
                 </div>

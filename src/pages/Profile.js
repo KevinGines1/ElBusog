@@ -17,11 +17,11 @@ function Profile() {
     return profileDetails.isLoggedIn && profileDetails.User_type !== "" ? (
         <div className="Profile" style={background}>
             <div className="rowcenter">
-                {(!profile.isEditing &&
+                {(!profile.editingProfile &&
                     <MyProfile />
                 )}
 
-                {(profile.isEditing &&
+                {(profile.editingProfile &&
                     <EditProfile />
                 )}
 

@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { uploadImage } from '../redux';
+import { useDispatch } from 'react-redux';
 
 function ImageUploader() {
     const [loading, setLoading] = useState(false)
+    const dispatch = useDispatch()
 
     const fileUploadHandler = (event) => {
         const data = new FormData();
@@ -11,7 +14,8 @@ function ImageUploader() {
         setLoading(true)
         axios.post("https://api.cloudinary.com/v1_1/cloudymeatballs/image/upload", data)
         .then((result) => {
-            console.log(result.data.secure_url)
+            // console.log(result.data.secure_url)
+            dispatch(uploadImage(result.data.secure_url))
             // the image url will be on result.data.secure_url
             setLoading(false)
         })

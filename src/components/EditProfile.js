@@ -4,11 +4,13 @@ import {
     editProfile,
     checkUsername,
     checkEmail,
+    checkPassword,
     saveChanges,
     cancelChanges,
     deleteAccount
 } from '../redux';
 import defaultPic from '../assets/user.png';
+import ImageUploader from './ImageUploader';
 
 function EditProfile() {
     const profile = useSelector(state => state.zeit.profile)
@@ -18,15 +20,17 @@ function EditProfile() {
         Name: profile.Name,
         Username: profile.Username,
         Email: profile.Email,
-        Password: "",
+        newPassword: "",
         Picture: profile.Picture,
-        imgSrcInvalid: false,
         User_type: profile.User_type,
         blankField: false,
         passwordsMatch: true,
         confirmPassword: "",
         invalidAccType: false,
-        deletingAccount: false 
+        deletingAccount: false,
+        Password: "",
+        correctPassword: true,
+        saveTouched: false
     })
 
     // VALIDATION: checks if input in each field is valid
@@ -47,6 +51,21 @@ function EditProfile() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.Email])
 
+    // CHECKS IF PASSWORD IS CORRECT
+    useEffect(() => {
+        dispatch(checkPassword(state.Password, profile.User_id))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.Password, state.saveTouched])
+
+    // useEffect(() => {
+    //     if(profile.correctPassword){
+    //         setState(state => ({...state, correctPassword: true}))
+    //     } else {
+    //         setState(state => ({...state, correctPassword: false}))
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [state.Password])
+    
     //  CHECKS IF A BUSINESS OWNER HAS BUSINESSES
     useEffect(() => {
         if(state.User_type === "Customer" && profile.ownedFoodPlaces.length !== 0){
@@ -68,7 +87,7 @@ function EditProfile() {
         } else {
             setState({ ...state, blankField: true })
         }
-        if (state.Password !== state.confirmPassword) {
+        if (state.newPassword !== state.confirmPassword) {
             setState({ ...state, passwordsMatch: false })
         } else if (state.passwordsMatch === false) {
             setState({ ...state, passwordsMatch: true })
@@ -79,19 +98,11 @@ function EditProfile() {
         state.Name,
         state.Username,
         state.Email,
-        state.Password,
+        state.newPassword,
         state.confirmPassword,
         state.passwordsMatch,
         state.blankField
     ])
-
-    const imgSrcInvalid= () => {
-        setState(state => ({...state, imgSrcInvalid: true}))
-    }
-
-    const imgSrcValid = () => {
-        setState(state => ({...state, imgSrcInvalid: false}))
-    }
 
     const handleInputChange = (event) => {
         const { target } = event;
@@ -100,22 +111,35 @@ function EditProfile() {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        let Picture = state.Picture
-        if(Picture === ""){
+        let Picture = profile.uploadedImage
+        if(Picture === "") {
             Picture = profile.Picture
         }
-        let Password = state.Password
-        if(Password === ""){
-            Password = profile.Password
+        let newPassword = state.newPassword
+        if(state.Password === ""){
+            setState({ ...state, correctPassword: false })
+        } else if (newPassword === "") {
+            newPassword = state.Password
         }
+        console.log(
+            state.UserID,
+            profile.Username,
+            state.Name,
+            state.Username,
+            state.Email,
+            newPassword,
+            Picture,
+            state.User_type
+        )
         if (
             state.Name !== "" &&
             state.Username !== "" &&
             state.Email !== "" &&
+            state.Password !== "" &&
             state.passwordsMatch &&
+            profile.correctPassword &&
             profile.usernameAvailable &&
             profile.emailAvailable &&
-            !state.imgSrcInvalid &&
             !state.invalidAccType
         ) {
             dispatch(saveChanges(
@@ -124,11 +148,13 @@ function EditProfile() {
                 state.Name,
                 state.Username,
                 state.Email,
-                Password,
+                newPassword,
                 Picture,
                 state.User_type
             ))
             dispatch(editProfile())
+        } else if (!state.saveTouched){
+            setState({...state, saveTouched: true})
         }
     }
 
@@ -149,10 +175,8 @@ function EditProfile() {
                     <h3>Edit Profile</h3>
                     <div className="myProfilePic">
                         <img
-                            onError={imgSrcInvalid}
-                            onLoad={imgSrcValid}
-                            src={state.Picture
-                                ? state.Picture
+                            src={ profile.uploadedImage
+                                ? profile.uploadedImage
                                 : profile.Picture !== null
                                 ? profile.Picture
                                 : defaultPic}
@@ -160,8 +184,9 @@ function EditProfile() {
                         />
                     </div>
                     <div className="editDetail">
-                        <p>Upload Photo</p>
-                        <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
+                        <p>Profile Picture</p>
+                        <ImageUploader />
+                        {/* <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
                         <input
                             onChange={handleInputChange}
                             className="editInput"
@@ -171,7 +196,7 @@ function EditProfile() {
                         />
                         <div className={state.imgSrcInvalid ? "show" : "hide"}>
                             Please enter an image's link.
-                        </div>
+                        </div> */}
                     </div>
                     <div className="editDetail">
                         <p>Name</p>
@@ -233,7 +258,7 @@ function EditProfile() {
                             onChange={handleInputChange}
                             className="editInput"
                             type="password"
-                            name="Password"
+                            name="newPassword"
                         />
                         <p>Confirm Password</p>
                         <input
@@ -245,6 +270,19 @@ function EditProfile() {
                         <div className={state.passwordsMatch ? "hide" : "show"}>
                             Passwords do not match
                         </div>
+                    </div>
+                    <div className="changePassword">
+                        <p>Password</p>
+                        <p style={{fontStyle: "italic"}}>Please enter your password to save changes</p>
+                        <input 
+                            onChange={handleInputChange}
+                            className="editInput"
+                            type="password"
+                            name="Password"
+                        />
+                    </div>
+                    <div className={!profile.correctPassword && state.saveTouched ? "show" : "hide"}>
+                        Incorrect Password
                     </div>
                     <div className={state.blankField ? "show" : "hide"}>
                         Please do not leave any field blank.

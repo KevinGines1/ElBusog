@@ -5,6 +5,7 @@ import {
     EDIT_PROFILE,
     CHECK_USERNAME,
     CHECK_EMAIL,
+    CHECK_PASSWORD,
     SAVE_CHANGES,
     CANCEL_CHANGES,
     DELETE_ACCOUNT,
@@ -13,6 +14,7 @@ import {
     ADDING_FOOD_PLACE,
     ADD_FOOD_PLACE,
     DELETE_FOOD_PLACE,
+    UPLOAD_IMAGE
 } from './profileTypes';
 
 // FETCH DATA ACTIONS
@@ -135,6 +137,22 @@ export const checkEmail = (email) => {
                 dispatch({
                     type: CHECK_EMAIL,
                     payload: response.data
+                })
+            })
+            .catch(error => {
+                console.log(error.message)
+            })
+    }
+}
+
+export const checkPassword = (password, userID) => {
+    return (dispatch) => {
+        axios.post("https://ancient-garden-70007.herokuapp.com/api/checkPassword",
+            { password, userID })
+            .then(response => {
+                dispatch({
+                    type: CHECK_PASSWORD,
+                    payload: response.data.msg
                 })
             })
             .catch(error => {
@@ -388,5 +406,12 @@ export const deleteFoodPlace = (foodPlaceID, foodPlacePhoto) => {
             .then(response => {
                 console.log(response.data)
             })
+    }
+}
+
+export const uploadImage = (url) => {
+    return {
+        type: UPLOAD_IMAGE,
+        payload: url
     }
 }

@@ -91,7 +91,7 @@ function Dashboard() {
                 {(!profile.addingFoodPlace &&
                     <button
                         className="profileBtn"
-                        disabled={profile.addingFoodPlace || profile.isEditing || profile.editingFoodPlace}
+                        disabled={profile.addingFoodPlace || profile.editingProfile || profile.editingFoodPlace}
                         onClick={() => dispatch(addingFoodPlace())}
                     >Add a Food Place</button>
                 )}
