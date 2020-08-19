@@ -9,7 +9,8 @@ import {
 	GET_PROFILE,
 	LOGOUT_USER,
 	CHECK_USERNAME,
-	CHECK_EMAIL
+	CHECK_EMAIL,
+	RESET_REGISTER
 } from './userTypes'
 
 
@@ -17,7 +18,9 @@ const initialState = {
 	loading:  false,
 	users: [],
 	userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: false},
-	error: ''
+	error: '',
+	usernameVerified: false,
+	emailVerified: false
 }
 
 const userReducer = (state = initialState, action) =>{
@@ -38,11 +41,18 @@ const userReducer = (state = initialState, action) =>{
 			users: [],
 			error: action.payload
 		}
-		case REGISTER: 	return {
-			loading: false,
-			users: [...state.users, action.payload],
-			error: ''
-		}
+		case REGISTER: 
+			if(this.state.usernameVerified === true && this.state.emailVerified === true) {
+				return {
+					loading: false,
+					users: [...state.users, action.payload],
+					error: ''
+				}
+			}else {
+				return {
+					...state
+				}
+			}
 		case ADD_USER_FAILURE: return {
 			...state,
 			loading: false,
@@ -59,21 +69,26 @@ const userReducer = (state = initialState, action) =>{
 			loading: false,
 			error: action.payload
 		} 
-		case GET_PROFILE: 
-			return {
+		case GET_PROFILE: return {
 			...state,
 			userInfo: action.payload,	
 		}
-		case LOGOUT_USER:
-			return {
-				...state,
-				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: false}
-			}
+		case LOGOUT_USER: return {
+			...state,
+			userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: false}
+		}
 		case CHECK_USERNAME: return {
-			...state
+			...state,
+			usernameVerified: true
 		}
 		case CHECK_EMAIL: return {
-			...state
+			...state,
+			emailVerified: true
+		}
+		case RESET_REGISTER: return {
+			...state,
+			usernameVerified: false,
+			emailVerified: false
 		}
 		
 		default: return state

@@ -10,8 +10,11 @@ import {
 	GET_PROFILE,
 	LOGOUT_USER,
 	CHECK_USERNAME,
-	CHECK_EMAIL
+	CHECK_EMAIL,
+	RESET_REGISTER
 } from './userTypes'
+
+var checker = 2
 
 export const fetchUsersRequest = () => {
 	return {
@@ -40,6 +43,14 @@ export const addUserFailure = error => {
 	}
 }
 
+export const resetRegister = () => {
+	return(dispatch) => {
+		dispatch({
+			type:RESET_REGISTER
+		})
+	}
+}
+
 export const verifyEmail = email => {
 	return (dispatch) => {
 		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', {email}, {
@@ -47,12 +58,18 @@ export const verifyEmail = email => {
             'application/json' }
 		})
 		.then(response => {
-			console.log("verifyEmail")
+			console.log("verifyEmail====================")
 			console.log(response.data)
-
-			dispatch({
-				type: CHECK_EMAIL
-			})
+			console.log("===============================")
+			if(response.data.infoValid === true) {
+				checker = checker - 1
+				console.log(checker)
+				dispatch({
+					type: CHECK_EMAIL
+				})
+			} else {
+				alert("Email is already taken!")
+			}
 		})
 		.catch(error =>{
 			// const errorMsg = error.message
@@ -69,13 +86,20 @@ export const verifyUsername = username => {
 	            'application/json' }
 			})
 		.then(response => {
-			console.log("verifyUsername")
+			console.log("verifyUsername===============")
 			console.log(response.data)
-
-			dispatch({
-				type: CHECK_USERNAME
-
-			})
+			console.log("=============================")
+			if(response.data.infoValid === true) {
+				checker = checker - 1
+				console.log(checker)
+				dispatch({
+					type: CHECK_USERNAME
+				})
+				checker = checker - 1
+				console.log(checker)
+			} else {
+				alert("Username is already taken!")
+			}
 		})
 		.catch(error =>{
 			//console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL")
@@ -85,6 +109,9 @@ export const verifyUsername = username => {
 
 export const addUser = userObj => {
 	return (dispatch) => {
+		console.log("checker in add user")
+		console.log(checker)
+		if (checker === 0){
 			console.log("userObj")
 			axios.post('https://ancient-garden-70007.herokuapp.com/api/register', userObj, {
 	     		headers : { 'Content-Type': 
@@ -92,17 +119,26 @@ export const addUser = userObj => {
 			})
 
 			.then(response => {
-				console.log(response.data)
+
+				alert("Successfully added user!")
 				dispatch({
 					type: REGISTER,
 					payload: response.data
-				})
+				})				
+
+
 			})
 			.catch(error =>{
 				const errorMsg = error.message
 				dispatch(addUserFailure(errorMsg))
 			})
+
+
+		} else {
+			checker = 2
 		}
+	}
+
 }
 
 export const loginFail = error => {
