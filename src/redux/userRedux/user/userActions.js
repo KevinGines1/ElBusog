@@ -11,10 +11,9 @@ import {
 	LOGOUT_USER,
 	CHECK_USERNAME,
 	CHECK_EMAIL,
-	RESET_REGISTER
+	RESET_REGISTER_EMAIL,
+	RESET_REGISTER_USERNAME,
 } from './userTypes'
-
-var checker = 2
 
 export const fetchUsersRequest = () => {
 	return {
@@ -43,27 +42,39 @@ export const addUserFailure = error => {
 	}
 }
 
-export const resetRegister = () => {
+export const resetRegisterUsername = () => {
 	return(dispatch) => {
 		dispatch({
-			type:RESET_REGISTER
+			type:RESET_REGISTER_USERNAME
 		})
 	}
 }
 
-export const verifyEmail = email => {
+export const resetRegisterEmail = () => {
+	return(dispatch) => {
+		dispatch({
+			type:RESET_REGISTER_EMAIL
+		})
+	}
+}
+
+export const verifyEmail = userObj => {
+	console.log(userObj.Email)
+	const email = userObj.Email
 	return (dispatch) => {
 		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', {email}, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
 		.then(response => {
+			
+			dispatch(resetRegisterEmail())
+
 			console.log("verifyEmail====================")
 			console.log(response.data)
 			console.log("===============================")
 			if(response.data.infoValid === true) {
-				checker = checker - 1
-				console.log(checker)
+				dispatch(addUser(userObj))
 				dispatch({
 					type: CHECK_EMAIL
 				})
@@ -79,24 +90,27 @@ export const verifyEmail = email => {
 }
 
 
-export const verifyUsername = username => {
+export const verifyUsername = userObj => {
+	const username = userObj.Username
 	return (dispatch) => {
 		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', {username}, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
 		.then(response => {
+			console.log("USERNAME")
+
+			console.log(username)
+			dispatch(resetRegisterUsername())
+
 			console.log("verifyUsername===============")
 			console.log(response.data)
 			console.log("=============================")
 			if(response.data.infoValid === true) {
-				checker = checker - 1
-				console.log(checker)
+				dispatch(verifyEmail(userObj))
 				dispatch({
 					type: CHECK_USERNAME
 				})
-				checker = checker - 1
-				console.log(checker)
 			} else {
 				alert("Username is already taken!")
 			}
@@ -109,34 +123,24 @@ export const verifyUsername = username => {
 
 export const addUser = userObj => {
 	return (dispatch) => {
-		console.log("checker in add user")
-		console.log(checker)
-		if (checker === 0){
-			console.log("userObj")
+		console.log(userObj)
 			axios.post('https://ancient-garden-70007.herokuapp.com/api/register', userObj, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
-
+			alert("Successfully added user!")
 			.then(response => {
-
-				alert("Successfully added user!")
+				console.log(response.data)
 				dispatch({
 					type: REGISTER,
 					payload: response.data
 				})				
-
-
 			})
 			.catch(error =>{
 				const errorMsg = error.message
 				dispatch(addUserFailure(errorMsg))
 			})
 
-
-		} else {
-			checker = 2
-		}
 	}
 
 }
@@ -154,7 +158,6 @@ export const loginUser = userObj => {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
-
 		.then(response => {
 			console.log(response.data)
 
@@ -222,8 +225,8 @@ export const getUserFromToken = token => {
 				type: GET_PROFILE,
 				payload: payload
 			})
-
 		})
+
 		.catch(error =>{
 			alert("For security purposes, please log-in again.")
 		})

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
-import { resetRegister, verifyUsername, verifyEmail, addUser } from '../redux'
+import { verifyUsername } from '../redux'
 import { Link } from 'react-router-dom';
 
 const INITIAL_STATE = {
@@ -15,10 +15,10 @@ const INITIAL_STATE = {
 
 const mapDispatchToProps = dispatch => {
   return {
-    resetRegister : () =>dispatch(resetRegister()),
+    // resetRegister : () =>dispatch(resetRegister()),
     verifyUsername : (username) =>dispatch(verifyUsername(username)),
-    verifyEmail : (email) =>dispatch(verifyEmail(email)),
-    addUser: (userObj) =>dispatch(addUser(userObj))
+    // verifyEmail : (email) =>dispatch(verifyEmail(email)),
+    // addUser: (userObj) =>dispatch(addUser(userObj))
   }
 }
 
@@ -37,25 +37,28 @@ class CreateAccount extends Component {
     // this.props.verifyEmail(this.state.Email)
 
     if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
-      console.log(this.state)
+      //console.log(this.state)
       const {Name, Username, Email, Password, Picture, User_type } = this.state;
 
       //call action creator
-      this.props.resetRegister()
-      this.props.verifyUsername(this.state.Username)
-      this.props.verifyEmail(this.state.Email)
-      this.props.addUser({ Name, Username, Email, Password, Picture, User_type });
+
+      //setTimeout(this.props.addUser, 3000)
+
+      // this.props.resetRegister();
+      this.props.verifyUsername({ Name, Username, Email, Password, Picture, User_type });
+      // this.props.verifyEmail(this.state.Email);
+      // this.props.addUser({ Name, Username, Email, Password, Picture, User_type });
 
 
       //clear user input
-      this.setState({
-        Name: '',
-        Username: '',
-        Email: '',
-        Password: '',
-        Picture: '',
-        User_type: '',
-      })
+      // this.setState({
+      //   Name: '',
+      //   Username: '',
+      //   Email: '',
+      //   Password: '',
+      //   Picture: '',
+      //   User_type: '',
+      // })
     } else {
       alert("Please fill in the information before submitting!");
     }

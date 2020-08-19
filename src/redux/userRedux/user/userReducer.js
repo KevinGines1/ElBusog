@@ -10,7 +10,8 @@ import {
 	LOGOUT_USER,
 	CHECK_USERNAME,
 	CHECK_EMAIL,
-	RESET_REGISTER
+	RESET_REGISTER_EMAIL,
+	RESET_REGISTER_USERNAME,
 } from './userTypes'
 
 
@@ -42,7 +43,7 @@ const userReducer = (state = initialState, action) =>{
 			error: action.payload
 		}
 		case REGISTER: 
-			if(this.state.usernameVerified === true && this.state.emailVerified === true) {
+			if(this.state.usernameVerified == true && this.state.emailVerified == true) {
 				return {
 					loading: false,
 					users: [...state.users, action.payload],
@@ -85,12 +86,14 @@ const userReducer = (state = initialState, action) =>{
 			...state,
 			emailVerified: true
 		}
-		case RESET_REGISTER: return {
+		case RESET_REGISTER_EMAIL: return {
 			...state,
-			usernameVerified: false,
 			emailVerified: false
 		}
-		
+		case RESET_REGISTER_USERNAME: return {
+			...state,
+			usernameVerified: false
+		}
 		default: return state
 	}
 }
