@@ -30,7 +30,7 @@ const initialState = {
     editingFoodPlace: false,
     editingData: {},
     addingFoodPlace: false,
-    isLoggedIn: true
+    isLoggedIn: false
 }
 
 const profileReducer = (state = initialState, action) => {
@@ -44,7 +44,8 @@ const profileReducer = (state = initialState, action) => {
                 Email: action.payload.Email,
                 Picture: action.payload.Picture,
                 User_type: action.payload.User_type,
-                Password: action.payload.Password,
+                isLoggedIn: true
+                // Password: action.payload.Password,
             }
         case FETCH_OWN_FOODPLACE:
             return {

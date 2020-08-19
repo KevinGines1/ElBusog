@@ -17,36 +17,49 @@ import {
 
 // FETCH DATA ACTIONS
 
-export const fetchProfile = (username) => {
+// export const fetchProfile = (username) => {
+//     return (dispatch) => {
+//         axios.get(`https://ancient-garden-70007.herokuapp.com/api/profile/${username}`)
+//             .then(response => {
+//                 const userProfile = response.data[0]
+//                 axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllUsers`)
+//                     .then(response => {
+//                         console.log(response.data)
+//                         response.data.map(user => {
+//                             if (user.User_id === userProfile.User_id) {
+//                                 dispatch({
+//                                     type: FETCH_PROFILE,
+//                                     payload: {
+//                                         ...userProfile,
+//                                         Password: user.Password
+//                                     }
+//                                 })
+//                             }
+//                             return null
+//                         })
+//                     })
+//                 if (userProfile.User_type === "Business_owner") {
+//                     dispatch(fetchOwnFoodPlace(userProfile.User_id))
+//                 }
+//             })
+//             .catch(error => {
+//                 console.log(error.message)
+//             })
+//     }
+// }
+
+export const fetchProfile = (userInfo) => {
     return (dispatch) => {
-        axios.get(`https://ancient-garden-70007.herokuapp.com/api/profile/${username}`)
-            .then(response => {
-                const userProfile = response.data[0]
-                axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllUsers`)
-                    .then(response => {
-                        console.log(response.data)
-                        response.data.map(user => {
-                            if (user.User_id === userProfile.User_id) {
-                                dispatch({
-                                    type: FETCH_PROFILE,
-                                    payload: {
-                                        ...userProfile,
-                                        Password: user.Password
-                                    }
-                                })
-                            }
-                            return null
-                        })
-                    })
-                if (userProfile.User_type === "Business_owner") {
-                    dispatch(fetchOwnFoodPlace(userProfile.User_id))
-                }
-            })
-            .catch(error => {
-                console.log(error.message)
-            })
+        if (userInfo.User_type === "Business_owner") {
+            dispatch(fetchOwnFoodPlace(userInfo.User_id))
+        }
+        dispatch({
+            type: FETCH_PROFILE,
+            payload: userInfo
+        })
     }
 }
+
 export const fetchOwnFoodPlace = (userID) => {
     return (dispatch) => {
         axios.get(`https://ancient-garden-70007.herokuapp.com/api/getOwnFoodPlace/${userID}`)

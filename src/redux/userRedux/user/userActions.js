@@ -14,6 +14,7 @@ import {
 	RESET_REGISTER_EMAIL,
 	RESET_REGISTER_USERNAME,
 } from './userTypes'
+import { fetchProfile } from '../../index'
 
 export const fetchUsersRequest = () => {
 	return {
@@ -195,6 +196,10 @@ export const getUser = username => {
 			console.log(response.data)
 			var payload = response.data[0]
 			payload.isLoggedIn = true		//use this only if logging in
+
+			// calls fetchProfile action from profileActions
+			dispatch(fetchProfile(payload))
+
 			dispatch({
 				type: GET_PROFILE,
 				payload: payload
@@ -221,6 +226,10 @@ export const getUserFromToken = token => {
 			// console.log(response.data.userInfo)
 			var payload = response.data.userInfo
 			payload.isLoggedIn = true		//use this only if logging in
+
+			// calls fetchProfile action from profileActions
+			dispatch(fetchProfile(payload))
+			
 			dispatch({
 				type: GET_PROFILE,
 				payload: payload
