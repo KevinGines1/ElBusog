@@ -10,7 +10,7 @@ import LeftNavbar from '../components/LeftNavbar';
 function StickyNavbar(props) {
     var prevScrollY = 0
     const [top, toggleStickyNavbar] = useState("-80px");
-    const profilePic = useSelector(state => state.zeit.profile.Picture);
+    const profilePic = useSelector(state => state.aaron.user.userInfo.Picture);
     const [leftNavbarVisible, toggleLeftNavbar] = useState(false);
     const [profileDropdownVisible, toggleDropdown] = useState(false);
 

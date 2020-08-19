@@ -16,7 +16,7 @@ import {
 const initialState = {
 	loading:  false,
 	users: [],
-	userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true},
+	userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: false},
 	error: ''
 }
 
@@ -67,7 +67,7 @@ const userReducer = (state = initialState, action) =>{
 		case LOGOUT_USER:
 			return {
 				...state,
-				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: true}
+				userInfo: {Name: null, Picture: null, User_type: null, isLoggedIn: false}
 			}
 		case CHECK_USERNAME: return {
 			...state

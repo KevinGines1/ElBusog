@@ -71,11 +71,12 @@ class Login extends Component {
             />  
             <br/><br/>
 
-          <div className="force-center" >
-            <button type="submit" className="button">Login</button>
-            <div className="padding-lr-10"></div>
-            <Link to="/register"><button className="button ">Sign Up</button></Link>
-          </div>
+            <div className="force-center" >
+              <button type="submit" className="button">Login</button>
+            </div>
+            <div className="force-center">
+              <Link to="/register" className="margin-tb-10"><p>Don't have an account? <u>Sign up</u></p></Link>
+            </div>
           </div>
 
           </form>

@@ -132,7 +132,7 @@ export const loginUser = userObj => {
 				type: LOGIN_USER,
 				payload: response.data
 			})
-			alert(response.data.msg)
+			// alert(response.data.msg)
 		})
 		.catch(error =>{
 			const errorMsg = error.message
@@ -172,15 +172,14 @@ export const getUserFromToken = token => {
 	return (dispatch) => {
 
 		const url = "https://ancient-garden-70007.herokuapp.com/api/verifyToken/"
-		// const url = urlString.concat(username)
-		console.log(url)
+		// console.log(url)
 		axios.post(url, {token}, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
 
 		.then(response => {
-			console.log(response.data.userInfo)
+			// console.log(response.data.userInfo)
 			var payload = response.data.userInfo
 			payload.isLoggedIn = true		//use this only if logging in
 			dispatch({

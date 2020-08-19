@@ -145,9 +145,11 @@ class CreateAccount extends Component {
               <br/><br/>
               <div className="force-center" >
                 <button type="submit" className="button ">Register</button>
-                <div className="padding-lr-10"></div>
-              <Link to="/login"><button className="button ">Sign In</button></Link>
-            </div>
+              </div>
+              <div className="force-center">
+                <Link to="/login" className="margin-tb-10"><p>Already have an account? <u>Log in</u></p></Link>
+              </div>
+            
             </div>
           </form>
         </div>

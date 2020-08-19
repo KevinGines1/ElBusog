@@ -12,6 +12,7 @@ import StickyNavbar from '../components/StickyNavbar';
 import Footer from '../components/Footer';
 import FetchData from '../components/FetchData.js';
 import ScrollToTop from '../components/ScrollToTop';
+import PrivateRoute from '../components/PrivateRoute';
 
 //pages
 import Home from '../pages/Home';
@@ -30,7 +31,7 @@ const App = () => (
         <Nav/>
         <StickyNavbar/>
         <Switch>
-          <Route path="/login" exact component={Login} />
+          <PrivateRoute path="/login" exact component={Login} />
           <Route path="/register" exact component={CreateAccount}/>
           <Route path="/profile" exact component={Profile}/>
           <Route path="/" exact component={Home}/>
