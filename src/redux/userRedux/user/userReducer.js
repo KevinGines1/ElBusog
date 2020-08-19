@@ -43,7 +43,7 @@ const userReducer = (state = initialState, action) =>{
 			error: action.payload
 		}
 		case REGISTER: 
-			if(this.state.usernameVerified == true && this.state.emailVerified == true) {
+			if(this.state.usernameVerified === true && this.state.emailVerified === true) {
 				return {
 					loading: false,
 					users: [...state.users, action.payload],
