@@ -230,10 +230,11 @@ export const getUserFromToken = token => {
 			// calls fetchProfile action from profileActions
 			dispatch(fetchProfile(payload))
 			
-			dispatch({
-				type: GET_PROFILE,
-				payload: payload
-			})
+			//this is obsolete since profile is on state.zeit.profile
+			// dispatch({
+			// 	type: GET_PROFILE,
+			// 	payload: payload
+			// })
 		})
 
 		.catch(error =>{

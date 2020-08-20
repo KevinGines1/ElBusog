@@ -11,10 +11,9 @@ function Profile() {
     const background = {
         backgroundImage: `url(${profileBG})`
     }
-    const profileDetails = useSelector(state => state.aaron.user.userInfo)
     const profile = useSelector(state => state.zeit.profile)
 
-    return profileDetails.isLoggedIn && profileDetails.User_type !== "" ? (
+    return profile.isLoggedIn && profile.User_type !== "" ? (
         <div className="Profile" style={background}>
             <div className="rowcenter">
                 {(!profile.editingProfile &&
@@ -25,7 +24,7 @@ function Profile() {
                     <EditProfile />
                 )}
 
-                {(profileDetails.User_type === "Customer" &&
+                {(profile.User_type === "Customer" &&
                     <div className="col-7">
                         <div className="tile margin-lr-10 margin-tb-10 profileTiles customerDashboard">
                             <h3>Dashboard</h3>
@@ -34,13 +33,13 @@ function Profile() {
                     </div>
                 )}
                 
-                {(profileDetails.User_type === "Business_owner" &&
+                {(profile.User_type === "Business_owner" &&
                     <Dashboard />
                 )}
 
             </div>
         </div>
-    ) : !profileDetails.isLoggedIn ? (
+    ) : !profile.isLoggedIn ? (
         <div className="Profile" style={background}>
             <div className="rowcenter">
                 <div className="col-5 profileTiles notLoggedIn">

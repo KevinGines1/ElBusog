@@ -11,7 +11,7 @@ function ProfileDropdown() {
         dispatch(logoutUser())
     }
 
-    var profileName = useSelector(state => state.aaron.user.userInfo.Name);
+    var profileName = useSelector(state => state.zeit.profile.Name);
 
     return(
         <div className="profile-dropdown">

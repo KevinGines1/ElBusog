@@ -10,11 +10,11 @@ export const fetchFoodPlaces = () => {
                 const foodPlaces = response.data
                 foodPlaces.forEach((foodPlace) => {
                     dispatch(fetchFoodPlacesReview(foodPlace, foodPlace.Food_place_id))
-                    dispatch({
-                        type: FETCH_FOOD_PLACES,
-                        payload: foodPlace
-                    })}
-                    )
+                    // dispatch({
+                    //     type: FETCH_FOOD_PLACES,
+                    //     payload: foodPlace
+                    // })
+                })
                 
             })
             .catch(error => {
@@ -37,10 +37,12 @@ export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
                 })
                 const avgRating = Math.round((totalRating / numOfRatings) * 10) / 10
 
-                let getFoodPlace = Math.floor(Math.random() * 2)
-                if (getFoodPlace === 1 && avgRating >= 3.5) {
-                    dispatch(fetchFoodPlacesPhotos(foodPlace, foodPlaceID, avgRating))
-                }
+                // this condition has been moved to FFPreducer.js
+                // let getFoodPlace = Math.floor(Math.random() * 2)
+                // if (getFoodPlace === 1 && avgRating >= 3.5) {
+                //     dispatch(fetchFoodPlacesPhotos(foodPlace, foodPlaceID, avgRating))
+                // }
+                dispatch(fetchFoodPlacesPhotos(foodPlace, foodPlaceID, avgRating))
             })
     }
 }

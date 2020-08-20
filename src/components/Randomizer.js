@@ -161,7 +161,9 @@ function Randomizer() {
                     <button className="col-3 buttonTranslucent" onClick={() => handleClick(6)}>{questions[questionNumber][6]}</button>
                 </div>
                 <div className="row force-center">
-                    <button className="button margin-tb-10 seeMore" onClick={() => handleClick(7)}>Retry</button>
+                    {(questionNumber > 0) &&
+                        <button className="button margin-tb-10 seeMore" onClick={() => handleClick(7)}>Retry</button>
+                    }
                 </div>
             </div>
         </div>

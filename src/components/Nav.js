@@ -8,7 +8,7 @@ import ProfileDropdown from '../components/ProfileDropdown';
 import LeftNavbar from '../components/LeftNavbar';
 
 function Navbar(props) {
-    var profilePic = useSelector(state => state.aaron.user.userInfo.Picture);
+    var profilePic = useSelector(state => state.zeit.profile.Picture);
     const [leftNavbarVisible, toggleLeftNavbar] = useState(false);
     const [profileDropdownVisible, toggleDropdown] = useState(false);
 

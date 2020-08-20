@@ -10,7 +10,21 @@ const initialState = {
 const fetchFoodPlacesReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_FOOD_PLACES:
-            if(action.payload.Picture === undefined) {
+            let getFoodPlace = Math.floor(Math.random() * 2)
+            if(state.foodPlaces.length < 4 && getFoodPlace === 1 && action.payload.Rating >= 3.5){
+                return {
+                    ...state,
+                    foodPlaces: [
+                        ...state.foodPlaces,
+                        action.payload
+                    ],
+                    listOfFoodPlaces: [
+                        ...state.listOfFoodPlaces,
+                        action.payload
+                    ]
+                }
+            }
+            else {
                 return {
                     ...state,
                     listOfFoodPlaces: [
@@ -19,16 +33,6 @@ const fetchFoodPlacesReducer = (state = initialState, action) => {
                     ]
                 }
             }
-            else if(state.foodPlaces.length < 4){
-                return {
-                    ...state,
-                    foodPlaces: [
-                        ...state.foodPlaces,
-                        action.payload
-                    ],
-                }
-            }
-            else return state;
         default: return state
     }
 }

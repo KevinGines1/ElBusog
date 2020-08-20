@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-	var isLoggedIn = useSelector(state => state.aaron.user.userInfo.isLoggedIn);
+	var isLoggedIn = useSelector(state => state.zeit.profile.isLoggedIn);
 	//this will be used to redirect user away from login page if user is already logged in
 
 	return(

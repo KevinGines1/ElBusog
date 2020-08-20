@@ -14,7 +14,7 @@ import {
 	RESET_REGISTER_USERNAME,
 } from './userTypes'
 
-
+//userInfo is obsolete however, double check first before deleting  because isLoggedIn might still be needed
 const initialState = {
 	loading:  false,
 	users: [],
