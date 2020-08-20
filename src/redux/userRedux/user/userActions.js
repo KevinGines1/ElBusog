@@ -160,12 +160,11 @@ export const loginUser = userObj => {
             'application/json' }
 		})
 		.then(response => {
-			console.log(response.data)
-
 			//get user profile if login is correct
 			if(response.data.authorized === true) {
-				dispatch(getUser(userObj.username))
+				// dispatch(getUser(userObj.username))
 				localStorage.setItem('token', response.data.token)
+				dispatch(getUserFromToken(response.data.token))
 			}
 
 			dispatch({
@@ -181,19 +180,17 @@ export const loginUser = userObj => {
 	}
 }
 
-export const getUser = username => {
+export const getUser = User_id => {
 	return (dispatch) => {
 
 		const urlString = "https://ancient-garden-70007.herokuapp.com/api/profile/"
-		const url = urlString.concat(username)
-		console.log(url)
-		axios.get(url, username, {
+		const url = urlString.concat(User_id)
+		axios.get(url, User_id, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
 
 		.then(response => {
-			console.log(response.data)
 			var payload = response.data[0]
 			payload.isLoggedIn = true		//use this only if logging in
 
@@ -224,11 +221,11 @@ export const getUserFromToken = token => {
 
 		.then(response => {
 			// console.log(response.data.userInfo)
-			var payload = response.data.userInfo
-			payload.isLoggedIn = true		//use this only if logging in
+			// var payload = response.data.userInfo
+			// payload.isLoggedIn = true		//use this only if logging in
 
-			// calls fetchProfile action from profileActions
-			dispatch(fetchProfile(payload))
+			dispatch(getUser(response.data.User_id))
+			// dispatch(fetchProfile(payload))
 			
 			//this is obsolete since profile is on state.zeit.profile
 			// dispatch({

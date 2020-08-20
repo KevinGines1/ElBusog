@@ -186,19 +186,15 @@ export const saveChanges = (
             })
             .then(response => {
                 console.log(response.data)
-                dispatch({
-                    type: SAVE_CHANGES,
-                    payload: {
-                        response: response.data,
-                        newName,
-                        newUsername,
-                        newEmail,
-                        newPassword,
-                        newPicturePath,
-                        accType
-                    }
+                axios.get(`https://ancient-garden-70007.herokuapp.com/api/profile/${userID}`)
+                    .then(response => {
+                        const userInfo = response.data[0]
+                        dispatch({
+                            type: SAVE_CHANGES,
+                            payload: userInfo
+                        })
+                    })
                 })
-            })
             .catch(error => {
                 console.log(error.message)
             })

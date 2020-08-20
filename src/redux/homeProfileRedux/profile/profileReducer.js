@@ -82,12 +82,11 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 uploadedImage: "",
-                Name: action.payload.newName,
-                Username: action.payload.newUsername,
-                Email: action.payload.newEmail,
-                Picture: action.payload.newPicturePath,
-                Password: action.payload.newPassword,
-                User_type: action.payload.accType,
+                Name: action.payload.Name,
+                Username: action.payload.Username,
+                Email: action.payload.Email,
+                Picture: action.payload.Picture,
+                User_type: action.payload.User_type,
                 editingProfile: false
             }
         case CANCEL_CHANGES:

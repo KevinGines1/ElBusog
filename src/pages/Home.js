@@ -12,11 +12,10 @@ import Ratings from 'react-ratings-declarative';
 function Home() {
     const foodPlacesData = useSelector(state => state.zeit.foodPlacesData)
     const foodPlaces = foodPlacesData.foodPlaces
-    console.log("HERE ARE THE: ", foodPlaces)
     const foodTiles =[]
     foodPlaces.map(foodPlace =>
         foodTiles.push(
-            <div key={foodPlace.Food_place_id} className="col-3 foodTileContainer">
+            <div key={foodPlace.Food_place_id} className="col-3">
                 <div className="tile foodTile margin-lr-10 margin-tb-10">
                     <img className="foodIcon" src={foodPlace.Picture ? foodPlace.Picture : defaultFoodPic} alt="Food place" />
                     <h4>{foodPlace.Food_place_name}</h4>
