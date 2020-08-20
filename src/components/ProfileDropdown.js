@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logoutUser } from '../redux';
+import { logoutUser, logoutProfile } from '../redux';
 import '../components/ProfileDropdown.css'
 
 function ProfileDropdown() {
@@ -9,6 +9,7 @@ function ProfileDropdown() {
 
     const logout = () => {
         dispatch(logoutUser())
+        dispatch(logoutProfile())
     }
 
     var profileName = useSelector(state => state.zeit.profile.Name);

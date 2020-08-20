@@ -9,6 +9,7 @@ import {
     SAVE_CHANGES,
     CANCEL_CHANGES,
     DELETE_ACCOUNT,
+    LOGOUT_PROFILE,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
@@ -238,6 +239,12 @@ export const deleteAccount = (username, accType) => {
                     console.log(error.message)
                 })
         }
+    }
+}
+
+export const logoutProfile = () => {
+    return {
+        type: LOGOUT_PROFILE,
     }
 }
 

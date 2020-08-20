@@ -8,6 +8,7 @@ import {
     SAVE_CHANGES,
     CANCEL_CHANGES,
     DELETE_ACCOUNT,
+    LOGOUT_PROFILE,
     EDITING_FOOD_PLACE,
     EDIT_FOOD_PLACE,
     ADDING_FOOD_PLACE,
@@ -97,6 +98,11 @@ const profileReducer = (state = initialState, action) => {
                 emailAvailable: true
             }
         case DELETE_ACCOUNT:
+            return {
+                ...initialState,
+                isLoggedIn: false
+            }
+        case LOGOUT_PROFILE:
             return {
                 ...initialState,
                 isLoggedIn: false

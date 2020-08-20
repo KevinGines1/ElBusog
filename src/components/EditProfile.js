@@ -16,7 +16,6 @@ function EditProfile() {
     const profile = useSelector(state => state.zeit.profile)
     const dispatch = useDispatch()
     const [state, setState] = useState({
-        UserID: profile.User_id,
         Name: profile.Name,
         Username: profile.Username,
         Email: profile.Email,
@@ -29,15 +28,15 @@ function EditProfile() {
         invalidAccType: false,
         deletingAccount: false,
         Password: "",
-        correctPassword: true,
-        saveTouched: false
+        saveTouched: false,
+        passwordTouched: false
     })
 
     // VALIDATION: checks if input in each field is valid
 
     // CHECKS IF USERNAME IS AVAILABLE
     useEffect(() => {
-        if (profile.Username !== state.Username) {
+        if (profile.Username.toUpperCase() !== state.Username.toUpperCase()) {
             dispatch(checkUsername(state.Username))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -45,7 +44,7 @@ function EditProfile() {
 
     // CHECKS IF EMAIL IS AVAILABLE
     useEffect(() => {
-        if (profile.Email !== state.Email) {
+        if (profile.Email.toUpperCase() !== state.Email.toUpperCase()) {
             dispatch(checkEmail(state.Email))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,16 +54,14 @@ function EditProfile() {
     useEffect(() => {
         dispatch(checkPassword(state.Password, profile.User_id))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.Password, state.saveTouched])
+    }, [state.Password])
 
-    // useEffect(() => {
-    //     if(profile.correctPassword){
-    //         setState(state => ({...state, correctPassword: true}))
-    //     } else {
-    //         setState(state => ({...state, correctPassword: false}))
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [state.Password])
+    useEffect(() => {
+        if(!state.passwordTouched){
+            setState(state => ({...state, passwordTouched: true}))
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.Password])
     
     //  CHECKS IF A BUSINESS OWNER HAS BUSINESSES
     useEffect(() => {
@@ -121,16 +118,6 @@ function EditProfile() {
         } else if (newPassword === "") {
             newPassword = state.Password
         }
-        console.log(
-            state.UserID,
-            profile.Username,
-            state.Name,
-            state.Username,
-            state.Email,
-            newPassword,
-            Picture,
-            state.User_type
-        )
         if (
             state.Name !== "" &&
             state.Username !== "" &&
@@ -143,7 +130,7 @@ function EditProfile() {
             !state.invalidAccType
         ) {
             dispatch(saveChanges(
-                state.UserID,
+                profile.User_id,
                 profile.Username,
                 state.Name,
                 state.Username,
@@ -153,8 +140,6 @@ function EditProfile() {
                 state.User_type
             ))
             dispatch(editProfile())
-        } else if (!state.saveTouched){
-            setState({...state, saveTouched: true})
         }
     }
 
@@ -186,17 +171,6 @@ function EditProfile() {
                     <div className="editDetail">
                         <p>Profile Picture</p>
                         <ImageUploader />
-                        {/* <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
-                        <input
-                            onChange={handleInputChange}
-                            className="editInput"
-                            type="text"
-                            name="Picture"
-                            defaultValue={profile.Picture}
-                        />
-                        <div className={state.imgSrcInvalid ? "show" : "hide"}>
-                            Please enter an image's link.
-                        </div> */}
                     </div>
                     <div className="editDetail">
                         <p>Name</p>
@@ -253,14 +227,14 @@ function EditProfile() {
                         </div>
                     </div>
                     <div className="changePassword">
-                        <p>New Password</p>
+                        <p>New Password*</p>
                         <input
                             onChange={handleInputChange}
                             className="editInput"
                             type="password"
                             name="newPassword"
                         />
-                        <p>Confirm Password</p>
+                        <p>Confirm Password*</p>
                         <input
                             onChange={handleInputChange}
                             className="editInput"
@@ -271,18 +245,18 @@ function EditProfile() {
                             Passwords do not match
                         </div>
                     </div>
-                    <div className="changePassword">
+                    <div className="savePassword">
                         <p>Password</p>
-                        <p style={{fontStyle: "italic"}}>Please enter your password to save changes</p>
+                        <p className="passwordNote">Please enter your password to save changes</p>
                         <input 
                             onChange={handleInputChange}
                             className="editInput"
                             type="password"
                             name="Password"
                         />
-                    </div>
-                    <div className={!profile.correctPassword && state.saveTouched ? "show" : "hide"}>
-                        Incorrect Password
+                        <div className={!profile.correctPassword && state.passwordTouched ? "show" : "hide"}>
+                            Incorrect Password
+                        </div>
                     </div>
                     <div className={state.blankField ? "show" : "hide"}>
                         Please do not leave any field blank.
@@ -318,6 +292,9 @@ function EditProfile() {
                             className="profileBtn margin-lr-10"
                             onClick={handleCancel}
                         >Cancel</button>
+                    </div>
+                    <div className="notRequired">
+                        *not required
                     </div>
                 </form>
             </div>

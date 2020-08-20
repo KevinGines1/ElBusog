@@ -13,7 +13,12 @@
     margin-top: 10px;
 }
 
+.foodTileContainer {
+    display: flex;
+}
+
 .foodTile {
+    display: table-cell;
     background-color: rgb(242, 242, 242, 0.9);
     padding: 50px 5px;
 }

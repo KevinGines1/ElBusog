@@ -229,21 +229,10 @@ function AddEditFoodPlace() {
                             className="foodPlacePic" />
                     </div>
                 )}
-                <ImageUploader />
-                {/* <div className="foodPlaceInputContainer">
+                <div className="foodPlaceInputContainer">
                     <p>Food Place Photo</p>
-                    <p style={{ fontStyle: "italic", marginTop: "5px" }}>Enter the image's link below</p>
-                    <input
-                        onChange={handleInputChange}
-                        className="foodPlaceInput"
-                        type="text"
-                        name="picture"
-                        defaultValue={profile.addingFoodPlace ? "" : foodPlaceEdited.Picture}
-                    />
-                    <div className={state.invalidPicture ? "show" : "hide"}>
-                        Please enter an image's link.
-                    </div>
-                </div> */}
+                </div>
+                <ImageUploader />
                 <div className="inlineFlex">
                     <div className="editDetail">
                         <p>Food Place Name</p>
