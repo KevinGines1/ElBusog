@@ -38,8 +38,8 @@ const App = () => (
           <Route path="/profile" exact component={Profile}/>
           <Route path="/" exact component={Home}/>
           <Route path="/foodplace" exact component={FoodPlaceMain}/>
-          <Route path="/about" component={About} />
           <Route path="/foodplace/:foodPlaceName" component={FoodPlace}/>
+          <Route path="/about" component={About} />
         </Switch>
         <Footer/>
       </div>

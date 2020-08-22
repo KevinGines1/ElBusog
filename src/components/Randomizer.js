@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom'
 import { randomizeAction } from '../redux';
 import banner from '../assets/cakeBanner.png';
 
@@ -10,6 +11,8 @@ const questions = [
 ]
 
 function Randomizer() {
+    let history = useHistory();
+
     const listOfFoodPlaces = useSelector(state => state.zeit.foodPlacesData.listOfFoodPlaces);
     const dispatch = useDispatch()
 
@@ -118,7 +121,9 @@ function Randomizer() {
 
     const handleFormSubmit = () => {
         //dispatch the ranked food places to listOfFoodPlacesRanked in redux store
-        dispatch(randomizeAction(foodPlaceRanker()))
+        const foodPlaceScores = foodPlaceRanker()
+        dispatch(randomizeAction(foodPlaceScores))
+        history.push(`/foodplace/${foodPlaceScores[0].Food_place_name}`);
         console.log(budget, location, type);
     }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-// import JeepneyRoute from '../components/JeepneyRoute';
-// import FoodPlaceMap from '../components/FoodPlaceMap'
+import JeepneyRoute from '../components/JeepneyRoute';
+import FoodPlaceMap from '../components/FoodPlaceMap'
 import Rate from '../components/Rate';
 import banner from '../assets/uplbBanner.jpg';
 // import defaultFoodPic from '../assets/foodPlace.png';
@@ -24,10 +24,9 @@ function FoodPlace({ match }) {
       </div>
       <h3>{match.params.foodPlaceName}</h3>
       <Rate />
-      {/* temporary disabled to lessen api calls, pass the real values later */}
-      {/* <JeepneyRoute Food_place_id={5}/> */}
-      {/* <FoodPlaceMap latitude={14.167418} longitude={121.243359}/> */}
-      {console.log(foodPlace[0])}
+      <JeepneyRoute Food_place_id={foodPlace[0].Food_place_id}/>
+      <FoodPlaceMap latitude={foodPlace[0].Latitude} longitude={foodPlace[0].Longitude}/>
+      {/* {console.log(foodPlace[0])} */}
     </div>
   );
 }
