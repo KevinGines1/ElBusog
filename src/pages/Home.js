@@ -19,7 +19,7 @@ function Home() {
                 <div className="tile foodTile margin-lr-10 margin-tb-10">
                     <img className="foodIcon" src={foodPlace.Picture ? foodPlace.Picture : defaultFoodPic} alt="Food place" />
                     <h4>{foodPlace.Food_place_name}</h4>
-                    <Ratings 
+                    <Ratings
                         rating = {foodPlace.Rating}
                         widgetDimensions="18px"
                         widgetEmptyColors="#b3b3b3"
@@ -34,7 +34,7 @@ function Home() {
                     </Ratings>
                     <p className="priceRange">Price Range: {foodPlace.Price_range}</p>
                     <p className="foodTypes">{foodPlace.Food_types}</p>
-                    <Link className="button margin-tb-10 viewDetails" to="/">View Details</Link>
+                    <Link className="button margin-tb-10 viewDetails" to = {`/foodplace/${foodPlace.Food_place_name}`}>View Details</Link>
                 </div>
             </div>
         )

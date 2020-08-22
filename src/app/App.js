@@ -1,10 +1,11 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../redux/store.js';
 import './App.css';
 
- 
+
 
 //components
 import Nav from '../components/Nav';
@@ -17,7 +18,8 @@ import PrivateRoute from '../components/PrivateRoute';
 //pages
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
-import FoodPlace from '../pages/FoodPlaceMain';
+import FoodPlaceMain from '../pages/FoodPlaceMain';
+import FoodPlace from '../pages/FoodPlace';
 import About from '../pages/About';
 import CreateAccount from '../pages/CreateAccount'
 import Login from '../pages/Login'
@@ -35,8 +37,9 @@ const App = () => (
           <Route path="/register" exact component={CreateAccount}/>
           <Route path="/profile" exact component={Profile}/>
           <Route path="/" exact component={Home}/>
-          <Route path="/foodplace" exact component={FoodPlace}/>
+          <Route path="/foodplace" exact component={FoodPlaceMain}/>
           <Route path="/about" component={About} />
+          <Route path="/foodplace/:foodPlaceName" component={FoodPlace}/>
         </Switch>
         <Footer/>
       </div>

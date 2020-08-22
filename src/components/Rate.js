@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import './Rate.css';
 
 const Rate = () => {
 
@@ -14,14 +15,16 @@ const Rate = () => {
         return (
           <label>
             <input
+            className = "form-radio"
             type = "radio"
             name = "rating"
             value = {ratingValue}
             onClick = {() => setRating(ratingValue)}
             />
             <FaStar
+            className = "star"
             size = {20}
-            color = {ratingValue <= hover || rating ? '#ffc107' : 'e4e5e9'}
+            color = {ratingValue <= (hover || rating) ? '#ffc107' : 'e4e5e9'}
             onMouseEnter = {() => setHover(ratingValue)}
             onMouseLeave = {() => setHover(null)}
             />
