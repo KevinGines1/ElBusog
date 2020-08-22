@@ -2,13 +2,13 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import Rate from '../components/Rate';
 import banner from '../assets/uplbBanner.jpg';
-import defaultFoodPic from '../assets/foodPlace.png';
+// import defaultFoodPic from '../assets/foodPlace.png';
 
 function FoodPlace({ match }) {
   const foodPlacesData = useSelector(state => state.zeit.foodPlacesData);
   const foodPlaces = foodPlacesData.listOfFoodPlaces;
   const foodPlace = foodPlaces.filter(foodPlace => foodPlace.Food_place_name === match.params.foodPlaceName);
-  const foodPlaceName = foodPlace[0];
+  // const foodPlaceName = foodPlace[0];
 
   return (
     <div>
