@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getJeepRoute } from '../redux';
 
-function JeepneyRoute() {
+function JeepneyRoute(props) {
     const dispatch = useDispatch();
     const jeepRoute = useSelector(state => state.zoren.jeepRoute);
     const jeepRideStart = useSelector(state => state.zoren.jeepRideStart);
@@ -23,7 +23,7 @@ function JeepneyRoute() {
 
     const getCoordinates = (pos) => {
         console.log(pos);
-        dispatch(getJeepRoute(pos.coords.latitude, pos.coords.longitude, 5));   //put food place id
+        dispatch(getJeepRoute(pos.coords.latitude, pos.coords.longitude, props.Food_place_id));   //put food place id
     }
 
     const getCoordinatesError = (error) => {

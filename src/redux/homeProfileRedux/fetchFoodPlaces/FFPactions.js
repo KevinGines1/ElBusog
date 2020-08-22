@@ -35,8 +35,9 @@ export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
                     numOfRatings += 1
                     return null
                 })
-                const avgRating = Math.round((totalRating / numOfRatings) * 10) / 10
-
+                var avgRating = Math.round((totalRating / numOfRatings) * 10) / 10
+                //if no rating, make it zero
+                if(!avgRating) {avgRating = 0}
                 // this condition has been moved to FFPreducer.js
                 // let getFoodPlace = Math.floor(Math.random() * 2)
                 // if (getFoodPlace === 1 && avgRating >= 3.5) {
