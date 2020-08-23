@@ -23,6 +23,7 @@ import FoodPlace from '../pages/FoodPlace';
 import About from '../pages/About';
 import CreateAccount from '../pages/CreateAccount'
 import Login from '../pages/Login'
+import PageNotFound from '../pages/PageNotFound';
 
 const App = () => (
   <Provider store={store}>
@@ -40,6 +41,7 @@ const App = () => (
           <Route path="/foodplace" exact component={FoodPlaceMain}/>
           <Route path="/foodplace/:foodPlaceName" component={FoodPlace}/>
           <Route path="/about" component={About} />
+          <Route component={PageNotFound} />
         </Switch>
         <Footer/>
       </div>

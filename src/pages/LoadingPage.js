@@ -1,4 +1,5 @@
 import React from 'react';
+import loadingAnimation from '../assets/loadingAnimationWhite.gif';
 
 function LoadingPage(props) {
     const style = {
@@ -8,7 +9,7 @@ function LoadingPage(props) {
 
     return (
         <div className="row force-center" style={style}>
-            <h2>Please wait...</h2>
+            <img src={loadingAnimation} alt="Loading..."/>
         </div>
     );
 }
