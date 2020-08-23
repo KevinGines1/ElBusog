@@ -57,7 +57,7 @@ function FoodPlace({ match }) {
       if(hour < foodPlace[0].Opening_time && foodPlace[0].Days_open.includes(day)) {
         nextOpenWhen = `Opens later at ${openHourText}`
       }
-      else if(hour > foodPlace[0].Closing_time && (foodPlace[0].Days_open.includes(day+1) || day+1 === 7)) {
+      else if((foodPlace[0].Days_open.includes((day+1)%7))) {
         nextOpenWhen = `Opens tomorrow at ${openHourText}`
       }
     }
@@ -137,8 +137,11 @@ function FoodPlace({ match }) {
       </div>
       <JeepneyRoute Food_place_id={foodPlace[0].Food_place_id}/>
       <FoodPlaceMap latitude={foodPlace[0].Latitude} longitude={foodPlace[0].Longitude}/>
-      <div className="row">
-        <Rate />
+      <div className="rowcenter">
+        <div className="col-6 tile">
+          <h4>Rate this food place!</h4><br/>
+            <Rate />
+        </div>
       </div>
     </div>
   );
