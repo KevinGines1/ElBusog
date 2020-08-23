@@ -13,7 +13,7 @@ const Rate = () => {
         const ratingValue = i + 1;
 
         return (
-          <label>
+          <label key={i}>
             <input
             className = "form-radio"
             type = "radio"
