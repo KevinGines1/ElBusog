@@ -7,9 +7,6 @@ import kevin from '../assets/devs/kevin.jpg';
 import osie from '../assets/devs/osie.jpg';
 import zeit from '../assets/devs/zeit.jpg';
 import zoren from '../assets/devs/zoren.jpg';
-import JeepneyRoute from '../components/JeepneyRoute';
-import FoodPlaceMap from '../components/FoodPlaceMap';
-import ImageUploader from '../components/ImageUploader';
 
 const About = () => (
     <div>
@@ -61,7 +58,7 @@ const About = () => (
                         </div>
                         <div className="col-7 left-desktop-center-phone">
                             <h6>Kevin Gines</h6>
-                            <p>Junior Developer</p>
+                            <p>Junior Developer</p><br/>
                             <p>I love Vigan empanada.</p>
                         </div>
                     </div>
@@ -120,9 +117,6 @@ const About = () => (
                 </div>
             </div>
         </div>
-        <JeepneyRoute/>
-        <FoodPlaceMap/>
-        <ImageUploader/>
     </div>
 );
 
