@@ -6,6 +6,7 @@ import FoodPlaceMap from '../components/FoodPlaceMap';
 import LoadingPage from './LoadingPage';
 import Rate from '../components/Rate';
 import banner from '../assets/uplbBanner.jpg';
+import defaultFoodPic from '../assets/foodPlace.png';
 // import defaultFoodPic from '../assets/foodPlace.png';
 
 function FoodPlace({ match }) {
@@ -90,7 +91,7 @@ function FoodPlace({ match }) {
       </div>
       <div className="rowcenter margin-tb-30">
         <div className="col-5">
-          <img className="foodLargePic" src={foodPlace[0].Picture} alt={match.params.foodPlaceName}/>
+          <img className="foodLargePic" src={foodPlace[0].Picture ? foodPlace[0].Picture : defaultFoodPic} alt={match.params.foodPlaceName}/>
         </div>
         <div className="col-5">
           <div className="margin-lr-20">
@@ -104,7 +105,7 @@ function FoodPlace({ match }) {
               }
             </div>
             <Ratings
-									rating = {foodPlace.Rating}
+									rating = {foodPlace[0].Rating}
 									widgetDimensions="18px"
 									widgetEmptyColors="#b3b3b3"
 									widgetRatedColors="#e07f3e"

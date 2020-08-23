@@ -33,7 +33,7 @@ const initialState = {
     editingFoodPlace: false,
     editingData: {},
     addingFoodPlace: false,
-    isLoggedIn: false,
+    isLoggedIn: null,
     uploadedImage: ""
 }
 
