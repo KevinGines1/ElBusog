@@ -59,6 +59,7 @@ class Login extends Component {
                 name="username"
                 value={username}
                 placeholder="Username"
+                autoFocus
               /><br/><br/>
             <input
             className="logintextbox"

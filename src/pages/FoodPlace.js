@@ -139,9 +139,11 @@ function FoodPlace({ match }) {
       <JeepneyRoute Food_place_id={foodPlace[0].Food_place_id}/>
       <FoodPlaceMap latitude={foodPlace[0].Latitude} longitude={foodPlace[0].Longitude}/>
       <div className="rowcenter">
-        <div className="col-6 tile">
-          <h4>Rate this food place!</h4><br/>
-            <Rate />
+        <div className="col-6">
+          <div className="margin-lr-10 tile">
+            <h4>Rate this food place!</h4><br/>
+              <Rate />
+          </div>
         </div>
       </div>
     </div>

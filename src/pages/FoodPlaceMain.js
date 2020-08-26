@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoadingPage from './LoadingPage';
+import FoodPlaceTile from '../components/FoodPlaceTile';
 import banner from '../assets/uplbBanner.jpg';
-import defaultFoodPic from '../assets/foodPlace.png';
-import Ratings from 'react-ratings-declarative';
 
 
 function FoodPlaceMain() {
@@ -42,26 +40,14 @@ function FoodPlaceMain() {
 					return (
 						<div key={index} className="rowcenter foodTilesContainer">
 							{foodPlaceGroup.map(foodPlace =>
-								<div key={foodPlace.Food_place_id} className="col-3 tile foodTile">
-									<img className="foodIcon" src={foodPlace.Picture ? foodPlace.Picture : defaultFoodPic} alt="Food place" />
-									<h4>{foodPlace.Food_place_name}</h4>
-									<Ratings
-										rating={foodPlace.Rating}
-										widgetDimensions="18px"
-										widgetEmptyColors="#b3b3b3"
-										widgetRatedColors="#e07f3e"
-										widgetSpacings="1.5px"
-									>
-										<Ratings.Widget />
-										<Ratings.Widget />
-										<Ratings.Widget />
-										<Ratings.Widget />
-										<Ratings.Widget />
-									</Ratings>
-									<p className="priceRange">Price Range: {foodPlace.Price_range}</p>
-									<p className="foodTypes">{foodPlace.Food_types}</p>
-									<Link className="button margin-tb-10 viewDetails" to={`/foodplace/${foodPlace.Food_place_name}`}>View Details</Link>
-								</div>
+								<FoodPlaceTile
+									key={foodPlace.Food_place_id}
+									Picture={foodPlace.Picture}
+									Food_place_name={foodPlace.Food_place_name}
+									Rating={foodPlace.Rating}
+									Price_range={foodPlace.Price_range}
+									Food_types={foodPlace.Food_types}
+								/>
 							)}
 						</div>
 					)

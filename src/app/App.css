@@ -116,6 +116,10 @@ p {
     margin: 0;
 }
 
+a {
+    color: black;
+}
+
 .justify {
     text-align: justify;
 }
