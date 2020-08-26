@@ -13,10 +13,25 @@
     margin-top: 10px;
 }
 
+.foodTilesContainer {
+    padding: 10px;
+}
+
 .foodTile {
     background-color: rgb(242, 242, 242, 0.9);
     padding: 50px 5px;
+    margin: 0 7px;
 }
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="foodTilesContainer"] {
+        padding: 0 10px;
+    }
+    [class*="foodTile"] {
+        margin: 5px 0;
+    }
+  }
 
 .viewDetails {
     display: inline-block;
@@ -61,4 +76,8 @@
     border-color: #e07f3e;
     background-color: #e07f3e;
     color: #f2f2f2;
+}
+
+.foodPlaceMain .rowcenter {
+    margin: 0;
 }

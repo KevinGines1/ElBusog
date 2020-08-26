@@ -1,6 +1,9 @@
+.profile {
+    margin-top: 90px;
+}
+
 .profileTiles {
     background-color: rgb(242, 242, 242, 0.9);
-    margin-top: 110px;
     margin-bottom: 50px;
     color: #404040;
     box-shadow: 2px 2px 10px #000000;
@@ -36,7 +39,7 @@
     margin-top: 10px;
 }
 
-.Profile img {
+.profileBackground img {
     width: inherit;
     height: inherit;
     object-fit: cover;

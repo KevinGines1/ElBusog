@@ -2,10 +2,11 @@ import axios from 'axios'
 import {
     FETCH_FOOD_PLACES
 } from './FFPtypes'
+import { SERVER_URL } from '../../serverUrl'
 
 export const fetchFoodPlaces = () => {
     return (dispatch) => {
-        axios.get('https://ancient-garden-70007.herokuapp.com/api/getAllFoodPlaces')
+        axios.get(`${SERVER_URL}/getAllFoodPlaces`)
             .then(response => {
                 const foodPlaces = response.data
                 foodPlaces.forEach((foodPlace) => {
@@ -25,7 +26,7 @@ export const fetchFoodPlaces = () => {
 
 export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
     return (dispatch) => {
-        axios.get(`https://ancient-garden-70007.herokuapp.com/api/comments/${foodPlaceID}`)
+        axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
             .then(response => {
                 const Reviews = response.data
                 let totalRating = 0
@@ -50,7 +51,7 @@ export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
 
 export const fetchFoodPlacesPhotos = (foodPlace, foodPlaceID, rating) => {
     return (dispatch) => {
-        axios.get(`https://ancient-garden-70007.herokuapp.com/api/photos/${foodPlaceID}`)
+        axios.get(`${SERVER_URL}/photos/${foodPlaceID}`)
             .then(response => {
                 let Picture = ""
                 if (response.data.length === 0) {

@@ -1,5 +1,6 @@
 import { RANDOMIZE_FOODPLACE, GET_JEEP_STOP } from './randomizerTypes';
 import axios from 'axios'
+import { SERVER_URL } from '../serverUrl'
 
 // Actions
 export const randomizeAction = (payload) => ({
@@ -10,7 +11,7 @@ export const randomizeAction = (payload) => ({
 
 export const getJeepRoute = (lat, lng, id) => {
 	return (dispatch) => {
-		axios.get(`https://ancient-garden-70007.herokuapp.com/api/locate/${lat}&${lng}&${id}`)
+		axios.get(`${SERVER_URL}/locate/${lat}&${lng}&${id}`)
 		.then(response => {
 			// console.log(response.data)
 			dispatch({

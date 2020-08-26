@@ -15,6 +15,7 @@ import {
 	RESET_REGISTER_USERNAME,
 } from './userTypes'
 import { fetchProfile } from '../../index'
+import { SERVER_URL } from '../../serverUrl'
 
 export const fetchUsersRequest = () => {
 	return {
@@ -63,7 +64,7 @@ export const verifyEmail = userObj => {
 	console.log(userObj.Email)
 	const email = userObj.Email
 	return (dispatch) => {
-		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkEmail', {email}, {
+		axios.post(`${SERVER_URL}/checkEmail`, {email}, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
@@ -94,7 +95,7 @@ export const verifyEmail = userObj => {
 export const verifyUsername = userObj => {
 	const username = userObj.Username
 	return (dispatch) => {
-		axios.post('https://ancient-garden-70007.herokuapp.com/api/checkUsername', {username}, {
+		axios.post(`${SERVER_URL}/checkUsername`, {username}, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
@@ -125,7 +126,7 @@ export const verifyUsername = userObj => {
 export const addUser = userObj => {
 	return (dispatch) => {
 		console.log(userObj)
-			axios.post('https://ancient-garden-70007.herokuapp.com/api/register', userObj, {
+			axios.post(`${SERVER_URL}/register`, userObj, {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
@@ -155,7 +156,7 @@ export const loginFail = error => {
 
 export const loginUser = userObj => {
 	return (dispatch) => {
-		axios.post('https://ancient-garden-70007.herokuapp.com/api/login', userObj, {
+		axios.post(`${SERVER_URL}/login`, userObj, {
      		headers : { 'Content-Type': 
             'application/json' }
 		})
@@ -183,7 +184,7 @@ export const loginUser = userObj => {
 export const getUser = User_id => {
 	return (dispatch) => {
 
-		const urlString = "https://ancient-garden-70007.herokuapp.com/api/profile/"
+		const urlString = `${SERVER_URL}/profile/`
 		const url = urlString.concat(User_id)
 		axios.get(url, User_id, {
      		headers : { 'Content-Type': 
@@ -212,7 +213,7 @@ export const getUser = User_id => {
 export const getUserFromToken = token => {
 	return (dispatch) => {
 
-		const url = "https://ancient-garden-70007.herokuapp.com/api/verifyToken/"
+		const url = `${SERVER_URL}/verifyToken/`
 		// console.log(url)
 		axios.post(url, {token}, {
      		headers : { 'Content-Type': 
