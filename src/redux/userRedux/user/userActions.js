@@ -172,7 +172,7 @@ export const loginUser = userObj => {
 				type: LOGIN_USER,
 				payload: response.data
 			})
-			// alert(response.data.msg)
+			alert(response.data.msg)
 		})
 		.catch(error =>{
 			const errorMsg = error.message
