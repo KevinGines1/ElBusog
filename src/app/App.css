@@ -595,25 +595,3 @@ magdagdag lang kayo dito */
     border-radius: 50%;
     background: white;
 }
-
-
-/* -----AARONS IMAGE UPLOAD AND PREVIEW */
-
-.imgCont {
-    margin-left: 40%;
-    margin-right: 40%;
-    width: 20%;
-    height: 20%;
-    border: 2px solid #dddddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: bold;
-    color: #cccccc;
-}
-
-.imgPrev {
-    height: 100%;
-    width: 100%;
-}
