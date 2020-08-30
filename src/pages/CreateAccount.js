@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   Username: '',
   Email: '',
   Password: '',
-  Picture: defaultImg,
+  Picture: '',
   User_type: '',
 };
 
@@ -33,7 +33,9 @@ class CreateAccount extends Component {
 
   handleFormSubmit = (event) => {
     event.preventDefault();
-
+    
+    this.state.Picture = defaultImg
+    
     if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
       //console.log(this.state)
       const {Name, Username, Email, Password, Picture, User_type } = this.state;
