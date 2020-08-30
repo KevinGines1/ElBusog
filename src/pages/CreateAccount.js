@@ -3,13 +3,15 @@ import { connect } from 'react-redux'
 // import { addUser } from '../redux/userRedux/user/userActions'
 import { verifyUsername } from '../redux'
 import { Link } from 'react-router-dom';
+import defaultImg from '../assets/user.png'
+import ImageUploader from '../components/ImageUploader';
 
 const INITIAL_STATE = {
   Name: '',
   Username: '',
   Email: '',
   Password: '',
-  Picture: '',
+  Picture: defaultImg,
   User_type: '',
 };
 
@@ -33,37 +35,29 @@ class CreateAccount extends Component {
   handleFormSubmit = (event) => {
     event.preventDefault();
 
-    // this.props.verifyUsername(this.state.Username)
-    // this.props.verifyEmail(this.state.Email)
-
     if (this.state.Name && this.state.Username && this.state.Email && this.state.Password && this.state.Picture && this.state.User_type) {
       //console.log(this.state)
       const {Name, Username, Email, Password, Picture, User_type } = this.state;
 
       //call action creator
-
-      //setTimeout(this.props.addUser, 3000)
-
-      // this.props.resetRegister();
       this.props.verifyUsername({ Name, Username, Email, Password, Picture, User_type });
-      // this.props.verifyEmail(this.state.Email);
-      // this.props.addUser({ Name, Username, Email, Password, Picture, User_type });
 
-
-      //clear user input
-      // this.setState({
-      //   Name: '',
-      //   Username: '',
-      //   Email: '',
-      //   Password: '',
-      //   Picture: '',
-      //   User_type: '',
-      // })
     } else {
       alert("Please fill in the information before submitting!");
     }
     
   }
+
+  imageHandler = (event) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if(reader.readyState === 2){
+        this.setState({Picture: reader.result})
+      }
+    }
+    reader.readAsDataURL(event.target.files[0])
+  }
+
 
   render() {
     const { Name, Username, Email, Password, Picture } = this.state;  // removed User_type because it is not used (aug. 11)
@@ -111,42 +105,34 @@ class CreateAccount extends Component {
                 placeholder="Password"
               />
               <br/><br/>
-              <input
-                className="logintextbox"
-                onChange={this.handleInputChange}
-                type="text"
-                name="Picture"
-                value={Picture}
-                placeholder="Enter image URL"
-              /><br/><br/>
               <div className="rowcenter">
-              <label className="col-3 margin-tb-10">Account Type:</label>
+                <label className="col-3 margin-tb-10">Account Type:</label>
 
-              {/* <div className="padding-lr-20"></div> */}
-                
-              <label className="radContainer col-3 padding-lr-20 margin-tb-10">Business
-                <input 
-                  onChange={this.handleInputChange}
-                  type="radio" 
-                  name="User_type"
-                  id="business"
-                  value="Business_owner"
-                  />
-                <span className="radButton"></span>
-              </label>
+                {/* <div className="padding-lr-20"></div> */}
+                  
+                <label className="radContainer col-3 padding-lr-20 margin-tb-10">Business
+                  <input 
+                    onChange={this.handleInputChange}
+                    type="radio" 
+                    name="User_type"
+                    id="business"
+                    value="Business_owner"
+                    />
+                  <span className="radButton"></span>
+                </label>
 
-              {/* <div className="padding-lr-20"></div> */}
+                {/* <div className="padding-lr-20"></div> */}
 
-              <label className="radContainer col-3 padding-lr-20 margin-tb-10">Customer
-                <input 
-                  onChange={this.handleInputChange}
-                  type="radio" 
-                  name="User_type"
-                  id="customer"
-                  value="Customer"
-                  />
-                <span className="radButton"></span>
-            </label>
+                <label className="radContainer col-3 padding-lr-20 margin-tb-10">Customer
+                  <input 
+                    onChange={this.handleInputChange}
+                    type="radio" 
+                    name="User_type"
+                    id="customer"
+                    value="Customer"
+                    />
+                  <span className="radButton"></span>
+                </label>
 
 
               </div>
