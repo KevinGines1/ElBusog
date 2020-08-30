@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { verifyUsername } from '../redux'
 import { Link } from 'react-router-dom';
 import defaultImg from '../assets/user.png'
-import ImageUploader from '../components/ImageUploader';
 
 const INITIAL_STATE = {
   Name: '',
@@ -47,17 +46,6 @@ class CreateAccount extends Component {
     }
     
   }
-
-  imageHandler = (event) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if(reader.readyState === 2){
-        this.setState({Picture: reader.result})
-      }
-    }
-    reader.readAsDataURL(event.target.files[0])
-  }
-
 
   render() {
     const { Name, Username, Email, Password, Picture } = this.state;  // removed User_type because it is not used (aug. 11)
