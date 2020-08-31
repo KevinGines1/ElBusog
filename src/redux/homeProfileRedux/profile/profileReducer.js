@@ -131,7 +131,8 @@ const profileReducer = (state = initialState, action) => {
                                 Closing_time: action.payload.newClose,
                                 Food_types: action.payload.newFoodTypes,
                                 Days_open: action.payload.newDays,
-                                User_id: action.payload.owner,
+                                Longitude: action.payload.newLongitude,
+                                Latitude: action.payload.newLatitude,
                                 Picture: action.payload.foodPlacePhoto
                             }
                             : { ...foodPlace }
@@ -160,6 +161,8 @@ const profileReducer = (state = initialState, action) => {
                         Days_open: action.payload.daysOpen,
                         Food_types: action.payload.foodTypes,
                         User_id: action.payload.owner,
+                        Latitude: action.payload.latitude,
+                        Longitude: action.payload.longitude,
                         Picture: action.payload.foodPlacePhoto,
                         Reviews: []
                     }

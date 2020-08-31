@@ -21,37 +21,6 @@ import { SERVER_URL } from '../../serverUrl'
 
 // FETCH DATA ACTIONS
 
-// export const fetchProfile = (username) => {
-//     return (dispatch) => {
-//         axios.get(`https://ancient-garden-70007.herokuapp.com/api/profile/${username}`)
-//             .then(response => {
-//                 const userProfile = response.data[0]
-//                 axios.get(`https://ancient-garden-70007.herokuapp.com/api/getAllUsers`)
-//                     .then(response => {
-//                         console.log(response.data)
-//                         response.data.map(user => {
-//                             if (user.User_id === userProfile.User_id) {
-//                                 dispatch({
-//                                     type: FETCH_PROFILE,
-//                                     payload: {
-//                                         ...userProfile,
-//                                         Password: user.Password
-//                                     }
-//                                 })
-//                             }
-//                             return null
-//                         })
-//                     })
-//                 if (userProfile.User_type === "Business_owner") {
-//                     dispatch(fetchOwnFoodPlace(userProfile.User_id))
-//                 }
-//             })
-//             .catch(error => {
-//                 console.log(error.message)
-//             })
-//     }
-// }
-
 export const fetchProfile = (userInfo) => {
     return (dispatch) => {
         if (userInfo.User_type === "Business_owner") {
@@ -255,6 +224,7 @@ export const editingFoodPlace = (foodPlace) => {
 }
 
 export const editFoodPlace = (
+    foodPlaceID,
     newName,
     newLocation,
     newPrice,
@@ -263,8 +233,8 @@ export const editFoodPlace = (
     newClose,
     newDays,
     newFoodTypes,
-    owner,
-    foodPlaceID,
+    newLongitude,
+    newLatitude,
     foodPlacePhoto,
     oldFoodPlacePhoto
 ) => {
@@ -277,11 +247,10 @@ export const editFoodPlace = (
         newClose,
         newDays,
         newFoodTypes,
-        owner,
+        newLongitude,
+        newLatitude,
         foodPlaceID,
-        "NEW:",
         foodPlacePhoto,
-        "OLD:",
         oldFoodPlacePhoto)
     return (dispatch) => {
         axios.patch(`${SERVER_URL}/editFoodPlace`,
@@ -295,7 +264,8 @@ export const editFoodPlace = (
                 newClose,
                 newDays,
                 newFoodTypes,
-                owner
+                newLongitude,
+                newLatitude
             })
             .then(response => {
                 console.log(response.data)
@@ -325,11 +295,15 @@ export const editFoodPlace = (
                         newClose,
                         newDays,
                         newFoodTypes,
-                        owner,
+                        newLongitude,
+                        newLatitude,
                         foodPlaceID,
                         foodPlacePhoto
                     }
                 })
+            })
+            .catch(error => {
+                console.log(error.message)
             })
     }
 }
@@ -350,6 +324,8 @@ export const addFoodPlace = (
     daysOpen,
     foodTypes,
     owner,
+    latitude,
+    longitude,
     foodPlacePhoto
 ) => {
     return (dispatch) => {
@@ -363,6 +339,8 @@ export const addFoodPlace = (
                 closeTime,
                 daysOpen,
                 foodTypes,
+                latitude,
+                longitude,
                 owner
             })
             .then(response => {
@@ -385,6 +363,8 @@ export const addFoodPlace = (
                                 daysOpen,
                                 foodTypes,
                                 owner,
+                                latitude,
+                                longitude,
                                 foodPlacePhoto
                             }
                         })

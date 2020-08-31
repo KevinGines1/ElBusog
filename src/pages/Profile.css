@@ -109,7 +109,7 @@
 /* EDIT PROFILE CLASSES */
 
 .editProfileContainer {
-    font-family: 'Source Sans Pro', sans-serif;
+    /* font-family: 'Source Sans Pro', sans-serif; */
     overflow-y: scroll;
 }
 
@@ -117,13 +117,13 @@
     text-align: center;
 }
 
-.imgUploaderBtn {
+.uploadAndLocBtn {
     display: inline-block;
-    margin-top: 5px;
     padding: 5px 8px;
     border-radius: 3px;
-    background-color: #cccccc;
-    color: #a6a6a6;
+    border-color: transparent;
+    background-color: #b3b3b3;
+    color: #808080;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: min(7vw, 12px);
     text-decoration: none;
@@ -131,9 +131,8 @@
     outline: none;
 }
 
-.imgUploaderBtn:hover {
-    /* border-color: #a6a6a6; */
-    background-color: rgb(242, 242, 242, 0.7);
+.uploadAndLocBtn:hover {
+    background-color: #cccccc;
     color: #404040;
 }
 
@@ -163,18 +162,6 @@
     font-family: 'Source Sans Pro', sans-serif;
     text-align: center;
     font-weight: bold;
-}
-
-.editDetail p {
-    color: #999999;
-    font-size: min(7vw, 14px);
-}
-
-.editDetail {
-    display: flex-box;
-    margin-top: 5px;
-    background-color: transparent;
-    outline: none;
 }
 
 .changePassword {
@@ -246,9 +233,17 @@
     outline: none;
 }
 
+.editDetail {
+    display: flex-box;
+    margin-top: 5px;
+    background-color: transparent;
+    outline: none;
+}
+
 .editDetail p {
     margin-top: 10px;
     margin-bottom: 3px;
+    color: #999999;
     font-size: min(7vw, 14px);
 }
 
@@ -327,7 +322,6 @@
     padding: 10px;
     margin-top: 10px;
     background-color: rgb(224, 117, 46, 0.9);
-    /* border: 2px solid #404040; */
     border-radius: 10px;
     color: #404040;
 }
@@ -486,15 +480,16 @@
     font-size: min(11vw, 23px);
 }
 
-.inlineFlex {
-    display: inline-flex;
-    justify-content: center;
-    width: 90%;
-    margin-top: 10px;
+.addEditFoodPlaceDetail {
+    display: inline-block;
+    margin: 10px 10px;
+    outline: none;
 }
 
-.inlineFlex .editDetail {
-    margin: 0 10px 0 10px;
+.addEditFoodPlace p {
+    margin-bottom: 5px;
+    font-size: min(7vw, 15px);
+    color: rgb(242, 242, 242, 0.8);
 }
 
 .addEditPic {
@@ -527,20 +522,27 @@
     border-color: transparent;
 }
 
+.editFoodPlaceContainer select {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
 .descriptionTile {
     display: inline-block;
-    width: 80%;
+    width: 90%;
+    margin: 10px;
 }
 
 .descriptionTile p {
-    color: #404040;
+    font-size: min(7vw, 15px);
+    color: rgb(242, 242, 242, 0.8);
+    margin-bottom: 5px;
 }
 
 .descriptionTile textarea {
-    background-color: rgb(242, 242, 242, 0.5);
+    background-color: rgb(242, 242, 242, 0.8);
     border-radius: 5px;
     resize: none;
-    width: 80%;
+    width: 100%;
     height: 100px;
     padding: 10px;
     border-color: transparent;
@@ -551,13 +553,8 @@
     font-size: min(9vw, 18px);
 }
 
-.foodPlaceInputContainer p {
-    font-size: min(7vw, 14px);
-    color: #404040;
-}
-
 .foodPlaceInput {
-    background-color: rgb(242, 242, 242, 0.5);
+    background-color: rgb(242, 242, 242, 0.8);
     border-color: transparent;
     border-radius: 5px;
     outline: none;
@@ -566,12 +563,8 @@
     text-align: left;
 }
 
-.inlineFlex p {
-    color: #404040;
-}
-
 .editTime {
-    background-color: rgb(242, 242, 242, 0.5);
+    background-color: rgb(242, 242, 242, 0.8);
     color: #1a1a1a;
     margin: 2px 2px 0 2px;
     padding: 2px;
@@ -582,7 +575,7 @@
 }
 
 .editPrice {
-    background-color: rgb(242, 242, 242, 0.5);
+    background-color: rgb(242, 242, 242, 0.8);
     color: #1a1a1a;
     margin-top: 1px;
     padding: 2px;
@@ -592,16 +585,43 @@
     outline: none;
 }
 
-.checkboxes {
-    background-color: rgb(242, 242, 242, 0.5);
+.foodPlaceInputContainer {
+    background-color: rgb(242, 242, 242, 0.8);
     border-color: transparent;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
 }
 
-.checkboxes label {
+.foodPlaceInputContainer label {
+    font-family: 'Source Sans Pro', sans-serif;
     color: #1a1a1a;
     display: inline-block;
     padding: 3px;
     margin: 0px 3px 0px 3px;
+}
+
+.open24hContainer {
+    width: 70%;
+}
+
+.coordinatesInput {
+    display: inline-block;
+    margin: 0 5px 10px 5px;
+}
+
+.coordinatesInput p {
+    margin-top: 5px;
+    font-style: italic;
+    color: #707070;
+}
+
+.coordinatesInput .foodPlaceInput {
+    background-color: transparent;
+    border: 1px solid #707070;
+    outline: none;
+}
+
+.foodPlaceInputContainer .open24hMsg {
+    color: #1a1a1a;
+    font-size: min(7vw, 15px);
 }

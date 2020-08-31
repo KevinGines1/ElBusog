@@ -29,7 +29,7 @@ function ImageUploader() {
                 ?   <p>Uploading file...</p>
                 :   <div>
                         <label htmlFor="file-upload">
-                            <div className="imgUploaderBtn">Choose photo</div>
+                            <div className="uploadAndLocBtn">Choose photo</div>
                         </label>
                         <input
                             style={{display: 'none'}}
