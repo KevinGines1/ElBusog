@@ -44,8 +44,10 @@ function Profile() {
         <div className="profileBackground" style={background}>
             <div className="row"></div>
             <div className="rowcenter profile">
-                <div className="col-5 profileTiles notLoggedIn">
-                    <h6>Log in or sign up to view your profile.</h6>
+                <div className="col-5">
+                    <div className="margin-lr-10 profileTiles notLoggedIn">
+                        <h6>Log in or sign up to view your profile.</h6>
+                    </div>
                 </div>
             </div>
         </div>

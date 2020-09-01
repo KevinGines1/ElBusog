@@ -3,7 +3,7 @@ import {
 	FETCH_USERS_REQUEST,
 	FETCH_USERS_SUCCESS,
 	FETCH_USERS_FAILURE,
-	REGISTER,
+	// REGISTER,
 	ADD_USER_FAILURE,
 	LOGIN_USER,
 	LOGIN_FAIL,
@@ -130,13 +130,15 @@ export const addUser = userObj => {
 	     		headers : { 'Content-Type': 
 	            'application/json' }
 			})
-			alert("Successfully added user!")
 			.then(response => {
-				console.log(response.data)
-				dispatch({
-					type: REGISTER,
-					payload: response.data
-				})				
+				alert("Successfully added user!")
+				localStorage.setItem('token', response.data.token)
+				dispatch(getUserFromToken(response.data.token))
+				//obsolete? (since profile is at state.zeit)
+				// dispatch({
+				// 	type: REGISTER,
+				// 	payload: response.data
+				// })
 			})
 			.catch(error =>{
 				const errorMsg = error.message

@@ -35,7 +35,7 @@ const App = () => (
         <StickyNavbar/>
         <Switch>
           <PrivateRoute path="/login" exact component={Login} />
-          <Route path="/register" exact component={CreateAccount}/>
+          <PrivateRoute path="/register" exact component={CreateAccount}/>
           <Route path="/profile" exact component={Profile}/>
           <Route path="/" exact component={Home}/>
           <Route path="/foodplace" exact component={FoodPlaceMain}/>
