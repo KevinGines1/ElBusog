@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { verifyUsername } from '../redux'
 import { Link } from 'react-router-dom';
 import defaultImg from '../assets/user.png'
+import Swal from 'sweetalert2';
 
 const INITIAL_STATE = {
   Name: '',
@@ -42,7 +43,12 @@ class CreateAccount extends Component {
       this.props.verifyUsername({ Name, Username, Email, Password, Picture, User_type });
 
     } else {
-      alert("Please fill in the information before submitting!");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in the information before submitting.',
+        icon: 'error',
+        confirmButtonText: 'Okay'
+      })
     }
     
   }
@@ -63,6 +69,7 @@ class CreateAccount extends Component {
                 type="text"
                 name="Name"
                 value={Name}
+                maxLength="30"
                 placeholder="Name"
               />
               <br/><br/>
@@ -72,6 +79,7 @@ class CreateAccount extends Component {
                 type="text"
                 name="Username"
                 value={Username}
+                maxLength="15"
                 placeholder="Username"
               />
               <br/><br/>
@@ -81,6 +89,7 @@ class CreateAccount extends Component {
                 type="email"
                 name="Email"
                 value={Email}
+                maxLength="25"
                 placeholder="Email"
               />
               <br/><br/>

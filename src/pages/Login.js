@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { loginUser } from '../redux'
 // import logo from '../assets/logo.svg';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const INITIAL_STATE = {
   username: '',
@@ -27,13 +28,14 @@ class Login extends Component {
 
       //call action creator
       this.props.loginUser({ username, password });
-      //clear user input
-      this.setState({
-        username:'',
-        password:''
+
+     } else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please fill in the information before submitting.',
+        icon: 'error',
+        confirmButtonText: 'Okay'
       })
-    } else {
-      alert("Please fill in the following.")
     }
 
 
@@ -58,6 +60,7 @@ class Login extends Component {
                 type="text"
                 name="username"
                 value={username}
+                maxLength="15"
                 placeholder="Username"
                 autoFocus
               /><br/><br/>

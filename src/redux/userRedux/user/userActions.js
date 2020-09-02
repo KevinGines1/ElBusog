@@ -16,6 +16,7 @@ import {
 } from './userTypes'
 import { fetchProfile } from '../../index'
 import { SERVER_URL } from '../../serverUrl'
+import Swal from 'sweetalert2';
 
 export const fetchUsersRequest = () => {
 	return {
@@ -81,7 +82,12 @@ export const verifyEmail = userObj => {
 					type: CHECK_EMAIL
 				})
 			} else {
-				alert("Email is already taken!")
+			    Swal.fire({
+			        title: 'Invalid Email',
+			        text: 'Email is already taken.',
+			        icon: 'info',
+			        confirmButtonText: 'Okay'
+				})
 			}
 		})
 		.catch(error =>{
@@ -114,7 +120,12 @@ export const verifyUsername = userObj => {
 					type: CHECK_USERNAME
 				})
 			} else {
-				alert("Username is already taken!")
+			    Swal.fire({
+			        title: 'Invalid Username',
+			        text: 'Username is already taken.',
+			        icon: 'info',
+			        confirmButtonText: 'Okay'
+				})
 			}
 		})
 		.catch(error =>{
@@ -131,7 +142,12 @@ export const addUser = userObj => {
 	            'application/json' }
 			})
 			.then(response => {
-				alert("Successfully added user!")
+			    Swal.fire({
+			        title: 'Register Complete!',
+			        text: 'Successfully created new account.',
+			        icon: 'info',
+			        confirmButtonText: 'Okay'
+				})
 				localStorage.setItem('token', response.data.token)
 				dispatch(getUserFromToken(response.data.token))
 				//obsolete? (since profile is at state.zeit)
@@ -174,7 +190,21 @@ export const loginUser = userObj => {
 				type: LOGIN_USER,
 				payload: response.data
 			})
-			alert(response.data.msg)
+			if (response.data.authorized === true) {
+			    Swal.fire({
+			        title: 'Success!',
+			        text: 'Successfully logged in.',
+			        icon: 'success',
+			        confirmButtonText: 'Okay'
+				})
+			} else {
+				Swal.fire({
+			        title: 'Error!',
+			        text: 'Username and password did not match.',
+			        icon: 'error',
+			        confirmButtonText: 'Okay'
+				})
+			}
 		})
 		.catch(error =>{
 			const errorMsg = error.message

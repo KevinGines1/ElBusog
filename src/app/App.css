@@ -595,3 +595,8 @@ magdagdag lang kayo dito */
     border-radius: 50%;
     background: white;
 }
+
+/* -----TILES */
+.alert {
+    color: red;
+}
