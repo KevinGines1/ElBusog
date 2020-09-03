@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import Ratings from 'react-ratings-declarative';
 import JeepneyRoute from '../components/JeepneyRoute';
@@ -7,7 +7,6 @@ import LoadingPage from './LoadingPage';
 import Comment from '../components/Comment'
 import banner from '../assets/uplbBanner.jpg';
 import defaultFoodPic from '../assets/foodPlace.png';
-import Rate from '../components/Rate'
 // import defaultFoodPic from '../assets/foodPlace.png';
 
 function FoodPlace({ match }) {
