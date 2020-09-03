@@ -20,10 +20,9 @@ function Comment(props) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    //parseInt(currentUser.User_id)
-    if(true) {
+    if(currentUserIsLoggedIn) {
       if(rating !== null && currentComment !== "") {
-        dispatch(addComment(4, props.foodPlaceID, rating, currentComment))
+        dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment))
         reloadComment()
       }
       else {
