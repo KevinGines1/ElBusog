@@ -46,7 +46,9 @@ export const addComment = (userID, foodPlaceID, rating, comment) => {
         payload: parameters
       }))
       .catch(error => {
-          console.log(error.message);
+        error.message === "currentRating.toFixed is not a function"
+        ? window.location.reload(true)
+        : console.log(error.message);
       })
   }
 };
@@ -59,11 +61,13 @@ export const removeComment = (userID, foodPlaceID, rating, comment) => {
       rating,
       comment
     };
-    axios.delete(`${SERVER_URL}/remove/comment`)
-      .then(response => dispatch({
-        type: REMOVE_COMMENT,
-        payload: parameters
-      }))
+    axios.post(`${SERVER_URL}/remove/comment`, parameters)
+      .then(response => {
+        dispatch({
+          type: REMOVE_COMMENT,
+          payload: response
+        })
+      })
       .catch(error => {
           console.log(error.message);
       })
