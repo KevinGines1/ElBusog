@@ -38,12 +38,15 @@ const commentReducer = (state = initialState, action) => {
         ]
       }
     case REMOVE_COMMENT:
-      return {
-        ...state,
-        comment: state.comment.filter(comment => (comment.User_id && comment.Food_place_id && comment.rating && comment.comment) !== action.payload)
-      }
+      return null
     default: return state;
   }
 }
 
 export default commentReducer;
+
+// {
+//   if((comment.User_id === action.payload.userID) && (comment.Food_place_id === action.payload.foodPlaceID) && (comment.Rating === action.payload.rating)) {
+//     comment.Comment !== action.payload.comment;
+//   }
+// }
