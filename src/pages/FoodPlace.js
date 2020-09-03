@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Ratings from 'react-ratings-declarative';
 import JeepneyRoute from '../components/JeepneyRoute';
 import FoodPlaceMap from '../components/FoodPlaceMap';
 import LoadingPage from './LoadingPage';
-import Rate from '../components/Rate';
+import Comment from '../components/Comment'
 import banner from '../assets/uplbBanner.jpg';
 import defaultFoodPic from '../assets/foodPlace.png';
+import Rate from '../components/Rate'
 // import defaultFoodPic from '../assets/foodPlace.png';
 
 function FoodPlace({ match }) {
@@ -75,7 +76,7 @@ function FoodPlace({ match }) {
       openTimeSentence = `Open from ${openHourText} to ${closeHourText} (${openWeekDays})`
     }
   }
-  
+
 
   return !foodPlace[0]
 	?	<LoadingPage />
@@ -96,7 +97,7 @@ function FoodPlace({ match }) {
         <div className="col-5">
           <div className="margin-lr-20">
             <div className="row">
-              <h4>{match.params.foodPlaceName}</h4>
+              <h4>{foodPlace[0].Food_place_name}</h4>
               {placeClosed &&
                 <div>
                   <p style={{color: 'red'}}><strong>CLOSED AT THIS TIME</strong></p>
@@ -134,7 +135,7 @@ function FoodPlace({ match }) {
             </div>
           </div>
         </div>
-          
+
       </div>
       <JeepneyRoute Food_place_id={foodPlace[0].Food_place_id}/>
       <FoodPlaceMap latitude={foodPlace[0].Latitude} longitude={foodPlace[0].Longitude}/>
@@ -142,7 +143,7 @@ function FoodPlace({ match }) {
         <div className="col-6">
           <div className="margin-lr-10 tile">
             <h4>Rate this food place!</h4><br/>
-              <Rate />
+              <Comment foodPlaceID = {foodPlace[0].Food_place_id} />
           </div>
         </div>
       </div>
