@@ -40,21 +40,22 @@ function Comment(props) {
       <div>
         <p>
           <strong>{comment.Username}</strong><br/>
-          <p>Date Posted: {comment.Date_posted.slice(0, 10)}</p>
+          Date Posted: {comment.Date_posted.slice(0, 10)}<br/>
           <Ratings
-                rating = {comment.Rating}
-                widgetDimensions="18px"
-                widgetEmptyColors="#b3b3b3"
-                widgetRatedColors="#e07f3e"
-                widgetSpacings="1.5px"
-              >
-                <Ratings.Widget />
-                <Ratings.Widget />
-                <Ratings.Widget />
-                <Ratings.Widget />
-                <Ratings.Widget />
+            rating = {comment.Rating}
+            widgetDimensions="18px"
+            widgetEmptyColors="#b3b3b3"
+            widgetRatedColors="#e07f3e"
+            widgetSpacings="1.5px"
+          >
+            <Ratings.Widget />
+            <Ratings.Widget />
+            <Ratings.Widget />
+            <Ratings.Widget />
+            <Ratings.Widget />
           </Ratings><br/>
           {comment.Comment}
+          <button onClick = {() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
         </p>
       </div>
     )
@@ -73,7 +74,6 @@ function Comment(props) {
         <button type = "submit">Add Comment</button>
       </form>
       {comments.comment.map(comment => displayComment(comment))}
-      {/*dispatch(removeComment(4, props.foodPlaceID, 4, "The best!"))*/}
     </div>
   )
 }
