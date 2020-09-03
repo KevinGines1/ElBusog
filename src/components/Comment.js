@@ -37,7 +37,7 @@ function Comment(props) {
 
   function displayComment(comment, index) {
     return (
-      <div key={index}>
+      <div className="tile margin-tb-10" key={index}>
           <strong>{comment.Username}</strong><br/>
           Date Posted: {comment.Date_posted.slice(0, 10)}<br/>
           <Ratings
@@ -65,11 +65,16 @@ function Comment(props) {
   }
 
   return (
-    <div>
+    <div className="margin-lr-20">
       <form onSubmit = {handleFormSubmit}>
         <Rate onChange = {eventHandler}/>
-        <input type = "text" placeholder = "Comment" onChange = {(event) => setCurrentComment(event.target.value)}/>
-        <button type = "submit">Add Comment</button>
+        <input
+          className="textbox margin-tb-10"
+          type="text"
+          placeholder = "Comment"
+          onChange = {(event) => setCurrentComment(event.target.value)}
+        />
+        <button className="button margin-tb-10" type="submit">Add Comment</button>
       </form>
       {comments.comment.map((comment, index) => displayComment(comment, index))}
     </div>
