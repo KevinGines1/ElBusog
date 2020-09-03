@@ -4,24 +4,25 @@ import {
   ADD_COMMENT,
   REMOVE_COMMENT
 } from './commentTypes';
-import { SERVER_URL } from '../../serverUrl'
+import { SERVER_URL } from '../../serverUrl';
 
 export const fetchComment = foodPlaceID => {
   return (dispatch) => {
       axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
           .then(response => {
-              const comments = response.data
-              comments.map(comment => {
-                axios.get(`${SERVER_URL}/profile/${comment.User_id}`)
+              const comments = response.data;
+              comments.map(comments => {
+                axios.get(`${SERVER_URL}/profile/${comments.User_id}`)
                   .then(response => {
-                    const commentWithUsername = {
+                    const userInfo = response.data;
+                    const commentsWithName = {
                       ...comments,
-                      Username: response.data.Username
+                      Username: userInfo[0].Username
                     }
                     dispatch({
                       type: FETCH_COMMENT,
-                      payload: commentWithUsername
-                    })
+                      payload: commentsWithName
+                    });
                   })
               })
             })
@@ -58,7 +59,7 @@ export const removeComment = (userID, foodPlaceID, rating, comment) => {
       rating,
       comment
     };
-    axios.delete(`${SERVER_URL}/remove/comment`, parameters)
+    axios.delete(`${SERVER_URL}/remove/comment`)
       .then(response => dispatch({
         type: REMOVE_COMMENT,
         payload: parameters
