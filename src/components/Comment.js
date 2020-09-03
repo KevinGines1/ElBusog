@@ -16,6 +16,7 @@ function Comment(props) {
 
   useEffect(() => {
       dispatch(fetchComment(props.foodPlaceID));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateComment])
 
   const handleFormSubmit = (event) => {
@@ -34,10 +35,9 @@ function Comment(props) {
     }
   }
 
-  function displayComment(comment) {
+  function displayComment(comment, index) {
     return (
-      <div>
-        <p>
+      <div key={index}>
           <strong>{comment.Username}</strong><br/>
           Date Posted: {comment.Date_posted.slice(0, 10)}<br/>
           <Ratings
@@ -55,7 +55,6 @@ function Comment(props) {
           </Ratings><br/>
           {comment.Comment}
           <button onClick = {() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
-        </p>
       </div>
     )
   }
@@ -69,10 +68,10 @@ function Comment(props) {
     <div>
       <form onSubmit = {handleFormSubmit}>
         <Rate onChange = {eventHandler}/>
-        <input type = "text" placeHolder = "Comment" onChange = {(event) => setCurrentComment(event.target.value)}/>
+        <input type = "text" placeholder = "Comment" onChange = {(event) => setCurrentComment(event.target.value)}/>
         <button type = "submit">Add Comment</button>
       </form>
-      {comments.comment.map(comment => displayComment(comment))}
+      {comments.comment.map((comment, index) => displayComment(comment, index))}
     </div>
   )
 }

@@ -13,6 +13,7 @@ const Rate = (props) => {
     if (props.onChange) {
       props.onChange(rating)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rating])
 
   return (
