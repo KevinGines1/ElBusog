@@ -1,8 +1,7 @@
-import axios from 'axios';
 import {
   FETCH_COMMENT,
   ADD_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
 } from './commentTypes'
 
 const initialState = {
@@ -41,7 +40,7 @@ const commentReducer = (state = initialState, action) => {
     case REMOVE_COMMENT:
       return {
         ...state,
-        comment: state.comment.filter(comment => comment.Date_posted !== action.payload)
+        comment: state.comment.filter(comment => (comment.User_id && comment.Food_place_id && comment.rating && comment.comment) !== action.payload)
       }
     default: return state;
   }
