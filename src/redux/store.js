@@ -6,13 +6,15 @@ import thunk from 'redux-thunk'
 import randomizerReducers from './randomizer/randomizerReducers';
 import homeProfileReducer from './homeProfileRedux/rootReducer'
 import userReducer from './userRedux/rootReducer'
+import foodPlaceReducer from './foodPlaceRedux/rootReducer';
 //this will be the pinaka-main store
 
 // place here all the reducers from all pages
 const rootReducer = combineReducers({
     zoren : randomizerReducers,
     zeit : homeProfileReducer,
-    aaron: userReducer
+    aaron: userReducer,
+    jai : foodPlaceReducer,
 })
 
 const store = createStore(

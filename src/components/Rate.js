@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaStar } from 'react-icons/fa';
 import './Rate.css';
 
-const Rate = () => {
+const Rate = (props) => {
 
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+
+  const handleChange = event => setRating(event.target.value)
+
+  useEffect(() => {
+    if (props.onChange) {
+      props.onChange(rating)
+    }
+  }, [rating])
 
   return (
     <div>
@@ -20,6 +28,7 @@ const Rate = () => {
             name = "rating"
             value = {ratingValue}
             onClick = {() => setRating(ratingValue)}
+            onChange = {handleChange}
             />
             <FaStar
             className = "star"
