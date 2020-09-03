@@ -69,7 +69,9 @@ export const removeComment = (userID, foodPlaceID, rating, comment) => {
         })
       })
       .catch(error => {
-          console.log(error.message);
+        error.message === "Cannot read property 'comment' of null"
+        ? window.location.reload(true)
+        : console.log(error.message + "this one");
       })
   }
 };
