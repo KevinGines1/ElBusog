@@ -11,16 +11,12 @@ function Comment(props) {
   const currentUserIsLoggedIn = currentUser.isLoggedIn;
   const eventHandler = data => setRating(data);
   const [rating, setRating] = useState(null);
-  const [showComment, setShowComment] = useState(false);
+  const [updateComment, setUpdateComment] = useState(true);
   const [currentComment, setCurrentComment] = useState("");
 
   useEffect(() => {
-    dispatch(fetchComment(props.foodPlaceID));
-
-    return () => {
-      comments.comment = []
-    }
-  }, [showComment])
+      dispatch(fetchComment(props.foodPlaceID));
+  }, [updateComment])
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -28,8 +24,7 @@ function Comment(props) {
     if(true) {
       if(rating !== null && currentComment !== "") {
         dispatch(addComment(4, props.foodPlaceID, rating, currentComment))
-        setShowComment(false)
-        setShowComment(true)
+        reloadComment()
       }
       else {
         alert("Please rate and comment.")
@@ -39,8 +34,6 @@ function Comment(props) {
       alert("You must be logged in to use this feature.")
     }
   }
-
-  const foodPlaceComment = () => comments.comment.map(comment => displayComment(comment))
 
   function displayComment(comment) {
     return (
@@ -67,6 +60,11 @@ function Comment(props) {
     )
   }
 
+  function reloadComment() {
+    comments.comment = []
+    setUpdateComment(!updateComment)
+  }
+
   return (
     <div>
       <form onSubmit = {handleFormSubmit}>
@@ -74,10 +72,8 @@ function Comment(props) {
         <input type = "text" placeHolder = "Comment" onChange = {(event) => setCurrentComment(event.target.value)}/>
         <button type = "submit">Add Comment</button>
       </form>
-
-      {showComment && foodPlaceComment}
-      <button onClick = {() => setShowComment(!showComment)}>Show/Hide Comment</button>
-      {console.log(showComment)}
+      {comments.comment.map(comment => displayComment(comment))}
+      {/*dispatch(removeComment(4, props.foodPlaceID, 4, "The best!"))*/}
     </div>
   )
 }
