@@ -8,5 +8,5 @@ export * from './homeProfileRedux/fetchFoodPlaces/FFPactions'
 // export Aaron's actions
 export * from './userRedux/user/userActions'
 
-//export Jai's userActions
+//export Jai's actions
 export * from './foodPlaceRedux/comment/commentActions';
