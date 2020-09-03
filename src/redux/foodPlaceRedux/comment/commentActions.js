@@ -4,20 +4,31 @@ import {
   ADD_COMMENT,
   REMOVE_COMMENT
 } from './commentTypes';
+import { SERVER_URL } from '../../serverUrl'
 
 export const fetchComment = foodPlaceID => {
   return (dispatch) => {
-      axios.get(`https://ancient-garden-70007.herokuapp.com/api/comments/${foodPlaceID}`)
+      axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
           .then(response => {
-              const comments = response.data;
-              dispatch({
-                type: FETCH_COMMENT,
-                payload: comments
-              });
+              const comments = response.data
+              comments.map(comment => {
+                axios.get(`${SERVER_URL}/profile/${comment.User_id}`)
+                  .then(response => {
+                    const commentWithUsername = {
+                      ...comments,
+                      Username: response.data.Username
+                    }
+                    dispatch({
+                      type: FETCH_COMMENT,
+                      payload: commentWithUsername
+                    })
+                  })
+              })
             })
             .catch(error => {
                 console.log(error.message);
             })
+  }
 };
 
 export const addComment = (userID, foodPlaceID, rating, comment) => {
@@ -28,7 +39,7 @@ export const addComment = (userID, foodPlaceID, rating, comment) => {
       rating,
       comment
     };
-    axios.post(`https://ancient-garden-70007.herokuapp.com/api/addComment`, parameters)
+    axios.post(`${SERVER_URL}/addComment`, parameters)
       .then(response => dispatch({
         type: ADD_COMMENT,
         payload: parameters
@@ -47,7 +58,7 @@ export const removeComment = (userID, foodPlaceID, rating, comment) => {
       rating,
       comment
     };
-    axios.delete(`https://ancient-garden-70007.herokuapp.com/api/remove/comment`, parameters)
+    axios.delete(`${SERVER_URL}/remove/comment`, parameters)
       .then(response => dispatch({
         type: REMOVE_COMMENT,
         payload: parameters
