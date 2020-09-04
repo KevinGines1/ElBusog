@@ -140,7 +140,7 @@ function Randomizer() {
                     <h5 className="pretitle">Want to eat but can't decide where?</h5>
                     <h2
                         className="title"
-                        style={{textDecoration: 'underline', textDecorationThickness: '1px'}}
+                        style={{textDecoration: 'underline', textDecorationThickness: '1px', cursor: 'pointer'}}
                         onClick={() => handleClick(0)}>Get instant recommendation!</h2>
                 </div>
             </div>
