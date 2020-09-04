@@ -9,6 +9,7 @@ function Comment(props) {
   const dispatch = useDispatch();
   const comments = useSelector(state => state.jai.comment);
   const currentUser = useSelector(state => state.zeit.profile);
+  const currentUsername = currentUser.Username;
   const currentUserIsLoggedIn = currentUser.isLoggedIn;
   const eventHandler = data => setRating(data);
   const [rating, setRating] = useState(null);
@@ -56,7 +57,9 @@ function Comment(props) {
               <Ratings.Widget />
             </Ratings>
           </div>
-          <button className="circleXButton" onClick = {() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
+          {currentUsername === comment.Username &&
+            <button className="circleXButton" onClick = {() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
+          }
         </div>
         <div className="commentContainer">{comment.Comment}</div>
         <p>Date Posted: {comment.Date_posted.slice(0, 10)}</p>
