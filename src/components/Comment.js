@@ -77,17 +77,19 @@ function Comment(props) {
   return (
     <div className="margin-lr-20">
       {currentUserIsLoggedIn
-        ? <form onSubmit={handleFormSubmit}>
-          <Rate onChange={eventHandler} />
-          <input
-            className="textbox margin-tb-10"
-            type="text"
-            placeholder="Comment"
-            value={currentComment}
-            onChange={(event) => setCurrentComment(event.target.value)}
-          />
-          <button className="button margin-tb-10" type="submit">Add Comment</button>
-        </form>
+        ? currentUser.User_type === "Business_owner"
+          ? <p>Commenting are disabled for business accounts.</p>
+          : <form onSubmit={handleFormSubmit}>
+              <Rate onChange={eventHandler} />
+              <input
+                className="textbox margin-tb-10"
+                type="text"
+                placeholder="Comment"
+                value={currentComment}
+                onChange={(event) => setCurrentComment(event.target.value)}
+              />
+              <button className="button margin-tb-10" type="submit">Add Comment</button>
+            </form>
         : <p>Please <Link to="/login"><u>Log-in</u></Link> or <Link to="/register"><u>Register</u></Link> to rate and comment.</p>
       }
 

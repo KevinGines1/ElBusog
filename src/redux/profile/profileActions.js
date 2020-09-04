@@ -376,6 +376,7 @@ export const deleteAccount = (username, accType) => {
             axios.delete(`${SERVER_URL}/remove/customer/${username}`)
                 .then(response => {
                     console.log(response.data)
+                    localStorage.removeItem('token');
                     dispatch({
                         type: DELETE_ACCOUNT,
                         payload: username
@@ -389,6 +390,7 @@ export const deleteAccount = (username, accType) => {
             axios.delete(`${SERVER_URL}/remove/owner/${username}`)
                 .then(response => {
                     console.log(response.data)
+                    localStorage.removeItem('token');
                     dispatch({
                         type: DELETE_ACCOUNT
                     })
