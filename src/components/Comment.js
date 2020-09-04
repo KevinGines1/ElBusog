@@ -15,19 +15,19 @@ function Comment(props) {
   const currentUserIsLoggedIn = currentUser.isLoggedIn;
   const eventHandler = data => setRating(data);
   const [rating, setRating] = useState(null);
-  const [updateComment, setUpdateComment] = useState(true);
+  // const [updateComment, setUpdateComment] = useState(true);
   const [currentComment, setCurrentComment] = useState("");
 
   useEffect(() => {
       dispatch(fetchComment(props.foodPlaceID));
       // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateComment])
+  }, [])
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if(rating !== null && currentComment !== "") {
-      dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment))
-      reloadComment()
+      dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment, currentUsername))
+      setCurrentComment("")
     }
     else {
       Swal.fire({
@@ -69,10 +69,10 @@ function Comment(props) {
     )
   }
 
-  function reloadComment() {
-    comments.comment = []
-    setUpdateComment(!updateComment)
-  }
+  // function reloadComment() {
+  //   comments.comment = []
+  //   setUpdateComment(!updateComment)
+  // }
 
   return (
     <div className="margin-lr-20">
@@ -83,6 +83,7 @@ function Comment(props) {
             className="textbox margin-tb-10"
             type="text"
             placeholder = "Comment"
+            value={currentComment}
             onChange = {(event) => setCurrentComment(event.target.value)}
           />
           <button className="button margin-tb-10" type="submit">Add Comment</button>

@@ -22,7 +22,7 @@ export const fetchComment = foodPlaceID => {
   }
 };
 
-export const addComment = (userID, foodPlaceID, rating, comment) => {
+export const addComment = (userID, foodPlaceID, rating, comment, username) => {
   return (dispatch) => {
     const parameters = {
       userID,
@@ -30,15 +30,22 @@ export const addComment = (userID, foodPlaceID, rating, comment) => {
       rating,
       comment
     };
+    const payload = {
+      userID: userID,
+      foodPlaceID: foodPlaceID,
+      rating: parseInt(rating),
+      comment: comment,
+      username: username
+    }
     axios.post(`${SERVER_URL}/addComment`, parameters)
       .then(response => dispatch({
         type: ADD_COMMENT,
-        payload: parameters
+        payload: payload
       }))
       .catch(error => {
-        error.message === "currentRating.toFixed is not a function"
-        ? window.location.reload(true)
-        : console.log(error.message);
+        // error.message === "currentRating.toFixed is not a function"
+        // ? window.location.reload(true)
+        // : console.log(error.message);
       })
   }
 };
@@ -55,13 +62,13 @@ export const removeComment = (userID, foodPlaceID, rating, comment) => {
       .then(response => {
         dispatch({
           type: REMOVE_COMMENT,
-          payload: response
+          payload: comment
         })
       })
       .catch(error => {
-        error.message === "Cannot read property 'comment' of null"
-        ? window.location.reload(true)
-        : console.log(error.message + "this one");
+        // error.message === "Cannot read property 'comment' of null"
+        // ? window.location.reload(true)
+        // : console.log(error.message + "this one");
       })
   }
 };

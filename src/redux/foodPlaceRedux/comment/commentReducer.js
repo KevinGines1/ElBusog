@@ -24,18 +24,21 @@ const commentReducer = (state = initialState, action) => {
       return {
         ...state,
         comment: [
-          ...state.comment,
           {
             User_id: action.payload.userID,
+            Username: action.payload.username,
             Food_place_id: action.payload.foodPlaceID,
             Rating: action.payload.rating,
             Comment: action.payload.comment,
             Date_posted: dateTime
-          }
+          }, ...state.comment
         ]
       }
     case REMOVE_COMMENT:
-      return null
+      return {
+        ...state,
+        comment: state.comment.filter(com => com.Comment !== action.payload)
+      }
     default: return state;
   }
 }
