@@ -381,6 +381,7 @@ export const deleteAccount = (username, accType) => {
                         type: DELETE_ACCOUNT,
                         payload: username
                     })
+                    window.location.href="/";
                 })
                 .catch(error => {
                     console.log(error.message)
@@ -394,6 +395,7 @@ export const deleteAccount = (username, accType) => {
                     dispatch({
                         type: DELETE_ACCOUNT
                     })
+                    window.location.href="/";
                 })
                 .catch(error => {
                     console.log(error.message)
