@@ -19,6 +19,198 @@ import {
 } from './profileTypes';
 import { SERVER_URL } from '../../serverUrl'
 
+
+// testing aaron's codes
+import Swal from 'sweetalert2'
+
+export const verifyUsername = userObj => {
+    const username = userObj.Username
+    return (dispatch) => {
+        axios.post(`${SERVER_URL}/checkUsername`, { username }, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+            .then(response => {
+                if (response.data.infoValid === true) {
+                    dispatch(verifyEmail(userObj))
+                    // dispatch({
+                    // 	type: CHECK_USERNAME
+                    // })
+                } else {
+                    Swal.fire({
+                        title: 'Invalid Username',
+                        text: 'Username is already taken.',
+                        icon: 'info',
+                        confirmButtonText: 'Okay'
+                    })
+                }
+            })
+            .catch(error => {
+                console.log("VERIFY USERNAME ERROR", error)
+            })
+    }
+}
+
+export const verifyEmail = userObj => {
+    const email = userObj.Email
+    return (dispatch) => {
+        axios.post(`${SERVER_URL}/checkEmail`, { email }, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+            .then(response => {
+                // dispatch(resetRegisterEmail())
+                const infoValid = response.data.infoValid
+                if (infoValid) {
+                    dispatch(addUser(userObj))
+                    // dispatch({
+                    // 	type: CHECK_EMAIL,
+                    // 	payload: { infoValid: true }
+                    // })
+                } else {
+                    Swal.fire({
+                        title: 'Invalid Email',
+                        text: 'Email is already taken.',
+                        icon: 'info',
+                        confirmButtonText: 'Okay'
+                    })
+                }
+            })
+            .catch(error => {
+                console.log("CHECK EMAIL ERROR: ", error)
+                // dispatch(addUserFailure(errorMsg))
+            })
+    }
+}
+
+export const getUserFromToken = token => {
+    return (dispatch) => {
+
+        const url = `${SERVER_URL}/verifyToken/`
+        // console.log(url)
+        axios.post(url, { token }, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+
+            .then(response => {
+                // var payload = response.data.userInfo
+                // payload.isLoggedIn = true		//use this only if logging in
+
+                dispatch(getUser(response.data.User_id))
+                // dispatch(fetchProfile(payload))
+            })
+
+            .catch(error => {
+                alert("For security purposes, please log-in again.")
+            })
+    }
+}
+
+export const addUser = userObj => {
+    return (dispatch) => {
+        // console.log(userObj)
+        axios.post(`${SERVER_URL}/register`, userObj, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+            .then(response => {
+                Swal.fire({
+                    title: 'Register Complete!',
+                    text: 'Successfully created new account.',
+                    icon: 'info',
+                    confirmButtonText: 'Okay'
+                })
+                localStorage.setItem('token', response.data.token)
+                dispatch(getUserFromToken(response.data.token))
+            })
+            .catch(error => {
+                console.log("REGISTRATION ERROR: ", error)
+                // dispatch(addUserFailure(errorMsg))
+            })
+
+    }
+
+}
+
+export const loginUser = userObj => {
+    return (dispatch) => {
+        axios.post(`${SERVER_URL}/login`, userObj, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+            .then(response => {
+                //get user profile if login is correct
+                if (response.data.authorized === true) {
+                    // dispatch(getUser(userObj.username))
+                    localStorage.setItem('token', response.data.token)
+                    dispatch(getUserFromToken(response.data.token))
+                }
+
+                // dispatch({
+                // 	type: LOGIN_USER,
+                // 	payload: response.data
+                // })
+                if (response.data.authorized === true) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Successfully logged in.',
+                        icon: 'success',
+                        confirmButtonText: 'Okay'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Username and password did not match.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    })
+                }
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const getUser = User_id => {
+    return (dispatch) => {
+
+        const urlString = `${SERVER_URL}/profile/`
+        const url = urlString.concat(User_id)
+        axios.get(url, User_id, {
+            headers: {
+                'Content-Type':
+                    'application/json'
+            }
+        })
+
+            .then(response => {
+                var payload = response.data[0]
+                payload.isLoggedIn = true		//use this only if logging in
+
+                // calls fetchProfile action from profileActions
+                dispatch(fetchProfile(payload))
+
+            })
+            .catch(error => {
+                console.log("GET USER ERROR: ", error)
+            })
+    }
+}
+// end of aaron's codes
+
+
 // FETCH DATA ACTIONS
 
 export const fetchProfile = (userInfo) => {
@@ -164,7 +356,7 @@ export const saveChanges = (
                             payload: userInfo
                         })
                     })
-                })
+            })
             .catch(error => {
                 console.log(error.message)
             })
@@ -209,6 +401,7 @@ export const deleteAccount = (username, accType) => {
 }
 
 export const logoutProfile = () => {
+    localStorage.removeItem('token')
     return {
         type: LOGOUT_PROFILE,
     }

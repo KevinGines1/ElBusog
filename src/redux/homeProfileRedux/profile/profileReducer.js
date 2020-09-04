@@ -37,6 +37,9 @@ const initialState = {
     uploadedImage: ""
 }
 
+// FOR ACCOUNT SYSTEM
+
+// FOR PROFILE
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_PROFILE:
@@ -117,7 +120,7 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 uploadedImage: "",
-                ownedFoodPlaces: 
+                ownedFoodPlaces:
                     state.ownedFoodPlaces.map(foodPlace =>
                         foodPlace.Food_place_id === action.payload.foodPlaceID ?
                             {
@@ -171,7 +174,7 @@ const profileReducer = (state = initialState, action) => {
         case DELETE_FOOD_PLACE:
             return {
                 ...state,
-                ownedFoodPlaces: state.ownedFoodPlaces.filter(foodPlace => 
+                ownedFoodPlaces: state.ownedFoodPlaces.filter(foodPlace =>
                     foodPlace.Food_place_id !== action.payload
                 )
             }

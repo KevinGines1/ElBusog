@@ -1,23 +1,26 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logoutUser, logoutProfile } from '../redux';
+import {
+    // logoutUser,
+    logoutProfile
+} from '../redux';
 import '../components/ProfileDropdown.css'
 
 function ProfileDropdown() {
     const dispatch = useDispatch()
 
     const logout = () => {
-        dispatch(logoutUser())
+        // dispatch(logoutUser())
         dispatch(logoutProfile())
     }
 
     var profileName = useSelector(state => state.zeit.profile.Name);
 
-    return(
+    return (
         <div className="profile-dropdown">
             {profileName
-            ?   <div>
+                ? <div>
                     <Link to="/profile">
                         <div className="profile-dropdown-entry">
                             My Account
@@ -29,7 +32,7 @@ function ProfileDropdown() {
                         </div>
                     </Link>
                 </div>
-            :   <div>
+                : <div>
                     <Link to="/login">
                         <div className="profile-dropdown-entry">
                             Log in
