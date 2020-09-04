@@ -11,21 +11,11 @@ export const fetchComment = foodPlaceID => {
       axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
           .then(response => {
               const comments = response.data;
-              comments.map(comments => (
-                axios.get(`${SERVER_URL}/profile/${comments.User_id}`)
-                  .then(response => {
-                    const userInfo = response.data;
-                    const commentsWithName = {
-                      ...comments,
-                      Username: userInfo[0].Username
-                    }
                     dispatch({
                       type: FETCH_COMMENT,
-                      payload: commentsWithName
+                      payload: comments
                     });
                   })
-              ))
-            })
             .catch(error => {
                 console.log(error.message);
             })

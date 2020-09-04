@@ -1,0 +1,20 @@
+.nameStarCloseContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nameStarContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+    margin-right: 10px;
+}
+
+.commentContainer {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e07f3e;
+    border-radius: 30px;
+    font-size: 18px;
+}

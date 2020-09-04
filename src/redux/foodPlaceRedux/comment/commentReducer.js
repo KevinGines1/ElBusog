@@ -13,10 +13,7 @@ const commentReducer = (state = initialState, action) => {
     case FETCH_COMMENT:
       return {
         ...state,
-        comment: [
-          ...state.comment,
-          action.payload
-        ]
+        comment: action.payload
       }
     case ADD_COMMENT:
       const today = new Date();

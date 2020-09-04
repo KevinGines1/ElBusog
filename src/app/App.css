@@ -463,6 +463,20 @@ magdagdag lang kayo dito */
     color: white;
 }
 
+.circleXButton {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid #e07f3e;
+    color: #e07f3e;
+    background-color: white;
+}
+
+.circleXButton:hover {
+    color: white;
+    background-color: #e07f3e;
+}
+
 /* -----TEXTBOX */
 .textbox {
     width: 100%;
