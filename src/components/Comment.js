@@ -32,7 +32,7 @@ function Comment(props) {
     else {
       Swal.fire({
         title: 'Error!',
-        text: 'Please rate and write a comment first.',
+        text: 'Please give a rating and write a comment first.',
         icon: 'error',
         confirmButtonText: 'Okay'
       })
@@ -64,7 +64,7 @@ function Comment(props) {
           }
         </div>
         <div className="commentContainer">{comment.Comment}</div>
-        <p>Date Posted: {comment.Date_posted.slice(0, 10)}</p>
+        <p>Date Posted: {comment.Date_posted.split("T")[0]}</p>
       </div>
     )
   }
