@@ -92,7 +92,6 @@ function Comment(props) {
             </form>
         : <p>Please <Link to="/login"><u>Log-in</u></Link> or <Link to="/register"><u>Register</u></Link> to rate and comment.</p>
       }
-
       {comments.comment.map((comment, index) => displayComment(comment, index))}
     </div>
   )

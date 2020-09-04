@@ -115,7 +115,6 @@ function Randomizer() {
         ))
         // sort foodPlaceScores from highest score to lowest score, best pick will be at index [0]
         foodPlaceScores.sort((a, b) => b.score - a.score);
-        console.log(foodPlaceScores);
         return foodPlaceScores;
     }
 
@@ -124,7 +123,6 @@ function Randomizer() {
         const foodPlaceScores = foodPlaceRanker()
         dispatch(randomizeAction(foodPlaceScores))
         history.push(`/foodplace/${foodPlaceScores[0].Food_place_name}`);
-        console.log(budget, location, type);
     }
 
     return (

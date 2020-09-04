@@ -8,7 +8,7 @@ const initialState = {
     foodPlaces: [],
     listOfFoodPlaces: [],
     //zoren's reducer
-    istOfFoodPlacesRanked: null,
+    listOfFoodPlacesRanked: null,
     jeepRoute: null,
     jeepRideStart: null,
     jeepRideStop: null,

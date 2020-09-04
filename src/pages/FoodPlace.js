@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Ratings from 'react-ratings-declarative';
+import FoodPlaceTile from '../components/FoodPlaceTile';
 import JeepneyRoute from '../components/JeepneyRoute';
 import FoodPlaceMap from '../components/FoodPlaceMap';
 import LoadingPage from './LoadingPage';
@@ -10,6 +11,10 @@ import defaultFoodPic from '../assets/foodPlace.png';
 // import defaultFoodPic from '../assets/foodPlace.png';
 
 function FoodPlace({ match }) {
+  const foodPlacesRanked = useSelector(state => state.foodplaces.listOfFoodPlacesRanked)
+  const foodPlacesFromHome = useSelector(state => state.foodplaces.foodPlaces)
+  const recommendations = []
+
   const foodPlacesData = useSelector(state => state.foodplaces);
   const foodPlaces = foodPlacesData.listOfFoodPlaces;
   const foodPlace = foodPlaces.filter(foodPlace => foodPlace.Food_place_name === match.params.foodPlaceName);
@@ -74,6 +79,30 @@ function FoodPlace({ match }) {
     else if (foodPlace[0].Opening_time && foodPlace[0].Days_open !== "0123456") {
       openTimeSentence = `Open from ${openHourText} to ${closeHourText} (${openWeekDays})`
     }
+
+    //THIS IS FOR THE RECOMMENDATIONS PART
+    var foodPlacesRec = []
+    if(foodPlacesRanked) {
+      //if user comes from randomizer
+      foodPlacesRec = foodPlacesRanked.splice(1,4);
+    }
+    else {
+      //if not, just use the recommendations from home
+      foodPlacesRec = foodPlacesFromHome.filter(place => place.Food_place_id !== foodPlace[0].Food_place_id);
+    }
+    
+    foodPlacesRec.map(foodPlace =>
+        recommendations.push(
+            <FoodPlaceTile
+                key={foodPlace.Food_place_id}
+                Picture={foodPlace.Picture}
+                Food_place_name={foodPlace.Food_place_name}
+                Rating={foodPlace.Rating}
+                Price_range={foodPlace.Price_range}
+                Food_types={foodPlace.Food_types}
+            />
+        )
+    )
   }
 
 
@@ -145,6 +174,12 @@ function FoodPlace({ match }) {
               <Comment foodPlaceID={foodPlace[0].Food_place_id} />
             </div>
           </div>
+        </div>
+        <div className="rowcenter margin-tb-30">
+          <h3>You might also like:</h3>
+        </div>
+        <div className="rowcenter margin-tb-30 foodTilesContainer">
+          {recommendations}
         </div>
       </div>
     );
