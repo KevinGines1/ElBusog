@@ -10,7 +10,7 @@ import LeftNavbar from '../components/LeftNavbar';
 function StickyNavbar(props) {
     var prevScrollY = 0
     const [top, toggleStickyNavbar] = useState("-80px");
-    const profilePic = useSelector(state => state.zeit.profile.Picture);
+    const profilePic = useSelector(state => state.user.Picture);
     const [leftNavbarVisible, toggleLeftNavbar] = useState(false);
     const [profileDropdownVisible, toggleDropdown] = useState(false);
 
@@ -19,13 +19,13 @@ function StickyNavbar(props) {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [])
+    }, [])
 
     const handleScroll = () => {
         const currentScrollY = window.scrollY;
-        
+
         //hide sticky navbar when scrolling down or when user is at the top where there is a fixed navbar
-        if(currentScrollY > prevScrollY || currentScrollY < 300) {
+        if (currentScrollY > prevScrollY || currentScrollY < 300) {
             toggleStickyNavbar('-110px');
         }
         else {
@@ -39,13 +39,13 @@ function StickyNavbar(props) {
     return (
         <div>
             {(props.profilePic !== "" &&
-                <div className="stickyNavbar" style={{top: `${top}`}}>
+                <div className="stickyNavbar" style={{ top: `${top}` }}>
                     <div>
                         <img
-                            className="burger" 
-                            src={burger} 
+                            className="burger"
+                            src={burger}
                             alt="More options"
-                            onClick={() => {toggleLeftNavbar(!leftNavbarVisible); toggleDropdown(false)}}
+                            onClick={() => { toggleLeftNavbar(!leftNavbarVisible); toggleDropdown(false) }}
                         />
                         <img className="navbarLogo" src={logo} alt="Elbusog" />
                     </div>
@@ -63,7 +63,7 @@ function StickyNavbar(props) {
                     <div className="userHover">
                         <img
                             className="userThumb"
-                            onClick={() => {toggleDropdown(!profileDropdownVisible); toggleLeftNavbar(false)}}
+                            onClick={() => { toggleDropdown(!profileDropdownVisible); toggleLeftNavbar(false) }}
                             src={profilePic ? profilePic : defaultPic}
                             alt="User" />
                     </div>
@@ -71,12 +71,12 @@ function StickyNavbar(props) {
             )}
             <div onClick={() => toggleDropdown(false)}>
                 {profileDropdownVisible &&
-                    <ProfileDropdown/>
+                    <ProfileDropdown />
                 }
             </div>
             <div onClick={() => toggleLeftNavbar(false)}>
                 {leftNavbarVisible &&
-                    <LeftNavbar/>
+                    <LeftNavbar />
                 }
             </div>
         </div>

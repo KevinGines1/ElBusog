@@ -9,8 +9,8 @@ import './Comment.css';
 
 function Comment(props) {
   const dispatch = useDispatch();
-  const comments = useSelector(state => state.jai.comment);
-  const currentUser = useSelector(state => state.zeit.profile);
+  const comments = useSelector(state => state.foodPlaceComments);
+  const currentUser = useSelector(state => state.user);
   const currentUsername = currentUser.Username;
   const currentUserIsLoggedIn = currentUser.isLoggedIn;
   const eventHandler = data => setRating(data);
@@ -19,13 +19,13 @@ function Comment(props) {
   const [currentComment, setCurrentComment] = useState("");
 
   useEffect(() => {
-      dispatch(fetchComment(props.foodPlaceID));
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(fetchComment(props.foodPlaceID));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if(rating !== null && currentComment !== "") {
+    if (rating !== null && currentComment !== "") {
       dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment, currentUsername))
       setCurrentComment("")
     }
@@ -46,7 +46,7 @@ function Comment(props) {
           <div className="nameStarContainer">
             <strong>{comment.Username}</strong>
             <Ratings
-              rating = {comment.Rating}
+              rating={comment.Rating}
               widgetDimensions="18px"
               widgetEmptyColors="#b3b3b3"
               widgetRatedColors="#e07f3e"
@@ -60,7 +60,7 @@ function Comment(props) {
             </Ratings>
           </div>
           {currentUsername === comment.Username &&
-            <button className="circleXButton" onClick = {() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
+            <button className="circleXButton" onClick={() => dispatch(removeComment(comment.User_id, props.foodPlaceID, comment.Rating, comment.Comment))}>X</button>
           }
         </div>
         <div className="commentContainer">{comment.Comment}</div>
@@ -77,20 +77,20 @@ function Comment(props) {
   return (
     <div className="margin-lr-20">
       {currentUserIsLoggedIn
-      ? <form onSubmit = {handleFormSubmit}>
-          <Rate onChange = {eventHandler}/>
+        ? <form onSubmit={handleFormSubmit}>
+          <Rate onChange={eventHandler} />
           <input
             className="textbox margin-tb-10"
             type="text"
-            placeholder = "Comment"
+            placeholder="Comment"
             value={currentComment}
-            onChange = {(event) => setCurrentComment(event.target.value)}
+            onChange={(event) => setCurrentComment(event.target.value)}
           />
           <button className="button margin-tb-10" type="submit">Add Comment</button>
         </form>
-      : <p>Please <Link to="/login"><u>Log-in</u></Link> or <Link to="/register"><u>Register</u></Link> to rate and comment.</p>
+        : <p>Please <Link to="/login"><u>Log-in</u></Link> or <Link to="/register"><u>Register</u></Link> to rate and comment.</p>
       }
-      
+
       {comments.comment.map((comment, index) => displayComment(comment, index))}
     </div>
   )

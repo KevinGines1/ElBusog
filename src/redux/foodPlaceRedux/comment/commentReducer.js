@@ -17,9 +17,9 @@ const commentReducer = (state = initialState, action) => {
       }
     case ADD_COMMENT:
       const today = new Date();
-      const date = today.getFullYear()+'-'+('0'+(today.getMonth()+1)).slice(-2)+'-'+('0'+today.getDate()).slice(-2);
+      const date = today.getFullYear() + '-' + ('0' + (today.getMonth() + 1)).slice(-2) + '-' + ('0' + today.getDate()).slice(-2);
       const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-      const dateTime = date+'T'+time;
+      const dateTime = date + 'T' + time;
 
       return {
         ...state,
@@ -44,9 +44,3 @@ const commentReducer = (state = initialState, action) => {
 }
 
 export default commentReducer;
-
-// {
-//   if((comment.User_id === action.payload.userID) && (comment.Food_place_id === action.payload.foodPlaceID) && (comment.Rating === action.payload.rating)) {
-//     comment.Comment !== action.payload.comment;
-//   }
-// }

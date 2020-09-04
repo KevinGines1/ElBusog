@@ -9,7 +9,7 @@ import {
 import ImageUploader from './ImageUploader';
 
 function AddEditFoodPlace() {
-    const profile = useSelector(state => state.zeit.profile)
+    const profile = useSelector(state => state.user)
     const foodPlaceEdited = profile.editingData
     const dispatch = useDispatch()
     const [state, setState] = useState({

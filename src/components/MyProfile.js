@@ -4,7 +4,7 @@ import defaultPic from '../assets/user.png';
 import { editProfile } from '../redux';
 
 function MyProfile() {
-    const profile = useSelector(state => state.zeit.profile)
+    const profile = useSelector(state => state.user)
     const dispatch = useDispatch()
 
     return (

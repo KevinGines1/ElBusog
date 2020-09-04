@@ -4,7 +4,7 @@ import { editingFoodPlace, deleteFoodPlace } from '../redux';
 
 
 function DashboardItemButtons(props) {
-    const profile = useSelector(state => state.zeit.profile)
+    const profile = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [state, setState] = useState({
         confirmDelete: false

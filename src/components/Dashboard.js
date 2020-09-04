@@ -6,8 +6,8 @@ import DashboardItemButtons from './DashboardItemButtons';
 import foodIcon from '../assets/foodIcon.png';
 import Ratings from 'react-ratings-declarative';
 
-function Dashboard() {    
-    const profile = useSelector(state => state.zeit.profile)
+function Dashboard() {
+    const profile = useSelector(state => state.user)
     const dispatch = useDispatch()
     const ownedFoodPlaces = profile.ownedFoodPlaces
 
@@ -34,8 +34,8 @@ function Dashboard() {
                                         <p className="rating">No Rating</p>
                                     )}
                                     {(!isNaN(foodPlace.Rating) &&
-                                        <Ratings 
-                                            rating = {foodPlace.Rating}
+                                        <Ratings
+                                            rating={foodPlace.Rating}
                                             widgetDimensions="15px"
                                             widgetEmptyColors="#a6a6a6"
                                             widgetRatedColors="rgb(242, 242, 242, 0.9)"
@@ -57,25 +57,25 @@ function Dashboard() {
                                     <div className="commentsTitle"> Comments </div>
                                     <div className="scrollingComments">
                                         {foodPlace.Reviews.length !== 0 &&
-                                        foodPlace.Reviews.map(review => (
-                                            <div key={review.Comment} className="commentContainer">
-                                            <Ratings 
-                                                rating = {review.Rating}
-                                                widgetDimensions="12px"
-                                                widgetEmptyColors="#737373"
-                                                widgetRatedColors="#e07f3e"
-                                                widgetSpacings="0.5px"
-                                            >
-                                                <Ratings.Widget />
-                                                <Ratings.Widget />
-                                                <Ratings.Widget />
-                                                <Ratings.Widget />
-                                                <Ratings.Widget />
-                                            </Ratings>
-                                                <p className="datePosted">{review.Date_posted.slice(0, 10)}</p>
-                                                <p className="comment">{review.Comment}</p>
-                                            </div>
-                                        ))}
+                                            foodPlace.Reviews.map(review => (
+                                                <div key={review.Comment} className="commentContainer">
+                                                    <Ratings
+                                                        rating={review.Rating}
+                                                        widgetDimensions="12px"
+                                                        widgetEmptyColors="#737373"
+                                                        widgetRatedColors="#e07f3e"
+                                                        widgetSpacings="0.5px"
+                                                    >
+                                                        <Ratings.Widget />
+                                                        <Ratings.Widget />
+                                                        <Ratings.Widget />
+                                                        <Ratings.Widget />
+                                                        <Ratings.Widget />
+                                                    </Ratings>
+                                                    <p className="datePosted">{review.Date_posted.slice(0, 10)}</p>
+                                                    <p className="comment">{review.Comment}</p>
+                                                </div>
+                                            ))}
                                     </div>
                                 </div>
 

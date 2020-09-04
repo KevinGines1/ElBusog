@@ -11,7 +11,7 @@ function Profile() {
     const background = {
         backgroundImage: `url(${profileBG})`
     }
-    const profile = useSelector(state => state.zeit.profile)
+    const profile = useSelector(state => state.user)
 
     return profile.isLoggedIn && profile.User_type !== "" ? (
         <div className="profileBackground" style={background}>
@@ -33,7 +33,7 @@ function Profile() {
                         </div>
                     </div>
                 )}
-                
+
                 {(profile.User_type === "Business_owner" &&
                     <Dashboard />
                 )}
@@ -51,8 +51,8 @@ function Profile() {
                 </div>
             </div>
         </div>
-        ) : (
-            <LoadingPage />
+    ) : (
+                <LoadingPage />
             )
 }
 

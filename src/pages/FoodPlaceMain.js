@@ -6,7 +6,7 @@ import banner from '../assets/uplbBanner.jpg';
 
 
 function FoodPlaceMain() {
-	const foodPlacesData = useSelector(state => state.zeit.foodPlacesData);
+	const foodPlacesData = useSelector(state => state.foodplaces);
 	const foodPlaces = foodPlacesData.listOfFoodPlaces;
 	// const foodTiles = []
 

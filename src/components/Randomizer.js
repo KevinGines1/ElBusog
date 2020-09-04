@@ -13,25 +13,25 @@ const questions = [
 function Randomizer() {
     let history = useHistory();
 
-    const listOfFoodPlaces = useSelector(state => state.zeit.foodPlacesData.listOfFoodPlaces);
+    const listOfFoodPlaces = useSelector(state => state.foodplaces.listOfFoodPlaces);
     const dispatch = useDispatch()
 
     const [budget, setBudget] = useState('');
     const [location, setLocation] = useState('');
     const [type, setType] = useState('');
     const [questionNumber, setQuestionNumber] = useState(0);
-    
+
     const handleClick = (choice) => {
-        if(choice === 0) {
+        if (choice === 0) {
             setBudget('any');
             setLocation('any');
             setType('any');
             handleFormSubmit();
         }
-        else if(choice === 7) {
+        else if (choice === 7) {
             setQuestionNumber(0);
         }
-        else if(questionNumber === 0){
+        else if (questionNumber === 0) {
             switch (choice) {
                 case 1: setBudget('<60'); break;
                 case 2: setBudget('60-100'); break;
@@ -40,7 +40,7 @@ function Randomizer() {
             }
             setQuestionNumber(1)
         }
-        else if(questionNumber === 1){
+        else if (questionNumber === 1) {
             switch (choice) {
                 case 1: setLocation('within UPLB'); break;
                 case 2: setLocation('Raymundo'); break;
@@ -50,7 +50,7 @@ function Randomizer() {
             }
             setQuestionNumber(2)
         }
-        else if(questionNumber === 2){
+        else if (questionNumber === 2) {
             switch (choice) {
                 case 1: setType('Meat'); break;
                 case 2: setType('Vegetable'); break;
@@ -73,8 +73,8 @@ function Randomizer() {
         var foodPlaceScores = [];
         listOfFoodPlaces.forEach((currentValue) => {
             // food place needs to be open on current time and day of the week
-            if(((hour > currentValue.Opening_time && hour < currentValue.Closing_time) || currentValue.Opening_time === null) && currentValue.Days_open.includes(day)) {
-                foodPlaceScores.push({...currentValue, score: 0});
+            if (((hour > currentValue.Opening_time && hour < currentValue.Closing_time) || currentValue.Opening_time === null) && currentValue.Days_open.includes(day)) {
+                foodPlaceScores.push({ ...currentValue, score: 0 });
             }
         })
         // console.log(foodPlaceScores);
@@ -82,36 +82,36 @@ function Randomizer() {
         listOfFoodPlaces.forEach((currentValue) => {
             // check if the price range of food place is similar to user preference
             // right budget rewards 3 points, right location rewards 1 point, right type rewards 2 points
-            if(currentValue.Price_range === userPref[0]) {
+            if (currentValue.Price_range === userPref[0]) {
                 // find the food place in foodPlaceScores and increase its score
                 foodPlaceScores = foodPlaceScores.map(place => (
                     place.Food_place_name === currentValue.Food_place_name
-                    ?   {...place, score: place.score + 3}
-                    :   place
+                        ? { ...place, score: place.score + 3 }
+                        : place
                 ))
             }
             // check if the location of food place is similar to user preference
-            if(currentValue.Location === userPref[1]) {
+            if (currentValue.Location === userPref[1]) {
                 // find the food place in foodPlaceScores and increase its score
                 foodPlaceScores = foodPlaceScores.map(place => (
                     place.Food_place_name === currentValue.Food_place_name
-                    ?   {...place, score: place.score + 1}
-                    :   place
+                        ? { ...place, score: place.score + 1 }
+                        : place
                 ))
             }
             // check if the type of food place contains the user preference
-            if(currentValue.Food_types.includes(userPref[2])) {
+            if (currentValue.Food_types.includes(userPref[2])) {
                 // find the food place in foodPlaceScores and increase its score
                 foodPlaceScores = foodPlaceScores.map(place => (
                     place.Food_place_name === currentValue.Food_place_name
-                    ?   {...place, score: place.score + 2}
-                    :   place
+                        ? { ...place, score: place.score + 2 }
+                        : place
                 ))
             }
         })
         // add a random value between 0-1 to break ties
         foodPlaceScores = foodPlaceScores.map(place => (
-            {...place, score: place.score + Math.random()}
+            { ...place, score: place.score + Math.random() }
         ))
         // sort foodPlaceScores from highest score to lowest score, best pick will be at index [0]
         foodPlaceScores.sort((a, b) => b.score - a.score);
@@ -127,24 +127,24 @@ function Randomizer() {
         console.log(budget, location, type);
     }
 
-    return(
+    return (
         <div>
             <div className="row">
                 <div className="col-12">
                     <img
                         className="banner-no-height"
-                        style={{height: "300px"}}
+                        style={{ height: "300px" }}
                         src={banner}
                         alt="Banner"
-                        onClick={() => handleClick(0)}/>
+                        onClick={() => handleClick(0)} />
                     <h5 className="pretitle">Want to eat but can't decide where?</h5>
                     <h2
                         className="title"
-                        style={{textDecoration: 'underline', textDecorationThickness: '1px', cursor: 'pointer'}}
+                        style={{ textDecoration: 'underline', textDecorationThickness: '1px', cursor: 'pointer' }}
                         onClick={() => handleClick(0)}>Get instant recommendation!</h2>
                 </div>
             </div>
-            <div className="banner-auto-height padding-tb-40" style={{"backgroundImage": `url(${banner})`}}>
+            <div className="banner-auto-height padding-tb-40" style={{ "backgroundImage": `url(${banner})` }}>
                 <div className="row">
                     <h4 className="col-12 force-center white">...or choose your preferences</h4>
                 </div>

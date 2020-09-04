@@ -9,7 +9,7 @@ import LoadingPage from './LoadingPage';
 import Randomizer from '../components/Randomizer';
 
 function Home() {
-    const foodPlacesData = useSelector(state => state.zeit.foodPlacesData)
+    const foodPlacesData = useSelector(state => state.foodplaces)
     const foodPlaces = foodPlacesData.foodPlaces
     const foodTiles = []
     foodPlaces.map(foodPlace =>

@@ -1,8 +1,33 @@
 import axios from 'axios'
 import {
-    FETCH_FOOD_PLACES
+    FETCH_FOOD_PLACES,
+    // zoren's code
+    RANDOMIZE_FOODPLACE,
+    GET_JEEP_STOP
 } from './FFPtypes'
 import { SERVER_URL } from '../../serverUrl'
+
+// start of zoren's code
+export const randomizeAction = (payload) => ({
+    type: RANDOMIZE_FOODPLACE,
+    payload: payload
+})
+
+
+export const getJeepRoute = (lat, lng, id) => {
+    return (dispatch) => {
+        axios.get(`${SERVER_URL}/locate/${lat}&${lng}&${id}`)
+            .then(response => {
+                // console.log(response.data)
+                dispatch({
+                    type: GET_JEEP_STOP,
+                    payload: response.data
+                })
+            })
+    }
+}
+
+// end 
 
 export const fetchFoodPlaces = () => {
     return (dispatch) => {
@@ -16,7 +41,7 @@ export const fetchFoodPlaces = () => {
                     //     payload: foodPlace
                     // })
                 })
-                
+
             })
             .catch(error => {
                 console.log(error.message)
@@ -38,7 +63,7 @@ export const fetchFoodPlacesReview = (foodPlace, foodPlaceID) => {
                 })
                 var avgRating = Math.round((totalRating / numOfRatings) * 10) / 10
                 //if no rating, make it zero
-                if(!avgRating) {avgRating = 0}
+                if (!avgRating) { avgRating = 0 }
                 // this condition has been moved to FFPreducer.js
                 // let getFoodPlace = Math.floor(Math.random() * 2)
                 // if (getFoodPlace === 1 && avgRating >= 3.5) {

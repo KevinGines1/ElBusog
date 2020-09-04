@@ -13,7 +13,7 @@ import defaultPic from '../assets/user.png';
 import ImageUploader from './ImageUploader';
 
 function EditProfile() {
-    const profile = useSelector(state => state.zeit.profile)
+    const profile = useSelector(state => state.user)
     const dispatch = useDispatch()
     const [state, setState] = useState({
         Name: profile.Name,
@@ -57,18 +57,18 @@ function EditProfile() {
     }, [state.Password])
 
     useEffect(() => {
-        if(!state.passwordTouched){
-            setState(state => ({...state, passwordTouched: true}))
+        if (!state.passwordTouched) {
+            setState(state => ({ ...state, passwordTouched: true }))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.Password])
-    
+
     //  CHECKS IF A BUSINESS OWNER HAS BUSINESSES
     useEffect(() => {
-        if(state.User_type === "Customer" && profile.ownedFoodPlaces.length !== 0){
-            setState(state => ({...state, invalidAccType: true}))
-        } else if (state.invalidAccType === true){
-            setState(state => ({...state, invalidAccType: false}))
+        if (state.User_type === "Customer" && profile.ownedFoodPlaces.length !== 0) {
+            setState(state => ({ ...state, invalidAccType: true }))
+        } else if (state.invalidAccType === true) {
+            setState(state => ({ ...state, invalidAccType: false }))
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state.User_type])
@@ -109,11 +109,11 @@ function EditProfile() {
     const handleFormSubmit = (event) => {
         event.preventDefault();
         let Picture = profile.uploadedImage
-        if(Picture === "") {
+        if (Picture === "") {
             Picture = profile.Picture
         }
         let newPassword = state.newPassword
-        if(state.Password === ""){
+        if (state.Password === "") {
             setState({ ...state, correctPassword: false })
         } else if (newPassword === "") {
             newPassword = state.Password
@@ -150,9 +150,9 @@ function EditProfile() {
     }
 
     const confirmDelete = () => {
-        setState(state => ({...state, deletingAccount: !state.deletingAccount}))
+        setState(state => ({ ...state, deletingAccount: !state.deletingAccount }))
     }
-    
+
     return (
         <div className="col-4">
             <div className="editProfileContainer tile margin-lr-10 margin-tb-10 profileTiles">
@@ -160,11 +160,11 @@ function EditProfile() {
                     <h3>Edit Profile</h3>
                     <div className="myProfilePic">
                         <img
-                            src={ profile.uploadedImage
+                            src={profile.uploadedImage
                                 ? profile.uploadedImage
                                 : profile.Picture !== null
-                                ? profile.Picture
-                                : defaultPic}
+                                    ? profile.Picture
+                                    : defaultPic}
                             alt="Profile"
                         />
                     </div>
@@ -248,7 +248,7 @@ function EditProfile() {
                     <div className="savePassword">
                         <p>Password</p>
                         <p className="passwordNote">Please enter your password to save changes</p>
-                        <input 
+                        <input
                             onChange={handleInputChange}
                             className="editInput"
                             type="password"
@@ -268,18 +268,18 @@ function EditProfile() {
                             onClick={confirmDelete}
                         >Delete Account</button>
                         {(state.deletingAccount &&
-                        <div className="profileConfirmDelete">
-                            <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
-                            <button
-                                className="confirmDeleteBtn"
-                                onClick={() => dispatch(deleteAccount(profile.Username, profile.User_type))}
-                            >Yes</button>
-                            <button
-                                className="confirmDeleteBtn"
-                                type="button"
-                                onClick={confirmDelete}
-                            >No</button>
-                        </div>
+                            <div className="profileConfirmDelete">
+                                <div className="confirmDeleteMsg">Are you sure you want to delete your account?</div>
+                                <button
+                                    className="confirmDeleteBtn"
+                                    onClick={() => dispatch(deleteAccount(profile.Username, profile.User_type))}
+                                >Yes</button>
+                                <button
+                                    className="confirmDeleteBtn"
+                                    type="button"
+                                    onClick={confirmDelete}
+                                >No</button>
+                            </div>
                         )}
                     </div>
                     <div>

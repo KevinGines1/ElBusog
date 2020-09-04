@@ -1,12 +1,6 @@
-//export Zoren's actions
-export * from './randomizer/randomizerActions.js';
+//export Aaron's, Zeit's, & Zoren's actions (Profile, Foodplaces, Randomizer)
+export * from './profile/profileActions'
+export * from './foodPlaceRedux/fetchFoodPlaces/FFPactions'
 
-//export Zeit's actions
-export * from './homeProfileRedux/profile/profileActions'
-export * from './homeProfileRedux/fetchFoodPlaces/FFPactions'
-
-// export Aaron's actions
-// export * from './userRedux/user/userActions'
-
-//export Jai's actions
+//export Jai's actions (comments)
 export * from './foodPlaceRedux/comment/commentActions';

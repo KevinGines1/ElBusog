@@ -17,10 +17,10 @@ import {
     DELETE_FOOD_PLACE,
     UPLOAD_IMAGE
 } from './profileTypes';
-import { SERVER_URL } from '../../serverUrl'
+import { SERVER_URL } from '../serverUrl'
 
 
-// testing aaron's codes
+// start of aaron's codes
 import Swal from 'sweetalert2'
 
 export const verifyUsername = userObj => {

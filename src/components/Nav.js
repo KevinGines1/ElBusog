@@ -8,13 +8,13 @@ import ProfileDropdown from '../components/ProfileDropdown';
 import LeftNavbar from '../components/LeftNavbar';
 
 function Navbar(props) {
-    var profilePic = useSelector(state => state.zeit.profile.Picture);
+    var profilePic = useSelector(state => state.user.Picture);
     const [leftNavbarVisible, toggleLeftNavbar] = useState(false);
     const [profileDropdownVisible, toggleDropdown] = useState(false);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        }, [])
+    }, [])
 
     const handleScroll = () => {
         toggleDropdown(false);
@@ -26,10 +26,10 @@ function Navbar(props) {
                 <div className="fixedNavbar">
                     <div>
                         <img
-                            className="burger" 
-                            src={burger} 
+                            className="burger"
+                            src={burger}
                             alt="More options"
-                            onClick={() => {toggleLeftNavbar(!leftNavbarVisible); toggleDropdown(false)}}
+                            onClick={() => { toggleLeftNavbar(!leftNavbarVisible); toggleDropdown(false) }}
                         />
                         <img className="navbarLogo" src={logo} alt="Elbusog" />
                     </div>
@@ -47,7 +47,7 @@ function Navbar(props) {
                     <div className="userHover">
                         <img
                             className="userThumb"
-                            onClick={() => {toggleDropdown(!profileDropdownVisible); toggleLeftNavbar(false)}}
+                            onClick={() => { toggleDropdown(!profileDropdownVisible); toggleLeftNavbar(false) }}
                             src={profilePic ? profilePic : defaultPic}
                             alt="User" />
                     </div>
@@ -55,12 +55,12 @@ function Navbar(props) {
             )}
             <div onClick={() => toggleDropdown(false)}>
                 {profileDropdownVisible &&
-                    <ProfileDropdown/>
+                    <ProfileDropdown />
                 }
             </div>
             <div onClick={() => toggleLeftNavbar(false)}>
                 {leftNavbarVisible &&
-                    <LeftNavbar/>
+                    <LeftNavbar />
                 }
             </div>
         </div>

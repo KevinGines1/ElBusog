@@ -8,17 +8,17 @@ import { SERVER_URL } from '../../serverUrl';
 
 export const fetchComment = foodPlaceID => {
   return (dispatch) => {
-      axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
-          .then(response => {
-              const comments = response.data;
-                    dispatch({
-                      type: FETCH_COMMENT,
-                      payload: comments
-                    });
-                  })
-            .catch(error => {
-                console.log(error.message);
-            })
+    axios.get(`${SERVER_URL}/comments/${foodPlaceID}`)
+      .then(response => {
+        const comments = response.data;
+        dispatch({
+          type: FETCH_COMMENT,
+          payload: comments
+        });
+      })
+      .catch(error => {
+        console.log("FETCH COMMENT ERROR: ", error.message);
+      })
   }
 };
 
@@ -43,6 +43,7 @@ export const addComment = (userID, foodPlaceID, rating, comment, username) => {
         payload: payload
       }))
       .catch(error => {
+        console.log("ADD COMMENT ERROR: ", error)
         // error.message === "currentRating.toFixed is not a function"
         // ? window.location.reload(true)
         // : console.log(error.message);
