@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchComment, addComment, removeComment } from '../redux';
 import Ratings from 'react-ratings-declarative';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 import Rate from './Rate';
 import './Comment.css';
 
@@ -23,17 +25,17 @@ function Comment(props) {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    if(currentUserIsLoggedIn) {
-      if(rating !== null && currentComment !== "") {
-        dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment))
-        reloadComment()
-      }
-      else {
-        alert("Please rate and comment.")
-      }
+    if(rating !== null && currentComment !== "") {
+      dispatch(addComment(parseInt(currentUser.User_id), props.foodPlaceID, rating, currentComment))
+      reloadComment()
     }
     else {
-      alert("You must be logged in to use this feature.")
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please rate and write a comment first.',
+        icon: 'error',
+        confirmButtonText: 'Okay'
+      })
     }
   }
 
@@ -74,16 +76,20 @@ function Comment(props) {
 
   return (
     <div className="margin-lr-20">
-      <form onSubmit = {handleFormSubmit}>
-        <Rate onChange = {eventHandler}/>
-        <input
-          className="textbox margin-tb-10"
-          type="text"
-          placeholder = "Comment"
-          onChange = {(event) => setCurrentComment(event.target.value)}
-        />
-        <button className="button margin-tb-10" type="submit">Add Comment</button>
-      </form>
+      {currentUserIsLoggedIn
+      ? <form onSubmit = {handleFormSubmit}>
+          <Rate onChange = {eventHandler}/>
+          <input
+            className="textbox margin-tb-10"
+            type="text"
+            placeholder = "Comment"
+            onChange = {(event) => setCurrentComment(event.target.value)}
+          />
+          <button className="button margin-tb-10" type="submit">Add Comment</button>
+        </form>
+      : <p>Please <Link to="/login"><u>Log-in</u></Link> or <Link to="/register"><u>Register</u></Link> to rate and comment.</p>
+      }
+      
       {comments.comment.map((comment, index) => displayComment(comment, index))}
     </div>
   )
