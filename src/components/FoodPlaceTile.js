@@ -20,7 +20,7 @@ const FoodPlaceTile = (props) => (
                 <Ratings.Widget />
                 <Ratings.Widget />
             </Ratings>
-            <p className="priceRange">Price Range: {props.Price_range}</p>
+            <p className="priceRange">Price Range: {props.Price_range} PHP</p>
             <p className="foodTypes">{props.Food_types}</p>
             <Link className="button margin-tb-10 viewDetails" to={`/foodplace/${props.Food_place_name}`}>View Details</Link>
         </div>

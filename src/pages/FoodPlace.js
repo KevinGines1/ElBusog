@@ -147,7 +147,7 @@ function FoodPlace({ match }) {
                 <Ratings.Widget />
               </Ratings>
               <div className="row">
-                <p><strong>Price: </strong>{foodPlace[0].Price_range}</p>
+                <p><strong>Price: </strong>{foodPlace[0].Price_range} PHP</p>
               </div>
               <div className="row">
                 <p><strong>Location: </strong>{foodPlace[0].Location}</p>
@@ -176,7 +176,7 @@ function FoodPlace({ match }) {
           </div>
         </div>
         <div className="rowcenter margin-tb-30">
-          <h3>You might also like:</h3>
+          <h3 className="force-center">You might also like:</h3>
         </div>
         <div className="rowcenter margin-tb-30 foodTilesContainer">
           {recommendations}

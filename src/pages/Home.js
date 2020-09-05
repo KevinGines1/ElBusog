@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import FoodPlaceTile from '../components/FoodPlaceTile';
 import './Home.css';
 import homeBanner from '../assets/uplbBanner.jpg';
-import recomBanner from '../assets/cakeBanner.png';
+import recomBanner from '../assets/cakeBanner.jpg';
 import LoadingPage from './LoadingPage';
 import Randomizer from '../components/Randomizer';
 

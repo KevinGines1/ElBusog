@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { randomizeAction } from '../redux';
-import banner from '../assets/cakeBanner.png';
+import banner from '../assets/clubhouseBannerDark.jpg';
+import banner2 from '../assets/cakeBanner.jpg';
 
 const questions = [
     ["How much is your budget?", "Less than P60", "P60-P100", "More than P100", null, null, "I don't care"],
@@ -142,7 +143,7 @@ function Randomizer() {
                         onClick={() => handleClick(0)}>Get instant recommendation!</h2>
                 </div>
             </div>
-            <div className="banner-auto-height padding-tb-40" style={{ "backgroundImage": `url(${banner})` }}>
+            <div className="banner-auto-height padding-tb-40" style={{ "backgroundImage": `url(${banner2})` }}>
                 <div className="row">
                     <h4 className="col-12 force-center white">...or choose your preferences</h4>
                 </div>
