@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
 import { randomizeAction } from '../redux';
-import banner from '../assets/clubhouseBannerDark.jpg';
+import banner from '../assets/samgyupBannerDark.jpg';
 import banner2 from '../assets/cakeBanner.jpg';
+import './Randomizer.css'
 
 const questions = [
     ["How much is your budget?", "Less than P60", "P60-P100", "More than P100", null, null, "I don't care"],
@@ -128,8 +129,8 @@ function Randomizer() {
 
     return (
         <div>
-            <div className="row">
-                <div className="col-12">
+            <div className="row tintInstantRec">
+                <div className="col-12 instantRec">
                     <img
                         className="banner-no-height"
                         style={{ height: "300px" }}
@@ -139,7 +140,7 @@ function Randomizer() {
                     <h5 className="pretitle">Want to eat but can't decide where?</h5>
                     <h2
                         className="title"
-                        style={{ textDecoration: 'underline', textDecorationThickness: '1px', cursor: 'pointer' }}
+                        style={{ textDecoration: 'underline', textDecorationThickness: '1px'}}
                         onClick={() => handleClick(0)}>Get instant recommendation!</h2>
                 </div>
             </div>

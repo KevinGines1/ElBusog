@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import FoodPlaceTile from '../components/FoodPlaceTile';
 import './Home.css';
 import homeBanner from '../assets/uplbBanner.jpg';
-import recomBanner from '../assets/cakeBanner.jpg';
+import recomBanner from '../assets/clubhouseBannerDark.jpg';
 import LoadingPage from './LoadingPage';
 import Randomizer from '../components/Randomizer';
 
@@ -28,7 +28,7 @@ function Home() {
     return !foodPlaces[0] ? (
         <LoadingPage />
     ) : (
-            <div style={{ backgroundImage: `url(${recomBanner})` }}>
+            <div>
                 <div>
                     <div className="row">
                         <div className="col-12">
@@ -37,19 +37,21 @@ function Home() {
                         </div>
                     </div>
                     <Randomizer />
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="banner" style={{ width: "100%", height: "min(40vw, 300px)" }}></div>
-                            <h2 className="title">Our Recommendations</h2>
+                    <div style={{ backgroundImage: `url(${recomBanner})`, backgroundSize: 'cover'}}>
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="banner" style={{ width: "100%", height: "min(40vw, 300px)" }}></div>
+                                <h2 className="title">Our Recommendations</h2>
+                            </div>
                         </div>
-                    </div>
-                    <div className="rowcenter margin-tb-30 foodTilesContainer">
-                        {foodTiles}
-                    </div>
-                    <div className="row force-center">
-                        <Link className="button margin-tb-20 seeMore" to="/foodplace">
-                            See More Food Places
-                        </Link>
+                        <div className="rowcenter margin-tb-30 foodTilesContainer">
+                            {foodTiles}
+                        </div>
+                        <div className="row force-center">
+                            <Link className="button margin-tb-20 seeMore" to="/foodplace">
+                                See More Food Places
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,13 @@
+.instantRec {
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.instantRec:hover {
+    opacity: 0.7;
+    
+}
+
+.tintInstantRec:hover {
+    background-color: #e07f3e;
+}
