@@ -83,12 +83,16 @@ function FoodPlace({ match }) {
     //THIS IS FOR THE RECOMMENDATIONS PART
     var foodPlacesRec = []
     if(foodPlacesRanked) {
-      //if user comes from randomizer
+      //if user comes from randomizer, use randomizer picks
       foodPlacesRec = foodPlacesRanked.splice(1,4);
     }
     else {
       //if not, just use the recommendations from home
       foodPlacesRec = foodPlacesFromHome.filter(place => place.Food_place_id !== foodPlace[0].Food_place_id);
+    }
+    if(foodPlacesRec.length < 2) {
+      //if empty list, just get from main list
+      foodPlacesRec = foodPlaces.filter(place => place.Food_place_id !== foodPlace[0].Food_place_id).splice(0,4);
     }
     
     foodPlacesRec.map(foodPlace =>
