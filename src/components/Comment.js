@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchComment, addComment, removeComment } from '../redux';
 import Ratings from 'react-ratings-declarative';
@@ -15,13 +15,19 @@ function Comment(props) {
   const currentUserIsLoggedIn = currentUser.isLoggedIn;
   const eventHandler = data => setRating(data);
   const [rating, setRating] = useState(null);
-  // const [updateComment, setUpdateComment] = useState(true);
   const [currentComment, setCurrentComment] = useState("");
+  const [currentID, setCurrentID] = useState(null)
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   dispatch(fetchComment(props.foodPlaceID));
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
+
+  //this replaced the useEffect and ensures that it runs only once every unique place visit
+  if(currentID !== props.foodPlaceID) {
     dispatch(fetchComment(props.foodPlaceID));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    setCurrentID(props.foodPlaceID)
+  }
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
