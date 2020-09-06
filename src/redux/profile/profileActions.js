@@ -347,7 +347,7 @@ export const saveChanges = (
                 accType
             })
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 axios.get(`${SERVER_URL}/profile/${userID}`)
                     .then(response => {
                         const userInfo = response.data[0]
@@ -375,7 +375,7 @@ export const deleteAccount = (username, accType) => {
         if (accType === "Customer") {
             axios.delete(`${SERVER_URL}/remove/customer/${username}`)
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     localStorage.removeItem('token');
                     dispatch({
                         type: DELETE_ACCOUNT,
@@ -390,7 +390,7 @@ export const deleteAccount = (username, accType) => {
         if (accType === "Business_owner") {
             axios.delete(`${SERVER_URL}/remove/owner/${username}`)
                 .then(response => {
-                    console.log(response.data)
+                    // console.log(response.data)
                     localStorage.removeItem('token');
                     dispatch({
                         type: DELETE_ACCOUNT
@@ -465,17 +465,17 @@ export const editFoodPlace = (
                 newLatitude
             })
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 if (foodPlacePhoto !== oldFoodPlacePhoto) {
                     axios.post(`${SERVER_URL}/remove/photo/${foodPlaceID}`, { oldFoodPlacePhoto })
-                        .then(response => {
-                            console.log(foodPlaceID, response.data)
-                        })
+                        // .then(response => {
+                        //     console.log(foodPlaceID, response.data)
+                        // })
                     axios.post(`${SERVER_URL}/addPhoto/`, {
                         foodPlaceID, foodPlacePhoto
                     })
                         .then(response => {
-                            console.log(response.data)
+                            // console.log(response.data)
                         })
                         .catch(error => {
                             console.log(error.message)
@@ -546,7 +546,7 @@ export const addFoodPlace = (
                     foodPlaceID, foodPlacePhoto
                 })
                     .then(response => {
-                        console.log(response.data)
+                        // console.log(response.data)
                         dispatch({
                             type: ADD_FOOD_PLACE,
                             payload: {
@@ -577,7 +577,7 @@ export const deleteFoodPlace = (foodPlaceID, foodPlacePhoto) => {
     return (dispatch) => {
         axios.delete(`${SERVER_URL}/removeFoodPlace/${foodPlaceID}`)
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
                 dispatch({
                     type: DELETE_FOOD_PLACE,
                     payload: foodPlaceID
@@ -585,7 +585,7 @@ export const deleteFoodPlace = (foodPlaceID, foodPlacePhoto) => {
             })
         axios.post(`${SERVER_URL}/remove/photo/${foodPlaceID}`, { foodPlacePhoto })
             .then(response => {
-                console.log(response.data)
+                // console.log(response.data)
             })
     }
 }

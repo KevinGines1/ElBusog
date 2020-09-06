@@ -22,7 +22,6 @@ function JeepneyRoute(props) {
     }
 
     const getCoordinates = (pos) => {
-        console.log(pos);
         dispatch(getJeepRoute(pos.coords.latitude, pos.coords.longitude, props.Food_place_id));   //put food place id
     }
 
