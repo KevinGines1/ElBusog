@@ -66,7 +66,7 @@ export const verifyEmail = userObj => {
                 // dispatch(resetRegisterEmail())
                 const infoValid = response.data.infoValid
                 if (infoValid) {
-                    dispatch(addUser(userObj))
+                    // dispatch(addUser(userObj)) // ! temporarily removed for demo purposes
                     // dispatch({
                     // 	type: CHECK_EMAIL,
                     // 	payload: { infoValid: true }
@@ -381,7 +381,7 @@ export const deleteAccount = (username, accType) => {
                         type: DELETE_ACCOUNT,
                         payload: username
                     })
-                    window.location.href="/";
+                    window.location.href = "/";
                 })
                 .catch(error => {
                     console.log(error.message)
@@ -395,7 +395,7 @@ export const deleteAccount = (username, accType) => {
                     dispatch({
                         type: DELETE_ACCOUNT
                     })
-                    window.location.href="/";
+                    window.location.href = "/";
                 })
                 .catch(error => {
                     console.log(error.message)
@@ -468,9 +468,9 @@ export const editFoodPlace = (
                 // console.log(response.data)
                 if (foodPlacePhoto !== oldFoodPlacePhoto) {
                     axios.post(`${SERVER_URL}/remove/photo/${foodPlaceID}`, { oldFoodPlacePhoto })
-                        // .then(response => {
-                        //     console.log(foodPlaceID, response.data)
-                        // })
+                    // .then(response => {
+                    //     console.log(foodPlaceID, response.data)
+                    // })
                     axios.post(`${SERVER_URL}/addPhoto/`, {
                         foodPlaceID, foodPlacePhoto
                     })
